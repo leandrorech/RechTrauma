@@ -12,31 +12,33 @@ Status: ARTEFATOS RECUPERADOS / RECONCILIAÇÃO PENDENTE
 - Artefatos confirmados incluem `rechtrauma_copiloto_v12.html` e `rechtrauma_v23.html`.
 - `rechtrauma_copiloto_v12.html` declara internamente `RechTrauma Copiloto v12`.
 - `rechtrauma_v23.html` declara na interface `Documento atual: v23 sem fundo` e contém XABCDE longitudinal, eFAST, Shock Index/SIA, ABC Score, RTS, PTM/DCR, neuro, airway e módulos adicionais.
-- A existência de v23 invalida o antigo bloqueador documental "v12 não localizado"; porém ainda não prova que v23 seja clinicamente canônica.
+- Em 2026-08-09 foi recebido fisicamente `rechtrauma_fluxo_explicado (2)(2).html`; o arquivo contém marcação visual `Visual trauma v24`, portanto existe evidência de uma variante posterior à v23, mas isso NÃO estabelece que seja a versão clínica canônica.
+- SHA-256 de `rechtrauma_fluxo_explicado (2)(2).html`: `ffbe5dd9ae2a510b4b6b3838e257a19a2ac55389ff3c885a9fe4ca880c412f19`.
 
 ## DECISION
 - Preservar v12 como referência histórica.
-- Tratar v23 como candidata mais recente localizada, NÃO como release canônica até diff/auditoria.
+- Tratar v23 e a variante `fluxo_explicado` com marcação v24 como candidatas, NÃO como releases canônicas até diff/auditoria.
 - Não descartar nenhuma variante física antes da reconciliação.
 
 ## IN PROGRESS
 - Migração dos artefatos físicos para o GitHub.
-- Inventário de variantes e relação de derivação entre v12, v23 e arquivos intermediários.
+- Inventário de variantes e relação de derivação entre v12, v23, variante v24 e arquivos intermediários.
 
 ## BLOCKED
-- Falta comparar v12 → v23 funcional e clinicamente.
+- Falta comparar v12 → v23 → variante v24 funcional e clinicamente.
 - Falta auditoria de fórmulas, thresholds, doses, contraindicações e referências atuais.
 - Falta validação por cenários antes de uso assistencial.
 
 ## CANDIDATES LOCATED
-- `rechtrauma_v23.html` — candidata mais recente localizada.
+- `rechtrauma_fluxo_explicado (2)(2).html` — variante física com marcação visual v24; SHA-256 registrado acima.
+- `rechtrauma_v23.html` — candidata previamente localizada.
 - `rechtrauma_copiloto_v12.html` — versão v12 comprovada.
-- Outras variantes na Library: fluxo explicado, PCR/pós-PCR, ROSC/PaCO2, fontes macro, rastreabilidade, hotfix clínico visual e outras; ainda não reconciliadas.
+- Outras variantes na Library: PCR/pós-PCR, ROSC/PaCO2, fontes macro, rastreabilidade, hotfix clínico visual e outras; ainda não reconciliadas.
 
 ## NEXT
-1. Concluir migração física dos HTMLs relevantes.
-2. Gerar manifesto com hashes.
-3. Diff dirigido v12 ↔ v23.
+1. Migrar fisicamente os HTMLs relevantes para o GitHub sem alterar conteúdo.
+2. Atualizar `MIGRATION_MANIFEST.md` com hashes e origem.
+3. Diff dirigido v12 ↔ v23 ↔ variante v24.
 4. Eleger baseline/canônico somente após auditoria e testes.
 
 ## REGRA DE SINCRONIZAÇÃO
