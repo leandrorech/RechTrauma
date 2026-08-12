@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RECH TRAUMA</title>
+<style>
+:root{--bg:#090b10;--panel:#121722;--panel2:#1a2230;--panel3:#202b3a;--text:#f4f7fb;--muted:#9aa6b6;--line:#334155;--red:#ef4444;--amber:#f59e0b;--green:#22c55e;--blue:#38bdf8;--purple:#a78bfa;--cyan:#2dd4bf}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}.app{position:relative;z-index:1}button,input,select,textarea{font:inherit}.app{max-width:1540px;margin:0 auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.brand h1{margin:0;font-size:24px;letter-spacing:-.02em}.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:var(--panel);color:#dbeafe;font-size:13px}.pill.hotkey-pending{border-color:rgba(245,158,11,.75);background:rgba(245,158,11,.18);color:#fde68a;box-shadow:0 0 0 2px rgba(245,158,11,.16)}.hotkeyNotice{display:none;border:1px solid rgba(245,158,11,.70);background:rgba(245,158,11,.18);color:#fde68a;border-radius:999px;padding:8px 12px;font-weight:900;font-size:13px}.hotkeyNotice.show{display:inline-flex;animation:hotkeyPulse .45s ease-in-out infinite alternate}@keyframes hotkeyPulse{from{filter:brightness(1)}to{filter:brightness(1.35)}}.grid{display:grid;grid-template-columns:370px minmax(480px,1fr) 430px;gap:12px}.card{background:linear-gradient(180deg,var(--panel),#10141d);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 14px 38px rgba(0,0,0,.26)}.card h2{font-size:14px;margin:0 0 10px;color:#e5edf7;text-transform:uppercase;letter-spacing:.04em}.sub{font-size:12px;color:var(--muted);margin-top:-4px;margin-bottom:10px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:9px 11px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:4px}.btn:hover{border-color:#7890a8;transform:translateY(-1px)}.btn.red{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.45)}.btn.amber{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.45)}.btn.green{background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.45)}.btn.blue{background:rgba(56,189,248,.14);border-color:rgba(56,189,248,.45)}.btn.purple{background:rgba(167,139,250,.14);border-color:rgba(167,139,250,.45)}.btn.block{width:100%;justify-content:center}.tabs{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:10px 0 12px}.tab{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:9px 6px;text-align:center;cursor:pointer;position:relative}.tab .l{display:block;font-size:21px;font-weight:900}.tab .s{font-size:10px;color:var(--muted)}.tab.active{border-color:var(--red);background:rgba(239,68,68,.12)}.tab.done{border-color:rgba(34,197,94,.7)}.tab.done:after{content:'✓';position:absolute;right:6px;top:4px;color:#86efac;font-size:12px}.vitals{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.field input,.field select,textarea{width:100%;background:#070a0f;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px;outline:none}.field input:focus,.field select:focus,textarea:focus{border-color:var(--blue)}textarea{min-height:170px}.metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.modulePanel{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);padding:10px;margin-top:10px}.modulePanel h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#e5edf7}.modulePanel ul{margin:0;padding-left:18px;color:#dbeafe;font-size:12px;line-height:1.45}.modulePanel .muted{color:var(--muted);font-size:12px}.riskchip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 7px;font-size:10px;margin:2px 3px 2px 0}.riskchip.red{border-color:rgba(239,68,68,.55);color:#fecaca;background:rgba(239,68,68,.10)}.riskchip.amber{border-color:rgba(245,158,11,.55);color:#fde68a;background:rgba(245,158,11,.08)}.riskchip.green{border-color:rgba(34,197,94,.55);color:#bbf7d0;background:rgba(34,197,94,.08)}.metric div{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:9px}.metric span{display:block;font-size:11px;color:var(--muted)}.metric b{font-size:18px}.banner{border:1px solid rgba(239,68,68,.55);background:rgba(239,68,68,.16);border-radius:14px;padding:12px;margin:10px 0;font-weight:850}.banner.amber{border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.14)}.banner.green{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.12)}.question{font-size:22px;line-height:1.15;font-weight:900;margin:4px 0 12px;letter-spacing:-.02em}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.opt{min-height:74px;padding:12px;border:1px solid var(--line);background:var(--panel2);border-radius:14px;text-align:left;cursor:pointer}.opt b{display:block;margin-bottom:5px}.opt span{font-size:12px;color:var(--muted);line-height:1.35}.opt:hover{border-color:#64748b}.opt.selected{background:rgba(56,189,248,.12);border-color:var(--blue)}.explain{margin:12px 0;border-left:4px solid var(--amber);background:rgba(245,158,11,.1);padding:10px 12px;border-radius:12px;color:#fff7ed;font-size:13px;line-height:1.45}.checks{display:grid;gap:7px}.check{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:12px;padding:12px;cursor:pointer;user-select:none;transition:background 0.1s}.check:hover{background:rgba(255,255,255,.05)}.check input{width:16px;height:16px;margin:0;cursor:pointer}.check.done{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.07)}.mini{font-size:11px;color:var(--muted)}.decision{display:grid;gap:8px}.rec{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;padding:10px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}.tag{font-size:10px;border-radius:999px;padding:4px 8px;font-weight:800}.tag.red{background:rgba(239,68,68,.18);color:#fecaca}.tag.amber{background:rgba(245,158,11,.18);color:#fde68a}.tag.green{background:rgba(34,197,94,.18);color:#bbf7d0}.tag.blue{background:rgba(56,189,248,.18);color:#bae6fd}.tag.purple{background:rgba(167,139,250,.18);color:#ddd6fe}.log{max-height:330px;overflow:auto}.logitem{border-bottom:1px solid var(--line);padding:7px 0;font-size:12px;color:#dbeafe}.logitem b{color:#fff}.footerbar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--panel) 35%);padding-top:22px;margin-top:12px}.statusline{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.status{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:5px 8px;color:#d1d5db}.status.red{border-color:rgba(239,68,68,.55);color:#fecaca;background:rgba(239,68,68,.11)}.status.green{border-color:rgba(34,197,94,.55);color:#bbf7d0;background:rgba(34,197,94,.08)}.status.amber{border-color:rgba(245,158,11,.55);color:#fde68a;background:rgba(245,158,11,.08)}.kbd{font-family:ui-monospace,monospace;background:#05070b;border:1px solid var(--line);border-radius:6px;padding:2px 5px;font-size:10px;color:var(--muted)}.table{width:100%;border-collapse:collapse;font-size:12px}.table td,.table th{border-bottom:1px solid var(--line);padding:6px;text-align:left}.table th{color:var(--muted);font-weight:600}.drawer{margin-top:10px;border:1px solid var(--line);border-radius:14px;overflow:hidden}.drawer summary{cursor:pointer;background:var(--panel2);padding:10px;font-weight:700}.drawer div{padding:10px;color:#dbeafe;font-size:13px;line-height:1.45}.hidden{display:none!important}.tab.flash{animation:flashTab 1.8s ease-in-out infinite;border-color:rgba(239,68,68,.72)!important;background:rgba(239,68,68,.10)!important}
+@keyframes flashTab{0%,100%{box-shadow:0 0 0 1px rgba(239,68,68,.20),0 0 0 rgba(239,68,68,0)}50%{box-shadow:0 0 0 2px rgba(239,68,68,.38),0 0 16px rgba(239,68,68,.32)}}
+body.critical-state .app{box-shadow:inset 0 0 0 4px rgba(239,68,68,.75);animation:criticalPulse 1.1s infinite}
+@keyframes criticalPulse{0%,100%{filter:none}50%{filter:brightness(1.18)}}
+.smallwarn{font-size:11px;color:#fde68a;margin-top:6px;line-height:1.35}.carryover{border-color:rgba(245,158,11,.75)!important;box-shadow:0 0 0 1px rgba(245,158,11,.22)}
+.efastGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.efastBtn{border:1px solid var(--line);background:#070a0f;color:var(--text);border-radius:10px;padding:8px;text-align:left;cursor:pointer;font-size:12px}.efastBtn b{display:block;font-size:12px}.efastBtn span{display:block;font-size:10px;color:var(--muted);margin-top:2px}.efastBtn.neg{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.07)}.efastBtn.pos{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.14)}.efastBtn.unk{border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.10)}
+@media(max-width:1160px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(4,1fr)}.options{grid-template-columns:1fr}.top{flex-direction:column}.toolbar{justify-content:flex-start}.metric{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== Visual trauma v24 ===== */
+html,body{background:
+  radial-gradient(circle at 0% 0%, rgba(239,68,68,.12), transparent 28%),
+  radial-gradient(circle at 100% 0%, rgba(56,189,248,.08), transparent 32%),
+  linear-gradient(180deg,#0b0f16 0%,#090b10 48%,#080a0f 100%) !important;}
+body{position:relative}
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.22;
+  background:
+    radial-gradient(circle at center, transparent 0 62%, rgba(239,68,68,.06) 62.2%, transparent 63%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.02) 0 2px, transparent 2px 26px),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:auto, auto, 32px 32px, 32px 32px;
+}
+.app{position:relative;z-index:1}
+.top{
+  background:linear-gradient(180deg, rgba(18,23,34,.94), rgba(13,17,25,.84));
+  border:1px solid rgba(71,85,105,.55);
+  border-radius:18px;
+  padding:14px 16px;
+  box-shadow:0 14px 40px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.03);
+}
+.brand h1{font-size:28px;letter-spacing:.02em}
+.brand p{color:#b9c6d6;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.card{
+  background:linear-gradient(180deg, rgba(18,23,34,.96), rgba(12,16,24,.92));
+  border:1px solid rgba(71,85,105,.52);
+  box-shadow:0 14px 38px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.03);
+}
+.card h2{
+  display:flex;align-items:center;gap:8px;
+  color:#f0f5fb;
+}
+.card h2::before{
+  content:"";
+  width:10px;height:10px;border-radius:999px;background:linear-gradient(180deg,var(--red),#b91c1c);
+  box-shadow:0 0 0 4px rgba(239,68,68,.10);
+}
+.pill{background:rgba(10,14,22,.82)}
+.btn{font-weight:700;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.btn.red{color:#ffe3e3}
+.btn.amber{color:#fff1c2}
+.btn.green{color:#dcfce7}
+.btn.blue{color:#d8f2ff}
+.btn.purple{color:#efe8ff}
+.tabs{gap:10px}
+.tab{background:linear-gradient(180deg, rgba(22,28,40,.92), rgba(16,20,29,.92))}
+.tab .l{letter-spacing:.02em}
+.tab.active{box-shadow:0 0 0 1px rgba(239,68,68,.28), 0 0 16px rgba(239,68,68,.10)}
+.metric div{
+  background:linear-gradient(180deg, rgba(23,30,42,.96), rgba(16,21,31,.96));
+}
+.question{
+  padding:12px 14px;
+  border-radius:14px;
+  background:linear-gradient(90deg, rgba(239,68,68,.09), rgba(255,255,255,.02));
+  border:1px solid rgba(71,85,105,.35);
+}
+.opt{
+  min-height:82px;
+  background:linear-gradient(180deg, rgba(26,34,48,.96), rgba(18,23,34,.96));
+  transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease;
+}
+.opt:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.opt.selected{box-shadow:0 0 0 1px rgba(56,189,248,.24), 0 0 18px rgba(56,189,248,.08)}
+.explain{
+  border-left-color:var(--blue);
+  background:linear-gradient(90deg, rgba(56,189,248,.10), rgba(255,255,255,.02));
+  color:#e7f7ff;
+}
+.check{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+}
+.check.done{box-shadow:0 0 0 1px rgba(34,197,94,.10)}
+.decision{gap:10px}
+.rec{
+  position:relative;
+  padding:12px 12px 12px 14px;
+  border-left:4px solid var(--line);
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+}
+.rec.red{border-left-color:var(--red);background:linear-gradient(90deg, rgba(239,68,68,.12), rgba(255,255,255,.02))}
+.rec.amber{border-left-color:var(--amber);background:linear-gradient(90deg, rgba(245,158,11,.10), rgba(255,255,255,.02))}
+.rec.green{border-left-color:var(--green);background:linear-gradient(90deg, rgba(34,197,94,.10), rgba(255,255,255,.02))}
+.rec.blue{border-left-color:var(--blue);background:linear-gradient(90deg, rgba(56,189,248,.10), rgba(255,255,255,.02))}
+.rec.purple{border-left-color:var(--purple);background:linear-gradient(90deg, rgba(167,139,250,.10), rgba(255,255,255,.02))}
+.tag{min-width:62px;text-align:center;letter-spacing:.04em}
+.criticalActions{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.criticalActions .btn{
+  width:100%;
+  justify-content:center;
+  min-height:42px;
+  border-radius:12px;
+}
+.statusline{gap:8px}
+.status{font-weight:700}
+.footerbar{
+  border-top:1px solid rgba(71,85,105,.28);
+}
+.traumaFooter{
+  margin-top:14px;
+  padding:14px 16px;
+  border:1px solid rgba(71,85,105,.40);
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(16,20,29,.92), rgba(11,14,21,.92));
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  color:#cbd5e1;
+}
+.traumaFooter .mark{
+  width:52px;height:52px;flex:0 0 52px;
+  filter:drop-shadow(0 0 12px rgba(239,68,68,.18));
+}
+.traumaFooter .txt{display:flex;flex-direction:column;gap:2px}
+.traumaFooter .txt b{font-size:13px;letter-spacing:.12em;color:#f8fafc}
+.traumaFooter .txt span{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:1160px){
+  .criticalActions{grid-template-columns:1fr}
+  .traumaFooter{flex-direction:column;text-align:center}
+}
+
+
+#reportCard textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.38;min-height:360px;white-space:pre-wrap}
+
+.criticalAreaCard{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start;padding:11px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025);border-left:4px solid var(--blue)}
+.criticalAreaCard.red{border-left-color:var(--red);background:linear-gradient(90deg,rgba(239,68,68,.11),rgba(255,255,255,.02))}
+.criticalAreaCard.amber{border-left-color:var(--amber);background:linear-gradient(90deg,rgba(245,158,11,.10),rgba(255,255,255,.02))}
+.criticalAreaCard.green{border-left-color:var(--green);background:linear-gradient(90deg,rgba(34,197,94,.08),rgba(255,255,255,.02))}
+.criticalAreaCard .k{font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:4px 6px;text-align:center}
+.criticalAreaCard b{display:block;margin-bottom:4px}
+.criticalAreaCard span{font-size:12px;color:#dbeafe;line-height:1.35}
+.sourcesBox summary{font-weight:900;color:#e5edf7}
+.sourcesBox div{font-size:13px;line-height:1.45}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <h1>RECH TRAUMA</h1>
+      <p>Trauma • Sala Vermelha • Decisão em tempo real • Controle de danos • Reavaliação seriada.</p>
+    </div>
+    <div class="toolbar">
+      <span class="pill" id="clockPill">⏱ <b id="clock">00:00</b></span>
+      <span class="hotkeyNotice" id="hotkeyNotice">CONFIRME</span>
+      <button class="btn green" onclick="startCase()">Novo trauma</button>
+      <button class="btn red" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid">
+    <aside class="card">
+      <h2>Entrada rápida</h2>
+      <div class="vitals">
+        <div class="field"><label>Idade (anos)</label><input id="age" type="number" placeholder="45" oninput="debouncedCalc()"></div>
+        <div class="field"><label>FC (bpm)</label><input id="fc" type="number" placeholder="132" oninput="debouncedCalc()"></div>
+        <div class="field"><label>PAS (mmHg)</label><input id="pas" type="number" placeholder="86" oninput="debouncedCalc()"></div>
+        <div class="field"><label>PAD (mmHg)</label><input id="pad" type="number" placeholder="60" oninput="debouncedCalc()"></div>
+        <div class="field"><label>SpO₂ (%)</label><input id="spo2" type="number" placeholder="94" oninput="debouncedCalc()"></div>
+        <div class="field"><label>GCS</label><input id="gcs" type="number" min="3" max="15" placeholder="15" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Pupilas / GCS-P</label><select id="pupilScore" onchange="log('Pupilas/GCS-P: '+this.options[this.selectedIndex].text);calc()"><option value="0">Ambas reativas</option><option value="1">Uma não reativa</option><option value="2">Nenhuma reativa</option></select></div>
+        <div class="field"><label>FR (irpm)</label><input id="fr" type="number" placeholder="24" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Peso Est. (kg)</label><input id="weight" type="number" placeholder="70" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Temperatura (°C)</label><input id="temp" type="number" step="0.1" placeholder="35.0" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Beta/BCC?</label><select id="rateLimiter" onchange="log('Beta/BCC: '+this.value);calc()"><option></option><option>Não</option><option>Sim</option><option>Desconhecido</option></select></div>
+        <div class="field"><label>Idoso/HAS?</label><select id="htnProfile" onchange="log('Perfil HAS/idoso: '+this.value);calc()"><option></option><option>Não</option><option>Sim</option><option>Desconhecido</option></select></div>
+        <div class="field"><label>Tempo trauma</label><select id="traumaTime" onchange="log('Tempo desde trauma: '+this.value);calc()"><option></option><option>&lt; 1h</option><option>1–3h</option><option>&gt; 3h</option><option>Desconhecido</option></select></div>
+        <div class="field"><label>Mecanismo</label><select id="mech" onchange="log('Mecanismo: '+this.value);calc()"><option></option><option>Moto/atropelamento</option><option>Queda altura</option><option>Trauma penetrante torso</option><option>Capotamento/ejeção</option><option>Idoso/anticoagulado</option><option>Queimadura ambiente fechado</option></select></div>
+      </div>
+      <div class="modulePanel">
+        <h3>eFAST por Janelas</h3>
+        <div class="efastGrid" id="efastGrid"></div>
+        <div class="muted" style="margin-top:6px; font-size:11px;">Toque para alternar: não realizado → negativo → positivo → duvidoso.</div>
+      </div>
+      <div class="vitals" style="margin-top:10px">
+        <div class="field"><label>Pelve</label><select id="pelvis" onchange="log('Pelve: '+this.value);calc()"><option></option><option>Estável</option><option>Instável/suspeita</option><option>Dor importante</option><option>Não avaliada</option></select></div>
+        <div class="field"><label>Anticoagulado</label><select id="ac" onchange="log('Anticoagulação: '+this.value);calc()"><option></option><option>Não</option><option>Varfarina</option><option>DOAC</option><option>Antiagregante</option><option>Desconhecido</option></select></div>
+        <div class="field"><label>Ferida/ATB</label><select id="atbScenario" onchange="log('Cenário ATB: '+this.value);calc()"><option></option><option>Sem ferida aberta</option><option>Fratura aberta I-II</option><option>Fratura aberta III/alta energia</option><option>Contaminação solo/fazenda</option><option>Trauma penetrante torso</option><option>Trauma craniano aberto</option><option>Mordedura/água</option></select></div>
+        <div class="field"><label>Imagem rápida</label><select id="imageResource" onchange="log('Imagem rápida: '+this.value);calc()"><option></option><option>eFAST/RX leito</option><option>LODOX/RX corpo inteiro disponível</option><option>TC disponível</option><option>Indisponível</option></select></div>
+        <div class="field"><label>pH</label><input id="ph" type="number" step="0.001" placeholder="7.22" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>Lactato Admissão</label><input id="lactateInit" type="number" step="0.1" placeholder="6.0" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>Lactato Atual</label><input id="lactate" type="number" step="0.1" placeholder="4.2" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>Base Excess</label><input id="be" type="number" step="0.1" placeholder="-8" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>INR</label><input id="inr" type="number" step="0.01" placeholder="1.5" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Fibrinogênio</label><input id="fibrinogen" type="number" placeholder="160" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Plaquetas</label><input id="platelets" type="number" placeholder="85000" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Ca ionizado</label><input id="caion" type="number" step="0.01" placeholder="1.05" oninput="debouncedCalc()"></div>
+        <div class="field"><label>CH acumulado</label><input id="chUnits" type="number" placeholder="4" oninput="debouncedCalc()"></div>
+        <div class="field"><label>PFC acumulado</label><input id="pfcUnits" type="number" placeholder="2" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Plaquetas acumuladas (pools)</label><input id="platUnits" type="number" placeholder="1" oninput="debouncedCalc()"></div>
+        <div class="field"><label>Cristaloide acumulado mL</label><input id="cryst" type="number" placeholder="1000" oninput="debouncedCalc()"></div>
+        <div class="field"><label>PaCO₂</label><input id="paco2" type="number" step="0.1" placeholder="40" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>PvCO₂</label><input id="pvco2" type="number" step="0.1" placeholder="48" oninput="touchLabs();debouncedCalc()"></div>
+        <div class="field"><label>Esmagamento?</label><select id="crush" onchange="log('Esmagamento/rabdo: '+this.value);calc()"><option></option><option>Não</option><option>Sim</option><option>Suspeito</option></select></div>
+        <div class="field"><label>Diurese mL/h</label><input id="urine" type="number" placeholder="40" oninput="debouncedCalc()"></div>
+      </div>
+      <div id="labFreshness" class="smallwarn" style="margin-top:8px">Amostra metabólica: aguardando dados do ciclo atual.</div>
+      <div class="metric">
+        <div><span>Shock Index / SIA</span><b id="si">—</b></div>
+        <div><span>ABC Score</span><b id="abc">—</b></div>
+        <div><span>RTS</span><b id="rts">—</b></div>
+        <div><span>GCS-P</span><b id="gcsp">—</b></div>
+        <div><span>Perfil</span><b id="risk">—</b></div>
+        <div><span>Ir para TC?</span><b id="ctStatus">—</b></div>
+        <div><span>PTM?</span><b id="ptmStatus">—</b></div>
+        <div><span>DCR</span><b id="dcrStatus">—</b></div>
+        <div><span>Neuro</span><b id="neuroStatus">—</b></div>
+        <div><span>Airway</span><b id="airwayStatus">—</b></div>
+        <div><span>ROSI</span><b id="rosiStatus">—</b></div>
+        <div><span>Diamante</span><b id="diamondStatus">—</b></div>
+      </div>
+      <div id="criticalBox" class="banner hidden"></div>
+      <div id="sriBox" class="drawer hidden">
+        <summary style="background:rgba(56,189,248,0.15); color:var(--blue)">⚡ SRI Modulada por Choque</summary>
+        <div style="padding:8px 0 0 0">
+          <table class="table" id="sriTable"></table>
+        </div>
+      </div>
+      <div id="dcrBox" class="modulePanel hidden"></div>
+      <div id="airwayBox" class="modulePanel hidden"></div>
+      <div id="tbiBox" class="modulePanel hidden"></div>
+      <div id="ptmStopBox" class="modulePanel hidden"></div>
+      <details class="drawer"><summary>Calculadoras e Atalhos</summary><div>
+        <table class="table">
+          <tr><th>Tecla</th><th>Ação Direta na Sala Vermelha</th></tr>
+          <tr><td><kbd>→</kbd></td><td>Avança para a próxima etapa do XABCDE</td></tr>
+          <tr><td><kbd>←</kbd></td><td>Retorna à etapa anterior</td></tr>
+          <tr><td><kbd>C</kbd></td><td>Conclui a etapa atual do mnemônico</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Registrar novo ciclo de reavaliação (X)</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>1</kbd></td><td>TXA</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>2</kbd></td><td>PTM</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>3</kbd></td><td>Cinta pélvica</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>4</kbd></td><td>IOT</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>5</kbd></td><td>Dreno</td></tr>
+        </table>
+      </div></details>
+      <div class="footerbar"><button class="btn blue block" onclick="generateReport()">Gerar relatório do atendimento</button></div>
+    </aside>
+    <main class="card">
+      <div class="statusline" id="statusline"></div>
+      <h2 id="stageTitle">X — Hemorragia</h2>
+      <div id="danger" class="banner hidden"></div>
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+      <div class="explain" id="why"></div>
+      <h2 style="margin-top:14px">Checklist operacional</h2>
+      <p class="sub">Toque em qualquer lugar da linha para checar o procedimento.</p>
+      <div class="checks" id="checks"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn" onclick="prevStage()">← anterior</button>
+        <button class="btn red" onclick="nextStage()">próximo →</button>
+        <button class="btn amber" onclick="markDone()">Concluir etapa <kbd style="margin-left:4px">C</kbd></button>
+        <button class="btn purple" onclick="repeatXABCDE()">Novo Ciclo Reavaliação <kbd style="margin-left:4px">R</kbd></button>
+      </div>
+    </main>
+    <aside class="card">
+      <h2>Decisão em tempo real</h2>
+      <div class="decision" id="recs"></div>
+      <h2 style="margin-top:16px">Áreas críticas</h2>
+      <div class="decision" id="criticalAreas"></div>
+      <h2 style="margin-top:16px">Ações críticas</h2>
+      <p class="sub">Hemorragia, via aérea, tórax, neuro e suporte hemostático com acesso rápido.</p>
+      <div class="row criticalActions" style="margin-bottom:10px">
+        <button class="btn red" onclick="quickAction('TXA', 'C_4', 'TXA 1g EV ataque em 10 min + preparar 1g EV em BIC por 8h via Ação Rápida')">TXA</button>
+        <button class="btn red" onclick="quickAction('PTM', 'C_3', 'Protocolo de Transfusão Maciça (PTM) ativado via Ação Rápida')">PTM</button>
+        <button class="btn amber" onclick="quickAction('Cinta pélvica', 'X_3', 'Cinta pélvica posicionada via Ação Rápida')">Cinta pélvica</button>
+        <button class="btn blue" onclick="quickAction('IOT', 'A_2', 'Via aérea definitiva / IOT realizada via Ação Rápida')">IOT</button>
+        <button class="btn blue" onclick="quickAction('Dreno', 'B_3', 'Drenagem de tórax executada via Ação Rápida')">Dreno</button>
+        <button class="btn purple" onclick="quickLogAction('Equipe da Cirurgia Geral acionada à beira-leito')">Cirurgia</button>
+        <button class="btn purple" onclick="quickLogAction('Equipe da Neurocirurgia acionada de forma urgente')">Neuro</button>
+        <button class="btn amber" onclick="quickLogAction('Cálcio administrado/reposto conforme protocolo local durante ressuscitação hemostática')">Cálcio</button>
+        <button class="btn amber" onclick="quickLogAction('Crioprecipitado/fibrinogênio considerado ou solicitado conforme fibrinogênio e sangramento')">Crio/Fib</button>
+        <button class="btn blue" onclick="quickLogAction('Neuroproteção TCE: oxigenação, pressão, normocapnia, cabeceira e osmoterapia se indicada revisadas')">Neuroprot</button>
+      </div>
+      <h2>Timeline do Caso</h2>
+      <div class="log" id="log"></div>
+    </aside>
+  </div>
+
+  <details class="drawer sourcesBox" style="margin-top:12px">
+    <summary>Fontes que compõem o RECH TRAUMA</summary>
+    <div>
+      <b>Base geral de trauma</b><br>
+      • ACS/ATLS — abordagem inicial sistematizada XABCDE no trauma.<br><br>
+      <b>Hemorragia / DCR / PTM</b><br>
+      • Rossaint et al. European guideline on management of major bleeding and coagulopathy following traumatic injury, 6ª edição, Critical Care, 2023.<br><br>
+      <b>Antibiótico no trauma</b><br>
+      • AAST Critical Care Committee Clinical Consensus: Antibiotic prophylaxis in injury, Trauma Surgery & Acute Care Open, 2024.<br>
+      • EAST Practice Management Guideline: prophylactic antibiotic use in open fractures.<br><br>
+      <b>TCE / neuroproteção</b><br>
+      • ACS TQIP Best Practices Guidelines in the Management of Traumatic Brain Injury.<br>
+      • Brain Trauma Foundation Severe TBI Guidelines — evitar hiperventilação profilática; usar como ponte em herniação.<br><br>
+      <b>Temperatura</b><br>
+      • Controle de hipotermia no trauma hemorrágico e normotermia no TCE; alvo operacional do app: trauma hemorrágico ≥36°C; TCE 36–37,5°C, tratando febre ≥38°C conforme protocolo local.<br><br>
+      <span class="muted">Observação: o app é apoio à decisão e documentação. Condutas devem respeitar julgamento clínico, disponibilidade local, microbiologia institucional e protocolo do serviço.</span>
+    </div>
+  </details>
+
+  <div class="card hidden" id="reportCard" style="margin-top:12px">
+    <h2>Relatório gerado</h2>
+    <textarea id="report"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn blue" onclick="copyReport()">Copiar</button><button class="btn" onclick="downloadReport()">Baixar .txt</button><button class="btn purple" onclick="exportStructuredData()">Exportar JSON Base64</button></div>
+  </div>
+
+  <div class="traumaFooter">
+    <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M32 5 51 11v16c0 14.5-7.8 25.2-19 31C20.8 52.2 13 41.5 13 27V11z" fill="rgba(239,68,68,.12)" stroke="#ef4444" stroke-width="2.5"/>
+      <path d="M28 18h8v10h10v8H36v10h-8V36H18v-8h10z" fill="#f8fafc"/>
+      <circle cx="32" cy="32" r="24" fill="none" stroke="rgba(239,68,68,.18)" stroke-width="1.5"/>
+    </svg>
+    <div class="txt">
+      <b>TRAUMA • SALA VERMELHA</b>
+      <span>controle de danos • decisão rápida • reavaliação seriada</span>
+    </div>
+  </div>
+
+</div>
+<script>
+const APP_SCHEMA='rechtrauma_schema_visivel_seguro';
+const STORAGE_KEY='rechtrauma_visible_current';
+const stages=['PCR','X','A','B','C','D','E','DEST'];
+let stage='X', started=null, timer=null, cycleCount=1;
+let done={}, answers={}, checked={}, logs=[], historicalSweeps=[];
+let labDataStale=false, calcDebounce=null, hotkeyPending=null;
+let efastState={};
+let efastCycleStamps={};
+let efastCarryover=false;
+let deviceTimestamps={};
+let elapsedBaseMs=0, perfBase=null;
+
+const efastWindows=[
+  ['pericardio','Pericárdio','subxifoide/paraesternal'],
+  ['morrison','Morrison','hepatorrenal'],
+  ['espleno','Esplenorrenal','QSE'],
+  ['pelveFast','Pelve','fundo de saco/bexiga'],
+  ['pleuraD','Pleura D','hemotórax'],
+  ['pleuraE','Pleura E','hemotórax'],
+  ['pulmaoD','Pulmão D','Ausência de deslizamento (PNX)'],
+  ['pulmaoE','Pulmão E','Ausência de deslizamento (PNX)']
+];
+const data={
+PCR:{title:'PCR traumática / peri-parada', q:'Paciente chegou em PCR ou peri-parada?', why:'PCR traumática exige busca de causas reversíveis imediatas: descompressão, controle de via aérea e hemostasia mecânica agressiva.', danger:'PCR TRAUMÁTICA: TRATAR CAUSA REVERSÍVEL, NÃO APENAS MASSAGEM', opts:[['Não, tem pulso','Seguir XABCDE padrão'],['PCR sem sinais de vida','RCP + causas reversíveis + decisão conforme contexto'],['AESP trauma penetrante','Considerar tamponamento/hemotórax/PNX; cirurgia se recurso e janela'],['Peri-parada hemorrágica','PTM + controle de fonte + evitar TC']], checks:['Confirmar pulso/ritmo/tempo de PCR','Controlar hemorragia externa imediatamente','Descompressão torácica se suspeita de PNX hipertensivo','Via aérea/oxigenação/capnografia se IOT','FAST pericárdico/torácico se disponível','Acionar cirurgia/banco de sangue precocemente']},
+X:{title:'X — Hemorragia exsanguinante', q:'Há hemorragia externa ameaçadora ou suspeita de sangramento pélvico?', why:'A etapa X impede a morte por exsudação massiva antes das vias aéreas. Controle mecânico e torniquetes são prioridade absoluta.', danger:'HEMORRAGIA EXSANGUINANTE = CONTROLAR AGORA', opts:[['Não evidente','Seguir XABCDE sem atrasar reavaliação'],['Extremidade','Compressão + torniquete se ameaçador'],['Junção/raiz de membro','Compressão vigorosa + hemostático se disponível'],['Pelve instável/suspeita','Cinta pélvica + PTM + controle definitivo']], checks:['Compressão direta/curativo compressivo','Torniquete se extremidade ameaçadora','Hemostático tópico se disponível','Cinta pélvica se pelve instável/suspeita','PTM se choque hemorrágico ou alto risco','Registrar horário e resposta à intervenção']},
+A:{title:'A — Airway + proteção cervical', q:'A via aérea está segura neste momento?', why:'Alinhamento cervical neutro mandatório. Obstruções anatômicas, rebaixamento ou estridor exigem intervenção sem hesitação.', danger:'VIA AÉREA AMEAÇADA = PLANO A/B/C À BEIRA-LEITO', opts:[['Fala frases','VA pérvia; manter vigilância e proteção cervical'],['Roncos/vômitos/sangue','Aspirar + jaw thrust + preparar IOT se persistente'],['GCS ≤ 8','IOT imediata com estabilização cervical'],['Trauma facial/queimadura/estridor','Via aérea difícil: VL + bougie + crico preparada']], checks:['Restrição cervical manual/colar conforme contexto','Aspirador testado e pronto','O₂ alto fluxo iniciado se indicado','Jaw thrust sem hiperextensão se necessário','Material IOT + bougie + videolaringo prontos','Plano de via aérea cirúrgica se falha']},
+B:{title:'B — Breathing', q:'Há lesão torácica imediatamente fatal?', why:'Identifique e trate pneumotórax hipertensivo clinicamente. Não aguarde exames radiológicos sob instabilidade hemodinâmica.', danger:'PNX HIPERTENSIVO: DESCOMPRIMIR AGORA, DEPOIS DRENAR', opts:[['Sem sinais graves','Oxigênio + ausculta + monitorização'],['MV abolido + choque','Tratar como PNX hipertensivo se compatível'],['Ferida soprante','Curativo 3 pontas + drenagem torácica'],['Macicez + choque','Hemotórax maciço: dreno + reposição hemostática'],['Tórax instável','Analgesia + suporte ventilatório + buscar contusão'],['Tamponamento provável','FAST pericárdico + cirurgia; pericardiocentese apenas ponte']], checks:['Inspeção, palpação, percussão e ausculta bilateral','SpO₂ monitorizada e capnografia se IOT','Descompressão se PNX hipertensivo provável','Drenagem torácica quando indicada','Pensar hemotórax maciço se choque + macicez','Reavaliar B após intervenção']},
+C:{title:'C — Circulation / choque hemorrágico', q:'Paciente está em choque ou alto risco de sangramento oculto?', why:'A hipotensão permissiva protege contra o rompimento de coágulos iniciais. Reposição excessiva de cristaloides induz coagulopatia dilucional.', danger:'INSTÁVEL NÃO VAI PARA TC', opts:[['Estável','Acessos + coleta + reavaliação seriada'],['Shock Index ≥ 1','Acionar PTM e procurar fonte'],['FAST abdome positivo','Instável: centro cirúrgico; estável: TC'],['Pelve/fêmur/tórax suspeitos','Cinta pélvica / imobilização / dreno / controle definitivo']], checks:['2 acessos 14–16G ou intraósseo','Tipagem, prova cruzada, gaso/lactato/coagulograma/fibrinogênio','Cristaloide com parcimônia','PTM com CH:PFC:plaquetas balanceado se indicado','TXA se <3h e sangramento/risco hemorrágico','Aquecimento ativo e fluidos aquecidos']},
+D:{title:'D — Disability / TCE', q:'Qual o risco neurológico imediato?', why:'Impeça lesões secundárias mantendo perfusão e oxigenação cerebrais ótimas. Assimetrias pupilares sugerem hipertensão intracraniana iminente.', danger:'GCS ≤ 8 = TCE GRAVE / VIA AÉREA DEFINITIVA', opts:[['GCS 13–15','Neuro seriado + glicemia + TC conforme critérios'],['GCS 9–12','TCE moderado: TC e observação/UTI conforme contexto'],['GCS ≤ 8','IOT + estratégia TCE grave + TC quando estável'],['Anisocoria/rebaixamento','Herniação: SH 3%/manitol + hiperventilação breve ponte']], checks:['Glasgow O+V+M registrado','Pupilas e déficit focal documentados','Glicemia capilar checada','SpO₂ >94% e evitar PAS <90/PAM baixa','Cabeceira 30° se possível','Tratar convulsão e acionar neurocirurgia se indicado']},
+E:{title:'E — Exposure / controle ambiental', q:'Exposição completa foi feita sem hipotermiar?', why:'A hipotermia altera a cascata enzimática da coagulação de forma crítica. Dispa o paciente sob métodos de aquecimento ativo contínuo.', danger:'DESPIR, EXAMINAR DORSO, COBRIR E AQUECER', opts:[['Completo','Seguir reavaliação e secondary survey'],['Ainda não','Despir tudo + logroll + períneo/axilas/couro cabeludo'],['Hipotérmico','Aquecimento ativo + fluidos aquecidos'],['Ferida/fratura exposta','ATB/tétano/curativo estéril/imobilização']], checks:['Despir completamente','Examinar dorso com logroll','Examinar períneo, axilas e couro cabeludo','Temperatura aferida','Cobrir e aquecer ativamente','Analgesia, tétano, ATB/profilaxias conforme caso']},
+DEST:{title:'Destino / definitive care', q:'Qual o destino mais seguro agora?', why:'A estabilização fisiológica dita o fluxo tático. Pacientes instáveis pertencem à sala de operação ou radiologia intervencionista.', danger:'DESTINO ERRADO MATA: NÃO CONFUNDIR DIAGNÓSTICO COM TRATAMENTO', opts:[['Centro cirúrgico','Instável + FAST+, peritonite, tamponamento, penetrante instável'],['Hemodinâmica','Pelve/órgão sólido selecionado com sangramento embolizável'],['UTI','IOT/VM, choque, PTM, TCE moderado/grave, idoso alto risco'],['Transferência','Sem recurso crítico: neuro, vascular, UTI, sangue, queimados']], checks:['Repetir XABCDE antes do transporte','Via aérea segura','PNX tratado se suspeito/confirmado','Sangramento externo controlado','Acessos funcionantes e hemoderivados se necessário','Comunicação médico-médico e documentação']}
+};
+function el(id){return document.getElementById(id)}
+function getVal(id){let element=el(id); return element?element.value:''}
+function now(){return el('clock').textContent}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
+function debouncedCalc(){ clearTimeout(calcDebounce); calcDebounce=setTimeout(()=>{calcDebounce=null;calc();},250); }
+function cancelPendingCalc(){ if(calcDebounce){ clearTimeout(calcDebounce); calcDebounce=null; } }
+function syncBeforeAction(){ cancelPendingCalc(); calc(false); }
+function touchLabs(){ labDataStale=false; }
+
+function efastLabel(v){return v==='pos'?'Positivo':v==='neg'?'Negativo':v==='unk'?'Duvidoso':'Não realizado'}
+function efastClass(v){return v==='pos'?'pos':v==='neg'?'neg':v==='unk'?'unk':''}
+function efastIsCarryover(id){
+  let v=efastState[id]||'';
+  if(!v) return false;
+  let stamp=efastCycleStamps[id];
+  if(stamp==null) return !!efastCarryover;
+  return Number(stamp)<Number(cycleCount);
+}
+function efastTemporalLabel(id){
+  let v=efastState[id]||'';
+  if(!v) return '';
+  return efastIsCarryover(id)?' · ciclo prévio':' · ciclo atual';
+}
+function efastSummaryDetailed(){
+  return efastWindows.map(([id,name])=>{
+    let v=efastState[id]||'';
+    let tempo=v ? (efastIsCarryover(id)?'ciclo prévio':'ciclo atual') : 'não realizado';
+    return `${name}: ${efastLabel(v)} (${tempo})`;
+  }).join(' / ');
+}
+function renderEfast(){
+  let box=el('efastGrid'); if(!box) return;
+  box.innerHTML=efastWindows.map(([id,name,sub])=>{
+    let v=efastState[id]||'';
+    let carry=efastIsCarryover(id);
+    return `<button class="efastBtn ${efastClass(v)} ${carry?'carryover':''}" onclick="cycleEfast('${id}')"><b>${escapeHtml(name)}</b><span>${escapeHtml(sub)} · ${escapeHtml(efastLabel(v))}${escapeHtml(efastTemporalLabel(id))}</span></button>`
+  }).join('');
+}
+function cycleEfast(id){
+  const seq=['','neg','pos','unk'];
+  let current=efastState[id]||'';
+  let next=seq[(seq.indexOf(current)+1)%seq.length];
+  efastState[id]=next;
+  if(next) efastCycleStamps[id]=cycleCount; else delete efastCycleStamps[id];
+  let name=(efastWindows.find(w=>w[0]===id)||[id,id])[1];
+  log(`eFAST ${name}: ${efastLabel(next)}${next?' no ciclo atual':''}`);
+  autoSave();
+  render();
+}
+function efastAnyPositive(){return Object.values(efastState).some(v=>v==='pos')}
+function efastPositiveGroup(){
+  return {
+    abdomen:['morrison','espleno','pelveFast'].some(k=>efastState[k]==='pos'),
+    pericardium:efastState.pericardio==='pos',
+    ptx:['pulmaoD','pulmaoE'].some(k=>efastState[k]==='pos'),
+    pleura:['pleuraD','pleuraE'].some(k=>efastState[k]==='pos')
+  }
+}
+function efastSummary(){
+  return efastWindows.map(([id,name])=>`${name}: ${efastLabel(efastState[id]||'')}`).join(' / ')
+}
+
+function efastCounts(){
+  let vals=efastWindows.map(([id])=>efastState[id]||'');
+  return {
+    total: vals.length,
+    done: vals.filter(Boolean).length,
+    positive: vals.filter(v=>v==='pos').length,
+    negative: vals.filter(v=>v==='neg').length,
+    dubious: vals.filter(v=>v==='unk').length,
+    allNegative: vals.filter(Boolean).length===vals.length && vals.every(v=>v==='neg')
+  }
+}
+
+function renderTabs(){el('tabs').innerHTML=stages.map(s=>`<div data-stage="${s}" class="tab ${s===stage?'active':''} ${done[s]?'done':''}" onclick="stage='${s}';render()"><span class="l">${s}</span><span class="s">${s==='PCR'?'PCR':s==='DEST'?'Destino':escapeHtml(data[s].title.split('—')[1]||'')}</span></div>`).join('')}
+function render(){
+  renderTabs();
+  renderEfast();
+  let d=data[stage];
+  el('stageTitle').textContent=d.title;
+  el('question').textContent=d.q;
+  el('why').textContent=d.why;
+  el('danger').textContent=d.danger;
+  el('danger').classList.remove('hidden');
+  el('options').innerHTML=d.opts.map((o,i)=>`<button class="opt ${answers[stage]===i?'selected':''}" onclick="answer(${i})"><b>${escapeHtml(o[0])}</b><span>${escapeHtml(o[1])}</span></button>`).join('');
+  el('checks').innerHTML=d.checks.map((c,i)=>{
+    let key=stage+'_'+i;
+    let on=!!checked[key];
+    return `<div class="check ${on?'done':''}" onclick="toggleCheckRow('${key}',${!on})"><input type="checkbox" ${on?'checked':''} onclick="event.stopPropagation(); toggleCheckRow('${key}',this.checked)"><span>${escapeHtml(c)}</span><span class="mini">${on?'feito':''}</span></div>`
+  }).join('');
+  calc(false);
+}
+function checkTextFromKey(k){let [s,i]=String(k).split('_');let idx=Number(i);return data[s]?.checks?.[idx] || k}
+function answer(i){syncBeforeAction();answers[stage]=i;log(`${stage}: ${data[stage].opts[i][0]} → ${data[stage].opts[i][1]}`);autoActions(stage,i);render()}
+function toggleCheckRow(k,v){
+  syncBeforeAction();
+  checked[k]=v;
+  log(`${k.split('_')[0]}: ${v?'✓':'☐'} ${checkTextFromKey(k)}`);
+  if(k==='X_1'){
+    if(v) deviceTimestamps['torniquete'] = Date.now();
+    else delete deviceTimestamps['torniquete'];
+  }
+  if(k==='X_3'){
+    if(v) deviceTimestamps['cinta pélvica'] = Date.now();
+    else delete deviceTimestamps['cinta pélvica'];
+  }
+  autoSave();
+  render();
+}
+function autoActions(s,i){
+  let label=data[s].opts[i][0];
+  if(s==='X'&&label.includes('Pelve')) quickAction('Cinta pélvica', 'X_3', 'Cinta pélvica posicionada via Ação Rápida', true);
+  if(s==='A'&&(label.includes('GCS')||label.includes('Trauma facial'))) quickAction('IOT', 'A_2', 'Preparação para IOT disparada automaticamente', true);
+  if(s==='B'&&label.includes('MV abolido')) quickAction('Dreno', 'B_3', 'Alerte de descompressão/drenagem torácica acionado automaticamente', true);
+  if(s==='C'&&(label.includes('Shock')||label.includes('FAST'))) quickAction('PTM', 'C_3', 'Alerta de ativação de PTM estruturado automaticamente', true);
+}
+function nextStage(){let idx=stages.indexOf(stage);if(idx<stages.length-1){stage=stages[idx+1];autoSave();render()}}
+function prevStage(){let idx=stages.indexOf(stage);if(idx>0){stage=stages[idx-1];autoSave();render()}}
+function markDone(){syncBeforeAction();done[stage]=true;log(`${stage} concluído`);autoSave();render()}
+function getVitalsSnapshot(){
+  return {
+    age:getVal('age'), fc:getVal('fc'), pas:getVal('pas'), pad:getVal('pad'), spo2:getVal('spo2'), gcs:getVal('gcs'), fr:getVal('fr'), temp:getVal('temp'),
+    si:el('si')?el('si').textContent:'—', abc:el('abc')?el('abc').textContent:'—', rts:el('rts')?el('rts').textContent:'—', rosi:el('rosiStatus')?el('rosiStatus').textContent:'—', diamond:el('diamondStatus')?el('diamondStatus').textContent:'—', risk:el('risk')?el('risk').textContent:'—',
+    lactateInit:getVal('lactateInit'), lactate:getVal('lactate'), be:getVal('be'), ph:getVal('ph'), inr:getVal('inr'), fibrinogen:getVal('fibrinogen'), platelets:getVal('platelets'), caion:getVal('caion'),
+    efast:efastSummaryDetailed(), labStatus: labDataStale?'herdado/desatualizado':'ciclo atual ou não informado', pelvis:getVal('pelvis'), ac:getVal('ac'), htnProfile:getVal('htnProfile'), dcr:el('dcrStatus')?el('dcrStatus').textContent:'—', airway:el('airwayStatus')?el('airwayStatus').textContent:'—', neuro:el('neuroStatus')?el('neuroStatus').textContent:'—'
+  };
+}
+function repeatXABCDE(){
+  syncBeforeAction();
+  historicalSweeps.push({cycle: cycleCount, time: now(), answers: {...answers}, checked: {...checked}, efastState: {...efastState}, efastCycleStamps:{...efastCycleStamps}, vitals: getVitalsSnapshot()});
+  cycleCount++;
+  // Novo ciclo = nova avaliação clínica. Mantém eFAST como exame prévio visível para revalidação, evitando perda de achado consolidado.
+  done={};
+  answers={};
+  checked={};
+  ['fc','pas','pad','spo2','gcs','pupilScore','fr'].forEach(id=>{let node=el(id); if(node) node.value='';});
+  if(el('pupilScore')) el('pupilScore').value='0';
+  efastCarryover = Object.keys(efastState||{}).length>0;
+  labDataStale=true;
+  stage='X';
+  log(`Nova varredura de Reavaliação (Ciclo #${cycleCount}) acionada — respostas/checklists reiniciados; eFAST prévio mantido para revalidação.`);
+  autoSave();
+  render();
+}
+function clearFormFields(){
+  ['age','fc','pas','pad','spo2','gcs','pupilScore','fr','weight','temp','rateLimiter','htnProfile','traumaTime','mech','pelvis','ac','atbScenario','imageResource','ph','lactateInit','lactate','be','inr','fibrinogen','platelets','caion','chUnits','pfcUnits','platUnits','cryst','paco2','pvco2','crush','urine'].forEach(id=>{let node=el(id); if(node) node.value='';});
+  if(el('pupilScore')) el('pupilScore').value='0';
+}
+function resetRuntimeState(){
+  stage='X'; done={}; answers={}; checked={}; logs=[]; efastState={}; efastCycleStamps={}; efastCarryover=false; deviceTimestamps={}; cycleCount=1; historicalSweeps=[]; labDataStale=false; elapsedBaseMs=0; perfBase=null;
+}
+function startCase(){
+  if(logs.length || Object.keys(answers).length || Object.keys(checked).length){
+    if(!confirm('Iniciar NOVO trauma e limpar o atendimento atual?')) return;
+  }
+  if(timer)clearInterval(timer);
+  resetRuntimeState();
+  clearFormFields();
+  started=Date.now();
+  elapsedBaseMs=0;
+  perfBase=performance.now();
+  timer=setInterval(tick,1000);
+  log('Novo trauma iniciado');
+  autoSave();
+  render();
+}
+function currentElapsedMs(){ if(!started) return elapsedBaseMs||0; return (elapsedBaseMs||0) + ((perfBase!=null)?(performance.now()-perfBase):0); }
+function tick(){if(!started)return;let s=Math.floor(currentElapsedMs()/1000);el('clock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');calc(false)}
+function resetAll(){if(confirm('Resetar atendimento atual de forma definitiva?')){if(timer)clearInterval(timer);[STORAGE_KEY,'rechtrauma_v15','rechtrauma_v14','rechtrauma_v13','rechtrauma_v12','rechtrauma_v11','rechtrauma_v10','rechtrauma_v9','rechtrauma_v8','rechtrauma_v7','rechtrauma_v6','rechtrauma_v5','rechtrauma_v4','rechtrauma_v2'].forEach(k=>localStorage.removeItem(k));location.reload()}}
+function log(t){logs.unshift({time:now(),text:t,absTime:Date.now()}); if(logs.length>400) logs=logs.slice(0,400); drawLog()}
+function drawLog(){el('log').innerHTML=logs.map(x=>`<div class="logitem"><b>${escapeHtml(x.time)}</b> — ${escapeHtml(x.text)}</div>`).join('')}
+function quickLogAction(t){syncBeforeAction();log(t);autoSave()}
+function quickAction(btnName, checkKey, logText, isAuto=false){
+  syncBeforeAction();
+  checked[checkKey]=true;
+  if(btnName==='Torniquete' || checkKey==='X_1') deviceTimestamps['torniquete'] = Date.now();
+  if(btnName==='Cinta pélvica' || checkKey==='X_3') deviceTimestamps['cinta pélvica'] = Date.now();
+  let jáExiste = logs.some(l => l.text.includes(btnName));
+  if(!jáExiste || !isAuto){ log(logText); }
+  autoSave();
+  render();
+}
+function validRange(v,min,max){return Number.isFinite(v) && v>=min && v<=max}
+function setInputWarning(id, bad){let node=el(id); if(!node)return; node.style.borderColor=bad?'var(--red)':'var(--line)'}
+function codedGCS(g){if(!validRange(g,3,15))return null;if(g>=13)return 4;if(g>=9)return 3;if(g>=6)return 2;if(g>=4)return 1;return 0}
+function codedPAS(p){if(!validRange(p,0,400))return null;if(p>89)return 4;if(p>=76)return 3;if(p>=50)return 2;if(p>=1)return 1;return 0}
+function codedFR(r){if(!validRange(r,0,80))return null;if(r>=10&&r<=29)return 4;if(r>29)return 3;if(r>=6)return 2;if(r>=1)return 1;return 0}
+function setTabFlash(stageName,on){let tab=document.querySelector(`.tab[data-stage="${stageName}"]`); if(tab) tab.classList.toggle('flash', !!on)}
+function hasTXA(){return !!checked['C_4'] || logs.some(l=>String(l.text).toUpperCase().includes('TXA'))}
+function elapsedSeconds(){return Math.floor(currentElapsedMs()/1000)}
+
+function asNum(id){let v=getVal(id); return v===''?null:Number(v)}
+function bulletList(items){return '<ul>'+items.map(x=>`<li>${escapeHtml(x)}</li>`).join('')+'</ul>'}
+
+function updateDCRModule(ctx){
+  let items=[]; let chips=[]; let high=false;
+  if(ctx.unstable||ctx.abc>=2||ctx.sia>=50){high=true; chips.push('<span class="riskchip red">PTM/DCR</span>'); items.push('PTM: priorizar CH:PFC:plaquetas balanceado conforme protocolo local; reduzir cristaloide e controlar fonte anatômica.');}
+  if(ctx.chUnits && ctx.chUnits>0){
+    if(ctx.pfcUnits===0){ chips.push('<span class="riskchip red">Sem PFC</span>'); items.push(`CH ${ctx.chUnits}U sem PFC registrado: risco de ressuscitação não balanceada e coagulopatia dilucional.`); }
+    else if(ctx.pfcUnits){
+      let ratio = ctx.chUnits / ctx.pfcUnits;
+      if(ratio > 2) { chips.push('<span class="riskchip red">Rácio Desequilibrado</span>'); items.push(`Rácio CH:PFC elevado (${ratio.toFixed(1)}:1). Risco de coagulopatia dilucional. Corrigir estratégia hemostática.`); }
+    }
+    if(ctx.platUnits===0){ chips.push('<span class="riskchip amber">Sem Plaquetas</span>'); items.push(`CH ${ctx.chUnits}U sem plaquetas transfundidas registradas: revisar proporção do PTM e meta plaquetária.`); }
+    else if(ctx.platUnits){
+      let poolRatio = ctx.chUnits / ctx.platUnits; // input em pools; gatilho direto: >6 CH por pool
+      if(poolRatio > 6) { chips.push('<span class="riskchip red">Défice Plaquetas</span>'); items.push(`Rácio CH:pool de plaquetas ${poolRatio.toFixed(1)}:1. Se sangramento ativo/PTM, considerar novo pool conforme protocolo local.`); }
+    }
+  }
+  if(ctx.lactateInit!=null || ctx.lactate!=null){
+    if(ctx.lactateInit!=null && ctx.lactate!=null && ctx.lactateInit>0){
+      let clearance = ((ctx.lactateInit - ctx.lactate) / ctx.lactateInit) * 100;
+      if(!Number.isFinite(clearance) || clearance < -100){chips.push('<span class="riskchip red">Lactato inválido</span>'); items.push('Clearance de lactato matematicamente inválido: revisar lactato de admissão/atual antes de interpretar tendência.');}
+      else if(clearance < 10 && elapsedSeconds() > 1800) { chips.push('<span class="riskchip red">Clearance Ruim</span>'); items.push(`Clearance de Lactato inadequado (${clearance.toFixed(1)}%). Alerta para hemorragia persistente ou má perfusão.`); }
+      else if(clearance >= 10) { chips.push(`<span class="riskchip green">Clearance ${clearance.toFixed(0)}%</span>`); }
+    } else if(ctx.lactateInit===0){chips.push('<span class="riskchip red">Lactato adm inválido</span>'); items.push('Lactato de admissão igual a zero impede cálculo de clearance; revisar dado.');}
+  }
+  if(ctx.tt==='> 3h') items.push('TXA: evitar rotina se trauma >3h; revisar risco/benefício e motivo do sangramento.');
+  else if((ctx.tt==='< 1h'||ctx.tt==='1–3h'||ctx.tt==='Desconhecido'||!ctx.tt) && !hasTXA()) items.push('TXA: se sangramento significativo ou risco hemorrágico e dentro da janela, registrar 1g EV de ataque em 10 min + 1g EV em BIC de manutenção por 8h.');
+  if(ctx.chUnits>=4 || (ctx.caion && ctx.caion<1.1)){chips.push('<span class="riskchip amber">Cálcio</span>'); items.push('Cálcio: PTM/≥4 CH ou Ca ionizado baixo → repor Gluconato/Cloreto de Cálcio para evitar PCR por toxicidade do citrato.');}
+  if(ctx.fibrinogen && ctx.fibrinogen<200){chips.push('<span class="riskchip amber">Fibrinogênio baixo</span>'); items.push('Fibrinogênio <150–200 mg/dL em sangramento grave → considerar crioprecipitado ou concentrado de fibrinogênio.');}
+  if(ctx.inr && ctx.inr>=1.5){chips.push('<span class="riskchip amber">INR elevado</span>'); items.push('INR elevado no trauma hemorrágico → revisar plasma/PCC conforme etiologia e protocolo local.');}
+  if(ctx.platelets && ctx.platelets<100000){chips.push('<span class="riskchip amber">Plaquetas</span>'); items.push('Plaquetas <100.000 em trauma grave/TCE/sangramento → revisar meta transfusional.');}
+  if(ctx.temp && ctx.temp<36){
+    if(ctx.highRisk && ctx.temp<35) { chips.push('<span class="riskchip red">Hipotermia Grave + PTM</span>'); items.push('⚠️ TRÍADE LETAL: T <35°C em contexto de alto risco/PTM. Aquecimento ativo agressivo, fluidos/hemoderivados aquecidos e reduzir exposição.'); }
+    else { chips.push('<span class="riskchip amber">Hipotermia</span>'); items.push('Hipotermia: aquecer paciente, sala, fluidos e hemoderivados; hipotermia agrava severamente a disfunção plaquetária.'); }
+  }
+  if(ctx.ph && ctx.ph<7.2){chips.push('<span class="riskchip red">Acidose</span>'); items.push('pH <7,20 sugere falência fisiológica profunda: focar em controle cirúrgico agressivo de fonte e reanimação hemostática.');}
+  if(ctx.be && ctx.be<=-6){chips.push('<span class="riskchip amber">BE negativo</span>'); items.push('Base excess ≤ -6: marcador de hipoperfusão/hemorragia; monitorizar clearance metabólico.');}
+  
+  
+  if(ctx.paco2!=null && ctx.pvco2!=null){
+    let co2gap = ctx.pvco2 - ctx.paco2;
+    if(co2gap>6){chips.push('<span class="riskchip amber">Gap CO₂ alto</span>'); items.push(`Gap venoarterial de CO₂ ${co2gap.toFixed(1)} mmHg: sugere baixo fluxo/disóxia persistente apesar de pressão aparentemente aceitável.`);}
+  }
+  if(ctx.cryst && ctx.cryst>3000){chips.push('<span class="riskchip red">Cristaloide crítico</span>'); items.push('Cristaloide >3000 mL: risco alto de coagulopatia dilucional/acidose hiperclorêmica/sobrecarga; priorizar hemoderivados, solução balanceada e controle de fonte.');}
+  else if(ctx.cryst && ctx.cryst>1500){chips.push('<span class="riskchip amber">Cristaloide alto</span>'); items.push('Cristaloide >1500 mL: alvo excedido no trauma hemorrágico; evitar expansão adicional com cristaloide se PTM/controle de fonte forem necessários.');}
+  if(ctx.crush==='Sim'||ctx.crush==='Suspeito'){chips.push('<span class="riskchip amber">Risco renal/rabdo</span>'); items.push('Esmagamento/rabdomiólise suspeita: monitorar K+, CPK, creatinina e débito urinário; alvo diurese ≥0,5 mL/kg/h, evitando sobrecarga.');}
+  if(ctx.urine!=null){
+    if(ctx.weight && ctx.weight>0){let uctx=ctx.urine/ctx.weight; if(uctx<0.5){chips.push('<span class="riskchip amber">Oligúria</span>'); items.push(`Diurese ${uctx.toFixed(2)} mL/kg/h: risco de IRA/hipoperfusão; reavaliar volemia, choque e rim.`);}}
+    else {chips.push('<span class="riskchip amber">Peso ausente</span>'); items.push('Diurese preenchida sem peso estimado válido: não é possível calcular mL/kg/h; inserir peso para rastrear oligúria.');}
+  }
+
+  if(deviceTimestamps['torniquete']){
+    let tSec = Math.floor((Date.now() - deviceTimestamps['torniquete'])/1000);
+    if(tSec >= 5400) { chips.push('<span class="riskchip red">Isquemia Torniquete</span>'); items.push(`⚠️ ALERTA CRÍTICO: Torniquete aplicado há ${Math.floor(tSec/60)} min. Risco de lesão neuromuscular irreversível. Planear conversão.`); }
+    else { chips.push(`<span class="riskchip green">Torniquete ${Math.floor(tSec/60)}m</span>`); }
+  }
+  if(deviceTimestamps['cinta pélvica']){
+    let bSec = Math.floor((Date.now() - deviceTimestamps['cinta pélvica'])/1000);
+    chips.push(`<span class="riskchip green">Cinta pélvica ${Math.floor(bSec/60)}m</span>`);
+  }
+  
+  let diamond=[ctx.ph&&ctx.ph<7.2, ctx.temp&&ctx.temp<35, (ctx.inr&&ctx.inr>=1.5)||(ctx.fibrinogen&&ctx.fibrinogen<200)||(ctx.platelets&&ctx.platelets<100000), ctx.caion&&ctx.caion<1.1].filter(Boolean).length;
+  if(el('diamondStatus')) el('diamondStatus').textContent = diamond>=3 ? 'CRÍTICO' : (diamond>0 ? `${diamond}/4` : '—');
+  if(diamond>=3){chips.push('<span class="riskchip red">Diamante da Morte</span>'); items.push('Diamante da Morte: ≥3 vértices violados (acidose/hipotermia/coagulopatia/hipocalcemia). Priorizar controle de danos cirúrgico e ressuscitação hemostática, evitando estabilização clínica prolongada.');}
+
+  if(!items.length){items.push('Sem gatilhos laboratoriais de DCR preenchidos. Em choque, não aguardar laboratório.'); chips.push('<span class="riskchip green">monitorar</span>')}
+  el('dcrStatus').textContent= high?'ATIVO':(items.length>1?'vigiar':'—');
+  el('dcrBox').classList.remove('hidden');
+  el('dcrBox').innerHTML=`<h3>Hemorragia maciça / DCR</h3><div>${chips.join('')}</div>${bulletList(items)}`;
+}
+function updateAirwayModule(ctx){
+  let items=[]; let high=false;
+  if(ctx.tce||ctx.hypoxic){high=true; items.push('Indicação de via aérea definitiva provável: GCS ≤8, hipoxemia, exaustão ou incapacidade de proteger via aérea.');}
+  if(ctx.unstable){items.push('Choque + IOT = risco de colapso pós-indução: preparar vasopressor, sangue, cálcio se PTM, pré-oxigenação e dose reduzida do indutor.');}
+  if(ctx.mech==='Queimadura ambiente fechado'){high=true; items.push('Queimadura/ambiente fechado: procurar rouquidão, estridor, fuligem, vibrissas queimadas; considerar IOT precoce antes de edema progressivo.');}
+  if(ctx.weight && (ctx.tce||ctx.hypoxic)) items.push('Doses de SRI calculadas no painel; conferir apresentação da ampola local antes da administração.');
+  items.push('Pós-IOT obrigatório: capnografia, ausculta, fixação, reavaliação B/C e VM protetora inicial conforme contexto.');
+  el('airwayStatus').textContent= high?'ALTO':(ctx.unstable?'risco':'—');
+  el('airwayBox').classList.toggle('hidden', !(high||ctx.unstable||ctx.mech==='Queimadura ambiente fechado'));
+  el('airwayBox').innerHTML=`<h3>Via aérea de alto risco</h3>${bulletList(items)}`;
+}
+function updateTBIModule(ctx){
+  let items=[]; let high=false;
+  if(ctx.pupilScore>0){high=true; items.push('Pupila não reativa/anisocoria: alerta neurocirúrgico independente do GCS-P; diferenciar herniação de trauma ocular direto.');}
+  if(ctx.tce){high=true; items.push('TCE grave: evitar hipóxia e hipotensão; priorizar IOT segura, SpO₂ >94%, normocapnia e PAS adequada.');}
+  if(ctx.pas && ctx.pas<110 && ctx.gcs && ctx.gcs<=8) { high=true; items.push('⚠️ ALERTA DE PERFUSÃO: Alvo pressórico violado para TCE Grave! Evitar PAS <100–110 mmHg para garantir PPC.'); }
+  if(ctx.spo2 && ctx.spo2<94 && ctx.gcs && ctx.gcs<=8) items.push('TCE + dessaturação: lesão secundária iminente; corrigir oxigenação imediatamente.');
+  if(ctx.ac && ctx.ac!=='Não') items.push('TCE/trauma + antitrombótico: baixo limiar para TC crânio quando estável and reversão direcionada se sangramento intracraniano/hemorragia grave.');
+  if(ctx.invalidGcs) items.push('GCS fora da escala válida: corrigir dado para 3–15 antes de usar RTS/estratificação.');
+  if(!items.length) items.push('Sem gatilho de TCE grave preenchido; manter Glasgow, pupilas, glicemia e déficit focal seriados.');
+  el('neuroStatus').textContent= high?'TCE CRÍTICO':(ctx.ac&&ctx.ac!=='Não'?'vigiar':'—');
+  el('tbiBox').classList.remove('hidden');
+  el('tbiBox').innerHTML=`<h3>TCE grave / neuroproteção</h3>${bulletList(items)}`;
+}
+
+function updatePTMStopModule(ctx){
+  let show = !!ctx.ptm && (ctx.stage==='DEST' || ctx.elapsed>=3600);
+  if(!el('ptmStopBox')) return;
+  el('ptmStopBox').classList.toggle('hidden', !show);
+  if(!show) return;
+  let okTemp = ctx.temp && ctx.temp>=36;
+  let okPh = ctx.ph && ctx.ph>7.30;
+  let okSI = ctx.si && ctx.si<1.0;
+  let items=[
+    'Revisar interrupção ativa do PTM: fonte cirúrgica/endovascular controlada?',
+    okSI ? 'Shock Index em tendência/valor compatível com estabilidade.' : 'SI ainda elevado ou ausente: não encerrar PTM sem reavaliar fonte/perfusão.',
+    okTemp ? 'Temperatura >36°C.' : 'Temperatura ainda baixa ou ausente.',
+    okPh ? 'pH >7,30.' : 'pH ainda acidótico ou ausente.',
+    'Se fonte controlada + SI/PAS estáveis + T >36°C + pH >7,30: considerar transição para estratégia transfusional restritiva guiada por metas laboratoriais.'
+  ];
+  el('ptmStopBox').innerHTML=`<h3>Interrupção ativa do PTM</h3>${bulletList(items)}`;
+}
+
+
+function updateCriticalAreas(ctx){
+  let cards=[];
+  let unstable=!!ctx.unstable;
+  let tce=!!ctx.tce;
+  let scenario=ctx.atbScenario||'';
+  let image=ctx.imageResource||'';
+
+  // Imagem / LODOX
+  let imgTone=unstable?'red':'blue';
+  let imgText='';
+  if(unstable){
+    imgText='Instável: não deslocar para TC/LODOX se atrasar intervenção salvadora. Priorizar eFAST, RX leito tórax/pelve quando útil, controle de fonte e cirurgia/angio conforme foco.';
+  } else if(image.includes('LODOX')){
+    imgText='LODOX/RX corpo inteiro pode ser útil como rastreio rápido se disponível, mas não substitui TC com contraste no paciente estável com suspeita de lesão interna.';
+  } else if(image.includes('TC')){
+    imgText='Estável ou respondedor: TC com contraste conforme mecanismo, eFAST, exame e segurança de transporte.';
+  } else {
+    imgText='Sem recurso avançado informado: usar avaliação seriada, eFAST/RX leito e transferência precoce se suspeita de lesão não controlável localmente.';
+  }
+  cards.push({tone:imgTone, tag:'IMAGEM', title:'Imagem / LODOX / TC', text:imgText});
+
+  // Antibiótico
+  let atbTone=scenario && scenario!=='Sem ferida aberta'?'amber':'green';
+  let atbText='Sem cenário de ferida aberta/contaminação selecionado. ATB não é automático para todo trauma fechado; usar conforme foco infeccioso, fratura aberta, ferida penetrante contaminada ou protocolo.';
+  if(scenario==='Fratura aberta I-II') atbText='Fratura aberta grau I-II: iniciar ATB IV precoce, usualmente cobertura Gram+ com cefazolina, idealmente o quanto antes. Ajustar alergia/protocolo local.';
+  if(scenario==='Fratura aberta III/alta energia') atbText='Fratura aberta grau III/alta energia: cobertura Gram+ e Gram−, exemplo cefazolina + aminoglicosídeo ou ceftriaxona conforme protocolo local; acionar ortopedia/centro cirúrgico.';
+  if(scenario==='Contaminação solo/fazenda') atbText='Contaminação por solo/fazenda: além de cobertura para fratura aberta, considerar anaeróbios/Clostridium conforme protocolo local; revisar tétano.';
+  if(scenario==='Trauma penetrante torso') atbText='Penetrante de tórax/abdome: ATB conforme órgão/cavidade e necessidade operatória; se abdome/contaminação entérica, considerar cobertura Gram− + anaeróbios conforme protocolo local.';
+  if(scenario==='Trauma craniano aberto') atbText='Trauma craniano aberto/exposto: discutir neurocirurgia; cobertura precoce conforme exposição óssea/dural, contaminação e protocolo institucional.';
+  if(scenario==='Mordedura/água') atbText='Mordedura/água: cenário especial. Cobrir flora específica conforme tipo de exposição, contaminação e microbiologia local; não usar esquema padrão de fratura aberta sem ajuste.';
+  cards.push({tone:atbTone, tag:'ATB', title:'Antibiótico no trauma', text:atbText});
+
+  // Temperatura
+  let tempTone='green';
+  let tempText='Meta geral: prevenir hipotermia; manter temperatura central ≥36°C. Usar aquecimento ativo, fluidos/sangue aquecidos e exposição mínima.';
+  if(ctx.temp!=null && ctx.temp<35){tempTone='red'; tempText=`T ${ctx.temp}°C: hipotermia importante. Aquecimento ativo imediato, sangue/fluidos aquecidos, cobertor térmico e controle de exposição. Alvo mínimo ≥36°C.`;}
+  else if(ctx.temp!=null && ctx.temp<36){tempTone='amber'; tempText=`T ${ctx.temp}°C: abaixo da meta. Iniciar medidas ativas para manter ≥36°C e evitar coagulopatia induzida por hipotermia.`;}
+  else if(tce && ctx.temp!=null && ctx.temp>=38){tempTone='red'; tempText=`TCE + T ${ctx.temp}°C: tratar febre. Meta operacional 36–37,5°C; febre agrava demanda metabólica cerebral.`;}
+  else if(tce){tempTone='amber'; tempText='TCE: mirar normotermia 36–37,5°C e tratar T ≥38°C conforme protocolo local; evitar hipotermia não terapêutica e febre.';}
+  cards.push({tone:tempTone, tag:'TEMP', title:'Meta de temperatura', text:tempText});
+
+  if(el('criticalAreas')){
+    el('criticalAreas').innerHTML=cards.map(c=>`<div class="criticalAreaCard ${c.tone}"><div class="k">${c.tag}</div><div><b>${escapeHtml(c.title)}</b><span>${escapeHtml(c.text)}</span></div></div>`).join('');
+  }
+}
+
+function calc(shouldSave=true){
+  let age=asNum('age'), fc=asNum('fc'), pas=asNum('pas'), pad=asNum('pad'), spo2=asNum('spo2'), gcs=asNum('gcs'), pupilScore=Number(getVal('pupilScore')||0), fr=asNum('fr'), temp=asNum('temp'), weight=asNum('weight');
+  let ph=asNum('ph'), lactateInit=asNum('lactateInit'), lactate=asNum('lactate'), be=asNum('be'), inr=asNum('inr'), fbg=asNum('fibrinogen'), platelets=asNum('platelets'), caion=asNum('caion'), chUnits=asNum('chUnits'), pfcUnits=asNum('pfcUnits'), platUnits=asNum('platUnits'), cryst=asNum('cryst'), paco2=asNum('paco2'), pvco2=asNum('pvco2'), urine=asNum('urine');
+  let mech=getVal('mech') || '', pelvis=getVal('pelvis') || '', ac=getVal('ac') || '', atbScenario=getVal('atbScenario') || '', imageResource=getVal('imageResource') || '', tt=getVal('traumaTime') || '', rateLimiter=getVal('rateLimiter') || '', htnProfile=getVal('htnProfile') || '', crush=getVal('crush') || ''; 
+  const efg=efastPositiveGroup();
+  const efc=efastCounts();
+  
+  let invalidGcs = !!getVal('gcs') && !validRange(gcs,3,15);
+  let invalidFr = !!getVal('fr') && !validRange(fr,0,80);
+  let invalidPas = !!getVal('pas') && !validRange(pas,0,400);
+  let invalidPad = !!getVal('pad') && !validRange(pad,0,250);
+  let pediatricUnsupported = (age!=null && age<12);
+  setInputWarning('age', !!getVal('age') && (!validRange(age,12,125))); 
+  setInputWarning('fc', !!getVal('fc') && !validRange(fc,0,300));
+  setInputWarning('spo2', !!getVal('spo2') && !validRange(spo2,0,100));
+  setInputWarning('weight', !!getVal('weight') && !validRange(weight,1,300));
+  setInputWarning('temp', !!getVal('temp') && !validRange(temp,25,45));
+  setInputWarning('gcs', invalidGcs); setInputWarning('fr', invalidFr); setInputWarning('pas', invalidPas); setInputWarning('pad', invalidPad);
+  setInputWarning('ph', !!getVal('ph') && !validRange(ph,6.5,7.8));
+  setInputWarning('lactateInit', !!getVal('lactateInit') && !validRange(lactateInit,0,30));
+  setInputWarning('lactate', !!getVal('lactate') && !validRange(lactate,0,30));
+  setInputWarning('be', !!getVal('be') && !validRange(be,-40,40));
+  setInputWarning('inr', !!getVal('inr') && !validRange(inr,0.5,20));
+  setInputWarning('fibrinogen', !!getVal('fibrinogen') && !validRange(fbg,0,1000));
+  setInputWarning('platelets', !!getVal('platelets') && !validRange(platelets,0,1000000));
+  setInputWarning('caion', !!getVal('caion') && !validRange(caion,0.3,2.5));
+  setInputWarning('paco2', !!getVal('paco2') && !validRange(paco2,10,120));
+  setInputWarning('pvco2', !!getVal('pvco2') && !validRange(pvco2,10,140));
+  setInputWarning('urine', !!getVal('urine') && !validRange(urine,0,1000));
+  
+  let si=(fc&&pas&&validRange(pas,1,400))?fc/pas:null;
+  let pam=(pas&&pad&&validRange(pad,1,250))?((pas+2*pad)/3):null;
+  let rosi=(fc&&pam&&pam>0)?fc/pam:null;
+  if(el('rosiStatus')) el('rosiStatus').textContent=rosi?rosi.toFixed(2):'—';
+  let sia=(si&&age)?si*age:null;
+  let gcsp=(gcs!=null && validRange(gcs,3,15))?Math.max(1,gcs-pupilScore):null;
+  if(el('gcsp')) el('gcsp').textContent=gcsp!=null?String(gcsp):'—';
+  el('si').innerHTML=si?(sia && age>65 && sia>=50 ? `${si.toFixed(2)} <span style="color:var(--red)">[SIA ${sia.toFixed(0)}🚨]</span>` : (sia && age>65 && sia>=45 ? `${si.toFixed(2)} <span style="color:var(--amber)">[SIA ${sia.toFixed(0)}]</span>` : si.toFixed(2))):'—';
+  
+  let fastPositive = efastAnyPositive();
+  let abc = 0;
+  if(mech==='Trauma penetrante torso') abc++;
+  if(pas && pas<=90) abc++;
+  if(fc && fc>=120) abc++;
+  if(fastPositive) abc++;
+  el('abc').textContent=(fc||pas||mech||fastPositive)?String(abc):'—';
+  
+  let cg=codedGCS(gcs), cp=codedPAS(pas), cr=codedFR(fr);
+  let rts=(cg!=null&&cp!=null&&cr!=null)?(0.9368*cg+0.7326*cp+0.2908*cr):null;
+  el('rts').textContent=rts? rts.toFixed(2):'—';
+  
+  let tce=gcs&&gcs<=8;
+  let siThreshold = (rateLimiter==='Sim') ? 0.8 : 1.0;
+  let unstable=(pas&&pas<90)||(si&&si>=siThreshold);
+  if(tce && pas && pas<110) unstable=true; 
+  let catastrophic=(pas&&pas<70)||(si&&si>=1.4);
+  document.body.classList.toggle('critical-state', !!catastrophic);
+  let hypoxic=spo2&&spo2<90;
+  let elderlyHtnRelativeHypoperfusion = !!(age && age>65 && htnProfile==='Sim' && pam && pam<80);
+  if(elderlyHtnRelativeHypoperfusion) unstable=true;
+  
+  let siaWatch = (sia && age>65 && sia>=45);
+  let highRisk = abc>=2 || unstable || elderlyHtnRelativeHypoperfusion || (sia && age>65 && sia>=50);
+  let risk='—';
+  if(unstable)risk='ALTO';
+  if(catastrophic || hypoxic || tce || highRisk)risk='CRÍTICO';
+  el('risk').textContent=risk;
+  el('ctStatus').textContent=unstable?'NÃO':'avaliar';
+  el('ptmStatus').textContent=highRisk?'SIM/ACIONAR':'—';
+  
+  ['A', 'D', 'X', 'C'].forEach(s => {
+    let tab = document.querySelector(`.tab[data-stage="${s}"]`);
+    if(tab){
+      let sintoFlash = ((tce || invalidGcs) && (s==='A' || s==='D')) || (catastrophic && (s==='X' || s==='C'));
+      if(sintoFlash && !tab.classList.contains('flash')) tab.classList.add('flash');
+      if(!sintoFlash && tab.classList.contains('flash')) tab.classList.remove('flash');
+    }
+  });
+  
+  let status=[];
+  if(catastrophic)status.push(['red','Choque catastrófico']);
+  else if(tce && pas && pas<110)status.push(['red','Hipotensão relativa: alvo TCE violado']);
+  else if(elderlyHtnRelativeHypoperfusion)status.push(['red','Hipotensão relativa: idoso/HAS']);
+  else if(unstable)status.push(['red', rateLimiter==='Sim' ? 'Instável: SI limiar reduzido por beta/BCC' : 'Instável/alvo violado']);
+  else status.push(['green','Sem choque pelos dados atuais']);
+  if(pediatricUnsupported)status.push(['red','Fisiologia pediátrica não suportada']);
+  if(hypoxic)status.push(['red','Hipoxemia']);
+  if(tce) status.push(['red','GCS ≤8 (TCE Grave)']);
+  if(sia && age>65 && sia>=50)status.push(['red','SIA Geriátrico Alto']);
+  else if(siaWatch)status.push(['amber','SIA geriátrico limítrofe']);
+  if(pupilScore>0)status.push(['red','Pupila anormal/anisocoria']);
+  if(gcsp!=null && gcsp<=5)status.push(['red','GCS-P ≤5']);
+  if(temp&&temp<36)status.push(['amber','Hipotermia']);
+  if(ph&&ph<7.2)status.push(['red','Acidose grave']);
+  if(lactate&&lactate>=4)status.push(['amber','Lactato alto']);
+  el('statusline').innerHTML=status.map(s=>`<span class="status ${s[0]}">${s[1]}</span>`).join('');
+  if(el('labFreshness')){ el('labFreshness').innerHTML = labDataStale ? '⚠️ Amostra metabólica/gasométrica herdada do ciclo anterior — inserir nova amostra para o ciclo atual.' : 'Amostra metabólica/gasométrica compatível com o ciclo atual ou ainda não informada.'; el('labFreshness').style.color = labDataStale ? 'var(--amber)' : 'var(--muted)'; }
+  
+  if(gcs&&gcs<=8&&weight&&weight>0){
+    el('sriBox').classList.remove('hidden');
+    let mod = unstable ? 0.5 : 1.0;
+    let modStr = unstable ? ' <span style="color:var(--red);font-weight:900">[Indutor conservador por instabilidade — validar clinicamente]</span>' : '';
+    el('sriTable').innerHTML=`
+      <tr><th>Fármaco</th><th>Dose Alvo</th><th>Volume Real</th></tr>
+      <tr><td><b>Cetamina</b> (Indução)</td><td>${(1.5*mod).toFixed(2)} mg/kg (${(weight*1.5*mod).toFixed(0)} mg)${modStr}</td><td><b>${((weight*1.5*mod)/50).toFixed(1)} mL</b> (50mg/mL)</td></tr>
+      <tr><td><b>Etomidato</b> (Alternativa)</td><td>${(0.3*mod).toFixed(2)} mg/kg (${(weight*0.3*mod).toFixed(1)} mg)${modStr}</td><td><b>${((weight*0.3*mod)/2).toFixed(1)} mL</b> (2mg/mL)</td></tr>
+      <tr><td><b>Rocurônio</b> (Bloqueio)</td><td>1.2 mg/kg (${(weight*1.2).toFixed(0)} mg)</td><td><b>${((weight*1.2)/10).toFixed(1)} mL</b> (10mg/mL)</td></tr>
+      <tr><td><b>Succinilcolina</b></td><td>1,0–1,5 mg/kg (${(weight*1.0).toFixed(0)}–${(weight*1.5).toFixed(0)} mg)</td><td><b style="color:var(--amber)">Atenção à diluição: prescrever em mg, não em mL</b></td></tr>
+      <tr><td colspan="3"><div class="smallwarn">⚠️ Alerta de SRI: em instabilidade/choque, considerar dose conservadora/titulada do indutor, ressuscitação simultânea e vasopressor pronto; validar com protocolo local e cenário clínico.${(spo2&&spo2<93)?' Dessaturação crítica provável: pré-oxigenação com pressão positiva/PEEP antes da indução se possível.':''} Em choque grave, a latência do bloqueador pode aumentar; aguardar condição adequada de laringoscopia se a estabilidade permitir.</div></td></tr>
+    `;
+  } else {
+    el('sriBox').classList.add('hidden');
+  }
+  
+  let crit=[];let rec=[];
+  if(unstable){crit.push('Instabilidade hemodinâmica crítica ou quebra de alvo no TCE: contraindicada movimentação para TC antes de controle mecânico.');rec.push(['red','Foco hemorrágico ativo: investigar tórax, abdome, pelve, ossos longos e perdas externas.'])}
+  if(si&&si>=siThreshold)rec.push(['red', rateLimiter==='Sim' ? 'Shock Index ≥0,8 com beta/BCC: possível choque oculto; revisar PTM/fonte hemorrágica.' : 'Shock Index ≥1: iminência de colapso circulatório; ligar PTM e infundir TXA imediato se janela.']);
+  if(sia && age>65 && sia>=50)rec.push(['red',`SIA Geriátrico ${sia.toFixed(0)} ≥50: alto risco de choque oculto/críptico mascarado por medicação ou senescência.`]);
+  else if(siaWatch)rec.push(['amber',`SIA Geriátrico ${sia.toFixed(0)} entre 45–49: zona de vigilância; reavaliar sangramento, medicações cronotrópicas e tendência do SI.`]);
+  if(pupilScore>0)rec.push(['red','Pupila não reativa/anisocoria no trauma: sinal neurocirúrgico crítico independente do GCS-P; acionar neurocirurgia e reavaliar herniação/lesão ocular conforme contexto.']);
+  if(gcsp!=null && gcsp<=5)rec.push(['red',`GCS-P ${gcsp}: neurotrauma de altíssimo risco; acionar neurocirurgia/TC quando fisiologicamente seguro.`]);
+  if(rosi&&rosi>1.1)rec.push(['red',`ROSI ${rosi.toFixed(2)} >1,1: FC/PAM elevado sugere compensação vasoconstritora extrema e risco de descompensação hemodinâmica súbita.`]);
+  if(elderlyHtnRelativeHypoperfusion)rec.push(['red',`Idoso/HAS com PAM ${pam.toFixed(0)} <80: alvo pressórico permissivo habitual pode ser inadequado; risco de hipoperfusão por desvio da autorregulação vascular.`]);
+  if(pas&&pas<90 && !tce)rec.push(['red','PAS <90 sem TCE: Alvo pressórico permissivo tolerado temporariamente até controle anatómico.']);
+  if(pas&&pas<110 && tce)rec.push(['red','PAS <110 em doente com TCE Grave: Quebra estrita de Pressão de Perfusão Cerebral (PPC). Alvo deve ser PAS ≥100–110 mmHg.']);
+  if(hypoxic)rec.push(['red','SpO₂ <90%: falha de oxigenação. Avançar via aérea ou otimizar ventilação.']);
+  if(pediatricUnsupported)rec.push(['red','Idade <12 anos: fisiologia pediátrica não suportada nesta versão. Não usar limiares adultos de PAS/FC/SI para decisão automática.']);
+  if(unstable && ac==='Varfarina')rec.push(['red','Sangramento ativo sob varfarina: considerar CCP 4 fatores 25–50 U/kg + vitamina K 10 mg EV conforme INR, disponibilidade e protocolo local.']);
+  if(unstable && ac==='DOAC')rec.push(['red','Sangramento ativo sob DOAC: considerar CCP 4 fatores 25–50 U/kg ou reversor específico quando disponível, conforme fármaco, tempo da última dose, função renal e protocolo local.']);
+  if(unstable && ac==='Antiagregante')rec.push(['purple','Sangramento crítico sob antiagregante: discutir estratégia hemostática/neurocirurgia conforme sítio, plaquetas e protocolo institucional.']);
+  if(efg.abdomen){
+    let isolatedPelvis=(efastState['pelveFast']==='pos' && efastState['morrison']!=='pos' && efastState['espleno']!=='pos');
+    if(unstable && isolatedPelvis && pelvis.includes('Instável')) rec.push(['red','eFAST pélvico + pelve instável: evitar laparotomia branca. Priorizar cinta pélvica, packing pré-peritoneal pélvico ou angioembolização conforme disponibilidade.']);
+    else if(unstable) rec.push(['red','eFAST positivo em andar superior/difuso + instável: controle cirúrgico imediato/laparotomia de dano sem atraso para TC.']);
+    else rec.push(['amber','eFAST positivo + estável: TC com contraste para estadiamento e planejamento.']);
+  }
+  if(efg.pericardium)rec.push(['red','eFAST pericárdico positivo + choque/AESP: tamponamento até prova em contrário; cirurgia/janela pericárdica.']);
+  if(efg.ptx)rec.push(['red','Janela pulmonar com lung sliding ausente/suspeita de PNX em instável: descompressão imediata, depois drenagem.']);
+  if(efg.pleura)rec.push(['red','Janela pleural positiva: suspeitar hemotórax/derrame traumático; correlacionar com macicez, choque e necessidade de dreno.']);
+  if(efc.done===0)rec.push(['amber','eFAST segmentado ainda não realizado/registrado. Fazer à beira-leito se não atrasar intervenção salvadora.']);
+  else if(efc.dubious>0 && !fastPositive)rec.push(['amber','eFAST com janela(s) duvidosa(s): repetir exame seriado ou escalar imagem conforme estabilidade.']);
+  else if(efc.allNegative)rec.push(['amber','eFAST segmentado completamente negativo: não exclui retroperitônio, pelve, fêmures, lesão intestinal inicial ou sangramento externo.']);
+  if(pelvis.includes('Instável'))rec.push(['red','Abertura/instabilidade pélvica manual: fechamento com cinta pélvica na altura dos trocanteres maiores.']);
+  if(tt==='< 1h'||tt==='1–3h')rec.push(['green','Tempo de trauma compatível com benefício de Ácido Tranexâmico (TXA): realizar 1g EV de ataque em 10 min e preparar 1g EV em BIC de manutenção por 8h.']);
+  if(temp&&temp<36)rec.push(['amber','Temperatura <36°C detectada: monitorizar curva térmica ativamente para evitar Tríade Letal.']);
+  
+  updateDCRModule({unstable,abc,tt,chUnits,pfcUnits,platUnits,caion,fibrinogen:fbg,inr,platelets,temp,ph,be,lactateInit,lactate,cryst,sia,highRisk,paco2,pvco2,crush,urine,weight});
+  updateAirwayModule({tce,hypoxic,unstable,mech,weight});
+  updateTBIModule({tce,pas,gcs,spo2,ac,invalidGcs,pupilScore,gcsp});
+  updatePTMStopModule({highRisk,unstable,stage,elapsed:elapsedSeconds(),temp,ph,si,ptm:el('ptmStatus').textContent.includes('SIM')});
+  updateCriticalAreas({unstable,tce,temp,atbScenario,imageResource});
+  
+  rec.push(['green','Sempre reavaliar o XABCDE completo após procedimentos críticos, transferências ou oscilações clínicas.']);
+  el('criticalBox').className=crit.length?'banner':'banner hidden';el('criticalBox').innerHTML=crit.map(x=>'• '+x).join('<br>');
+  el('recs').innerHTML=rec.map(r=>`<div class="rec ${r[0]}"><span class="tag ${r[0]}">${r[0].toUpperCase()}</span><span>${r[1]}</span></div>`).join('');
+  if(shouldSave) autoSave();
+}
+function getCheckedText(){return stages.map(s=>{let d=data[s];let arr=d.checks.filter((_,i)=>checked[s+'_'+i]);return arr.length?`${s}: ${arr.join('; ')}`:''}).filter(Boolean).join('\n')}
+function formatHistoricalSweeps(){
+  if(!historicalSweeps.length) return 'Sem ciclos anteriores registrados.';
+  return historicalSweeps.map(hs => {
+    let v=hs.vitals||{};
+    let header=`[CICLO #${hs.cycle} às ${hs.time}] FC ${v.fc||'-'} / PAS ${v.pas||'-'} / SpO2 ${v.spo2||'-'} / GCS ${v.gcs||'-'} / SI-SIA ${v.si||'-'} / ABC ${v.abc||'-'} / RTS ${v.rts||'-'} / Risco ${v.risk||'-'} / DCR ${v.dcr||'-'} / Airway ${v.airway||'-'} / Neuro ${v.neuro||'-'} / eFAST: ${v.efast||'-'}`;
+    let stagesTxt=stages.map(s => `  - ${s}: ${hs.answers[s] != null ? data[s].opts[hs.answers[s]][0] : 'Não registrado'}`).join('\n');
+    return header+'\n'+stagesTxt;
+  }).join('\n');
+}
+function auditChecksum(txt){
+  let h=0;
+  for(let i=0;i<txt.length;i++){h=((h<<5)-h)+txt.charCodeAt(i); h|=0;}
+  return Math.abs(h).toString(36).toUpperCase().padStart(6,'0');
+}
+function generateReport(){
+  syncBeforeAction();
+  let sortedLogs = [...logs].sort((a,b)=>a.absTime - b.absTime);
+  let lines=[];
+  lines.push('ATENDIMENTO AO TRAUMA — RECH TRAUMA');
+  lines.push(`Total de Ciclos de Varredura XABCDE: ${cycleCount}`);
+  lines.push(`Tempo total registrado de atendimento: ${now()}`);
+  lines.push('');
+  lines.push('SINAIS/CONTEXTO DA ADMISSÃO:');
+  lines.push(`Idade: ${getVal('age')||'-'} anos / FC: ${getVal('fc')||'-'} bpm / PAS: ${getVal('pas')||'-'} mmHg / PAD: ${getVal('pad')||'-'} mmHg / SpO2: ${getVal('spo2')||'-'}% / GCS: ${getVal('gcs')||'-'} / Pupilas: ${el('gcsp')?el('gcsp').textContent:'-'} GCS-P / FR: ${getVal('fr')||'-'} irpm / T: ${getVal('temp')||'-'} °C / Peso Est: ${getVal('weight')||'-'} kg`);
+  lines.push(`Shock Index/SIA: ${el('si').textContent} / ROSI: ${el('rosiStatus')?el('rosiStatus').textContent:'-'} / Diamante: ${el('diamondStatus')?el('diamondStatus').textContent:'-'} / ABC Score: ${el('abc').textContent} / RTS: ${el('rts').textContent}`);
+  lines.push(`Mecanismo: ${getVal('mech')||'-'} / Tempo do trauma: ${getVal('traumaTime')||'-'} / Pelve: ${getVal('pelvis')||'-'} / Anticoagulação: ${getVal('ac')||'-'} / ATB: ${getVal('atbScenario')||'-'} / Imagem: ${getVal('imageResource')||'-'} / Beta-BCC: ${getVal('rateLimiter')||'-'} / Idoso-HAS: ${getVal('htnProfile')||'-'}`);
+  lines.push(`eFAST Segmentado: ${efastSummaryDetailed()}`);
+  lines.push('');
+  lines.push('RASTREABILIDADE DOS DADOS:');
+  lines.push(`Amostra metabólica/gasométrica: ${labDataStale?'HERDADA OU DESATUALIZADA':'compatível com ciclo atual ou ainda não informada'}.`);
+  let dynMissing=['fc','pas','pad','spo2','gcs','fr'].filter(id=>!getVal(id)).map(id=>id.toUpperCase());
+  lines.push(`Sinais vitais dinâmicos do ciclo atual: ${dynMissing.length?'pendentes/ausentes — '+dynMissing.join(', '):'registrados'}.`);
+  lines.push(`Validade do eFAST: ${efastSummaryDetailed()}`);
+  lines.push(`Laboratório DCR: pH ${getVal('ph')||'-'} / Lactato adm ${getVal('lactateInit')||'-'} / Lactato atual ${getVal('lactate')||'-'} / BE ${getVal('be')||'-'} / INR ${getVal('inr')||'-'} / Fib ${getVal('fibrinogen')||'-'} / Plaq ${getVal('platelets')||'-'} / Ca ion ${getVal('caion')||'-'} / CH ${getVal('chUnits')||'-'} / PFC ${getVal('pfcUnits')||'-'} / Plaquetas transf. ${getVal('platUnits')||'-'} pool(s) / Cristaloide ${getVal('cryst')||'-'} mL / PaCO2 ${getVal('paco2')||'-'} / PvCO2 ${getVal('pvco2')||'-'} / Esmagamento ${getVal('crush')||'-'} / Diurese ${getVal('urine')||'-'} mL/h`);
+  lines.push('');
+  lines.push('MÓDULOS DE SEGURANÇA:');
+  lines.push(`DCR: ${el('dcrStatus').textContent} / Airway: ${el('airwayStatus').textContent} / Neuro: ${el('neuroStatus').textContent}`);
+  lines.push('');
+  lines.push('HISTÓRICO IMUTÁVEL DE VARREDURAS REATIVAS (CICLOS):');
+  lines.push(formatHistoricalSweeps());
+  lines.push('');
+  lines.push('EXAME DIRECIONADO XABCDE (CICLO ATUAL EM CURSO):');
+  lines.push(stages.map(s=>`${s}: ${answers[s]!=null?data[s].opts[answers[s]][0]+' — '+data[s].opts[answers[s]][1]:'etapa não avaliada formalmente'}${done[s]?' [CONCLUÍDO]':''}`).join('\n'));
+  lines.push('');
+  lines.push('CHECKLISTS OPERACIONAIS EXECUTADOS:');
+  lines.push(getCheckedText()||'Nenhum procedimento específico checado nos boxes');
+  lines.push('');
+  lines.push('TIMELINE CRONOLÓGICA DAS CONDUTAS:');
+  lines.push(sortedLogs.map(x=>`[${x.time}] — ${x.text}`).join('\n')||'Sem anotações temporais na linha do tempo');
+  lines.push('');
+  lines.push('CONDUTAS REGISTRADAS:');
+  let registered=sortedLogs.filter(x=>/(administrad|ativad|posicionad|realizad|executad|acionad|repost|solicitad|preparar)/i.test(x.text)).map(x=>`[${x.time}] — ${x.text}`);
+  lines.push(registered.join('\n')||'Nenhuma conduta executada registrada por ação rápida/timeline.');
+  lines.push('');
+  lines.push('RECOMENDAÇÕES GERADAS PELO APP:');
+  let recTxt=Array.from(document.querySelectorAll('#recs .rec')).map(n=>'- '+n.innerText.replace(/\s+/g,' ').trim());
+  lines.push(recTxt.join('\n')||'Sem recomendações ativas no momento da geração.');
+  lines.push('');
+  lines.push('DADOS AUSENTES / NÃO CONFIRMADOS:');
+  let absent=[];
+  ['fc','pas','spo2','gcs','fr','weight','temp'].forEach(id=>{if(!getVal(id)) absent.push(id.toUpperCase());});
+  if(labDataStale) absent.push('LAB/GASO DO CICLO ATUAL');
+  if(!efastCounts().done) absent.push('eFAST NÃO REGISTRADO');
+  lines.push(absent.length?absent.join(' / '):'Sem pendências críticas identificadas pelo app.');
+  lines.push('');
+  lines.push('METAS FISIOLÓGICAS PERSONALIZADAS:');
+  let gcsReport=Number(getVal('gcs')||0), pasReport=Number(getVal('pas')||0), spo2Report=Number(getVal('spo2')||0);
+  let metasEspecificas=0;
+  if(gcsReport && gcsReport<=8){
+    metasEspecificas++;
+    lines.push('TCE GRAVE/NEUROPROTEÇÃO: manter PAS ≥100–110 mmHg conforme idade/protocolo, SpO2 >94%, evitar hipóxia/hipotensão, PaCO2 35–40 mmHg após via aérea definitiva, normotermia e glicemia controlada.');
+  }
+  if(el('ptmStatus').textContent.includes('SIM')) {
+    metasEspecificas++;
+    lines.push('CHOQUE HEMORRÁGICO / PTM-DCR: ressuscitação hemostática balanceada, controle anatômico de fonte, aquecimento ativo, cálcio conforme transfusão/ionizado, evitar cristaloide excessivo e tolerar hipotensão permissiva apenas se não houver TCE grave, conforme protocolo local.');
+  }
+  if(!metasEspecificas){
+    lines.push('SEM ALVO ESPECÍFICO CRÍTICO DOCUMENTADO: manter reavaliação seriada, analgesia, prevenção de hipotermia e vigilância de sangramento oculto.');
+  }
+  lines.push('');
+  lines.push('ÁREAS CRÍTICAS ADICIONAIS:');
+  lines.push(Array.from(document.querySelectorAll('#criticalAreas .criticalAreaCard')).map(n=>'- '+n.innerText.replace(/\s+/g,' ').trim()).join('\n')||'Sem áreas críticas adicionais renderizadas.');
+  lines.push('');
+  lines.push('DIRETRIZES DE FLUXO / PLANO:');
+  lines.push('Manter varredura repetida do mnemônico. Se instabilidade hemodinâmica persistir ou se SI/SIA/ABC indicarem alto risco, priorizar ressuscitação hemostática equilibrada e controle anatômico imediato de foco hemorrágico antes de deslocamentos diagnósticos para TC. ATB, imagem e temperatura devem seguir protocolo local e disponibilidade.');
+  let reportCore=lines.join('\n');
+  let auditCode=`RECH-${Date.now()}-${cycleCount}-${auditChecksum(reportCore)}`;
+  lines.push('');
+  lines.push(`CÓDIGO DE AUDITORIA INTERNA: ${auditCode}`);
+  el('report').value=lines.join('\n');
+  el('reportCard').classList.remove('hidden');
+  log('Relatório consolidado gerado com sucesso');
+  el('reportCard').scrollIntoView({behavior:'smooth'});
+}
+
+function collectStructuredState(){
+  syncBeforeAction();
+  return {
+    appVersion:'RECHTRAUMA', schema:APP_SCHEMA, generatedAt:new Date().toISOString(), elapsedMs:currentElapsedMs(), cycleCount,
+    fields:{age:getVal('age'),fc:getVal('fc'),pas:getVal('pas'),pad:getVal('pad'),spo2:getVal('spo2'),gcs:getVal('gcs'),pupilScore:getVal('pupilScore'),fr:getVal('fr'),weight:getVal('weight'),temp:getVal('temp'),rateLimiter:getVal('rateLimiter'),htnProfile:getVal('htnProfile'),traumaTime:getVal('traumaTime'),mech:getVal('mech'),pelvis:getVal('pelvis'),ac:getVal('ac'),atbScenario:getVal('atbScenario'),imageResource:getVal('imageResource'),ph:getVal('ph'),lactateInit:getVal('lactateInit'),lactate:getVal('lactate'),be:getVal('be'),inr:getVal('inr'),fibrinogen:getVal('fibrinogen'),platelets:getVal('platelets'),caion:getVal('caion'),chUnits:getVal('chUnits'),pfcUnits:getVal('pfcUnits'),platUnits:getVal('platUnits'),cryst:getVal('cryst'),paco2:getVal('paco2'),pvco2:getVal('pvco2'),crush:getVal('crush'),urine:getVal('urine')},
+    computed:getVitalsSnapshot(), efastState:{...efastState}, efastCycleStamps:{...efastCycleStamps}, answers:{...answers}, checked:{...checked}, logs:logs.slice(0,300), historicalSweeps:compactSweepsForSave()
+  };
+}
+function toBase64Utf8(str){ return btoa(unescape(encodeURIComponent(str))); }
+function exportStructuredData(){
+  let payload=collectStructuredState();
+  let encoded=toBase64Utf8(JSON.stringify(payload));
+  el('report').value=`RECHTRAUMA_STRUCTURED_BASE64
+${encoded}`;
+  el('reportCard').classList.remove('hidden');
+  log('Dados estruturados exportados em JSON Base64');
+  el('reportCard').scrollIntoView({behavior:'smooth'});
+}
+
+function copyReport(){el('report').select();document.execCommand('copy');log('Relatório copiado para a área de transferência')}
+function downloadReport(){let blob=new Blob([el('report').value||''],{type:'text/plain;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rechtrauma_relatorio.txt';a.click();URL.revokeObjectURL(a.href)}
+function compactSweepsForSave(){
+  return (historicalSweeps||[]).slice(-25).map(h=>({cycle:h.cycle,time:h.time,answers:h.answers||{},checked:h.checked||{},efastState:h.efastState||{},vitals:h.vitals||{}}));
+}
+function autoSave(){
+  let state={appVersion:'RECHTRAUMA',schema:APP_SCHEMA,stage,done,answers,checked,logs:logs.slice(0,300),efastState,efastCycleStamps,efastCarryover,labDataStale,deviceTimestamps,started,elapsedMs:currentElapsedMs(),cycleCount,historicalSweeps:compactSweepsForSave(),fields:{age:getVal('age'),fc:getVal('fc'),pas:getVal('pas'),pad:getVal('pad'),spo2:getVal('spo2'),gcs:getVal('gcs'),pupilScore:getVal('pupilScore'),fr:getVal('fr'),weight:getVal('weight'),temp:getVal('temp'),rateLimiter:getVal('rateLimiter'),htnProfile:getVal('htnProfile'),traumaTime:getVal('traumaTime'),mech:getVal('mech'),pelvis:getVal('pelvis'),ac:getVal('ac'),atbScenario:getVal('atbScenario'),imageResource:getVal('imageResource'),ph:getVal('ph'),lactateInit:getVal('lactateInit'),lactate:getVal('lactate'),be:getVal('be'),inr:getVal('inr'),fibrinogen:getVal('fibrinogen'),platelets:getVal('platelets'),caion:getVal('caion'),chUnits:getVal('chUnits'),pfcUnits:getVal('pfcUnits'),platUnits:getVal('platUnits'),cryst:getVal('cryst'),paco2:getVal('paco2'),pvco2:getVal('pvco2'),crush:getVal('crush'),urine:getVal('urine')}};
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); }
+  catch(e){ console.error('Falha ao salvar estado',e); logs.unshift({time:now(),text:'Falha ao salvar estado local: payload/armazenamento excedido. Gerar relatório e reiniciar caso se necessário.',absTime:Date.now()}); if(logs.length>300) logs=logs.slice(0,300); }
+}
+
+function reconcileLoadedState(){
+  if(!checked['X_1']) delete deviceTimestamps['torniquete'];
+  if(!checked['X_3']) delete deviceTimestamps['cinta pélvica'];
+  if(logs.length>400) logs=logs.slice(0,400);
+}
+function autoLoad(){
+  // v17 carrega apenas a própria chave para evitar migração silenciosa de estruturas antigas incompatíveis.
+  let raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw)return;
+  try{
+    let st=JSON.parse(raw);
+    if(st.appVersion && st.appVersion !== 'RECHTRAUMA') { console.warn('Estado antigo incompatível ignorado.'); return; }
+    stage=st.stage||'X';done=st.done||{};answers=st.answers||{};checked=st.checked||{};logs=st.logs||[];efastState=st.efastState||{};efastCycleStamps=st.efastCycleStamps||{};efastCarryover=!!st.efastCarryover;labDataStale=!!st.labDataStale;deviceTimestamps=st.deviceTimestamps||{};elapsedBaseMs=Number(st.elapsedMs)||0;perfBase=performance.now();cycleCount=st.cycleCount||1;historicalSweeps=Array.isArray(st.historicalSweeps)?st.historicalSweeps:[];Object.entries(st.fields||{}).forEach(([k,v])=>{if(el(k))el(k).value=v});
+    reconcileLoadedState();
+    if(st.started){
+      if(elapsedBaseMs > 12*60*60*1000){ started=null; logs.unshift({time:'--:--',text:'Estado carregado com cronômetro pausado (>12h acumuladas). Inicie novo trauma se for outro atendimento.',absTime:Date.now()}); }
+      else { started=Date.now(); perfBase=performance.now(); if(timer)clearInterval(timer);timer=setInterval(tick,1000);tick(); }
+    }
+    drawLog();calc(false);
+  }catch(e){console.error("Falha ao recuperar estado salvo",e)}
+}
+function showHotkeyNotice(label){
+  let pill=el('clockPill'), notice=el('hotkeyNotice');
+  if(pill){pill.classList.add('hotkey-pending'); pill.title=`Confirme: pressione ${label} novamente em até 1,2s`;}
+  if(notice){notice.textContent=`CONFIRME ${label}`; notice.classList.add('show');}
+}
+function clearHotkeyNotice(){
+  let pill=el('clockPill'), notice=el('hotkeyNotice');
+  if(pill){pill.classList.remove('hotkey-pending'); pill.title='';}
+  if(notice){notice.classList.remove('show'); notice.textContent='CONFIRME';}
+}
+function confirmHotkey(key,label){
+  let nowTs=performance.now();
+  if(hotkeyPending && hotkeyPending.key===key && nowTs-hotkeyPending.ts<1200){hotkeyPending=null; clearHotkeyNotice(); return true;}
+  hotkeyPending={key,ts:nowTs};
+  showHotkeyNotice(label);
+  setTimeout(()=>{ if(hotkeyPending && hotkeyPending.key===key && performance.now()-hotkeyPending.ts>=1150){ hotkeyPending=null; clearHotkeyNotice(); } },1250);
+  return false;
+}
+window.addEventListener('keydown',function(e){
+  if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT'||document.activeElement.tagName==='TEXTAREA') return;
+  if(e.key==='ArrowRight'){ e.preventDefault(); nextStage(); }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); prevStage(); }
+  if(e.key.toLowerCase()==='c'){ e.preventDefault(); if(confirmHotkey('C','C')) markDone(); }
+  if(e.key.toLowerCase()==='r'){ e.preventDefault(); repeatXABCDE(); }
+  if(e.altKey && e.key==='1'){ e.preventDefault(); if(confirmHotkey('ALT1','Alt+1')) quickAction('TXA', 'C_4', 'TXA 1g EV ataque em 10 min + preparar 1g EV em BIC por 8h via Hotkey Alt+1'); }
+  if(e.altKey && e.key==='2'){ e.preventDefault(); if(confirmHotkey('ALT2','Alt+2')) quickAction('PTM', 'C_3', 'PTM ativado via Hotkey Alt+2'); }
+  if(e.altKey && e.key==='3'){ e.preventDefault(); if(confirmHotkey('ALT3','Alt+3')) quickAction('Cinta pélvica', 'X_3', 'Cinta pélvica posicionada via Hotkey Alt+3'); }
+  if(e.altKey && e.key==='4'){ e.preventDefault(); if(confirmHotkey('ALT4','Alt+4')) quickAction('IOT', 'A_2', 'IOT/VA definitiva registrada via Hotkey Alt+4'); }
+  if(e.altKey && e.key==='5'){ e.preventDefault(); if(confirmHotkey('ALT5','Alt+5')) quickAction('Dreno', 'B_3', 'Drenagem torácica registrada via Hotkey Alt+5'); }
+});
+autoLoad();render();
+
+
+</script>
+
+<!-- RECHTRAUMA_CURRENT_DOCUMENT: visivel_sem_abas_colapsadas -->
+</body>
+</html>

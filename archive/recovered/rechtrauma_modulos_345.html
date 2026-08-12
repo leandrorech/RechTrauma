@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RechTrauma — Choque · DCR · Diamond of Death</title>
+<style>
+  :root {
+    --bg:        #0d0f12;
+    --surface:   #13161b;
+    --card:      #1a1e26;
+    --border:    #252a35;
+    --accent:    #e84040;   /* vermelho trauma */
+    --amber:     #f0a500;
+    --teal:      #00b4a6;
+    --muted:     #5a6275;
+    --text:      #d4d8e0;
+    --text-dim:  #8a92a3;
+    --white:     #f0f2f6;
+    --danger:    #ff4d4d;
+    --warning:   #f0a500;
+    --ok:        #3dd68c;
+    --info:      #4da6ff;
+
+    --r: 6px;
+    --r-lg: 10px;
+    --mono: 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 2px solid var(--accent);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--white);
+  }
+  .topbar-logo span { color: var(--accent); }
+  .topbar-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .topbar-ref {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ─── NAV TABS ─── */
+  .nav-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 12px;
+    gap: 2px;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 10px 14px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-dim);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ─── LAYOUT ─── */
+  .content { padding: 16px; max-width: 860px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title.amber { color: var(--amber); }
+  .card-title.teal  { color: var(--teal);  }
+
+  /* ─── SUBSECTION HEADER ─── */
+  .sub-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 16px 0 8px;
+  }
+  .sub-title:first-child { margin-top: 0; }
+
+  /* ─── TABLE ─── */
+  .tbl-wrap { overflow-x: auto; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th {
+    background: #1f2330;
+    color: var(--text-dim);
+    font-weight: 700;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #1e2230;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1e2230; }
+
+  /* status cells */
+  .c-danger { color: var(--danger); font-weight: 700; }
+  .c-warn   { color: var(--warning); font-weight: 700; }
+  .c-ok     { color: var(--ok);    }
+  .c-info   { color: var(--info);  }
+  .c-muted  { color: var(--muted); }
+
+  /* ─── BADGE / PILL ─── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .badge-red    { background: #3a1010; color: var(--danger); border: 1px solid #6a1515; }
+  .badge-amber  { background: #2e200a; color: var(--amber);  border: 1px solid #5a3d10; }
+  .badge-green  { background: #0d2e1c; color: var(--ok);     border: 1px solid #1a5a36; }
+  .badge-blue   { background: #0d1f3a; color: var(--info);   border: 1px solid #1a3d6e; }
+  .badge-teal   { background: #0a2626; color: var(--teal);   border: 1px solid #0a4444; }
+
+  /* ─── FISIOPATH FLOW ─── */
+  .flow-box {
+    background: #111520;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .flow-box .hl  { color: var(--amber); }
+  .flow-box .hlr { color: var(--danger); }
+  .flow-box .hlt { color: var(--teal); }
+  .flow-box .hlg { color: var(--ok); }
+
+  /* ─── ALERT BOXES ─── */
+  .alert {
+    padding: 10px 14px;
+    border-radius: var(--r);
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    border-left: 3px solid;
+    line-height: 1.5;
+  }
+  .alert-red    { background: #1e0f0f; border-color: var(--danger); color: #ffb3b3; }
+  .alert-amber  { background: #1e160a; border-color: var(--amber);  color: #ffd87a; }
+  .alert-teal   { background: #0a1f1e; border-color: var(--teal);   color: #7ee8df; }
+  .alert-blue   { background: #0a1525; border-color: var(--info);   color: #92caff; }
+
+  /* ─── CALCULADORA ─── */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  @media(max-width:520px){ .calc-grid { grid-template-columns: 1fr; } }
+
+  .calc-field label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .calc-field input, .calc-field select {
+    width: 100%;
+    background: #111520;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--white);
+    padding: 7px 10px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .calc-field input:focus, .calc-field select:focus {
+    border-color: var(--accent);
+  }
+  .calc-field .unit {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .btn-calc {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--r);
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.15s;
+    margin-bottom: 14px;
+  }
+  .btn-calc:hover { opacity: 0.88; }
+  .btn-calc.amber { background: var(--amber); color: #111; }
+  .btn-calc.teal  { background: var(--teal);  color: #111; }
+
+  /* ─── RESULTADO CALCULADORA ─── */
+  .result-panel {
+    background: #0e1218;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 14px;
+    display: none;
+    margin-bottom: 12px;
+  }
+  .result-panel.visible { display: block; }
+  .result-main {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .result-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .result-items {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-row .lbl { color: var(--text-dim); }
+  .result-row .val { font-weight: 700; }
+
+  /* ─── DIAMOND DISPLAY ─── */
+  .diamond-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .diamond-item {
+    background: #111520;
+    border-radius: var(--r);
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .diamond-item .d-icon { font-size: 20px; margin-bottom: 4px; }
+  .diamond-item .d-name {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .diamond-item .d-val {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .diamond-item .d-status {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+  .diamond-item.normal { border-color: #1a5a36; }
+  .diamond-item.mild   { border-color: #5a3d10; }
+  .diamond-item.severe { border-color: #6a1515; }
+
+  /* ─── PTM PROTOCOL ─── */
+  .ratio-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+    font-size: 12px;
+  }
+  .ratio-label { color: var(--text-dim); width: 60px; flex-shrink: 0; font-weight: 600; }
+  .ratio-unit {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .ratio-block {
+    background: #cc2222;
+    border-radius: 3px;
+    padding: 3px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .ratio-block.plasma { background: #c47a00; }
+  .ratio-block.platelet { background: #0e6655; }
+  .ratio-block.cryo { background: #1a3d7a; }
+
+  /* ─── MNEMONIC ─── */
+  .mnemonic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .mnemonic-item {
+    background: #111520;
+    border-radius: var(--r);
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid;
+  }
+  .mnemonic-item .m-letter {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .mnemonic-item .m-text {
+    font-size: 10.5px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .ck-icon { flex-shrink: 0; margin-top: 1px; font-size: 13px; }
+  .checklist .ck-text { flex: 1; }
+  .checklist .ck-note { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ─── DRUG TABLE ─── */
+  .drug-pill {
+    display: inline-block;
+    background: #1e2230;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    margin: 1px;
+  }
+
+  /* ─── SCENARIO CARDS ─── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .scenario-card {
+    background: #111520;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 12px;
+    border-left: 3px solid;
+  }
+  .scenario-card .sc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .scenario-card .sc-name { font-weight: 700; font-size: 13px; }
+  .scenario-card .sc-body { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+  /* responsive columns */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media(max-width:600px){ .two-col { grid-template-columns: 1fr; } }
+
+  /* separador */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+  }
+
+  small { font-size: 10.5px; color: var(--muted); }
+
+  /* tabs internas */
+  .inner-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .inner-tab {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+  .inner-tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .inner-section { display: none; }
+  .inner-section.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">Rech<span>Trauma</span></div>
+  <div class="topbar-badge">MÓDULOS 3·4·5</div>
+  <div class="topbar-ref">ATLS · ESC Trauma Bleeding 2023 · BTF</div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('choque')">🩸 Choque</button>
+  <button class="nav-tab" onclick="showTab('dcr')">⚙️ DCR</button>
+  <button class="nav-tab" onclick="showTab('diamond')">💎 Diamond of Death</button>
+  <button class="nav-tab" onclick="showTab('calcs')">🧮 Calculadoras</button>
+  <button class="nav-tab" onclick="showTab('ptm')">🔴 Transfusão Maciça</button>
+</div>
+
+<!-- ============================================================
+     SEÇÃO 1 — CHOQUE NO TRAUMA
+     ============================================================ -->
+<div class="content">
+<div class="section active" id="sec-choque">
+
+  <!-- CLASSIFICAÇÃO ATLS -->
+  <div class="card">
+    <div class="card-title">Classificação ATLS — Choque Hemorrágico</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Parâmetro</th>
+        <th class="c-ok">Classe I</th>
+        <th class="c-ok">Classe II</th>
+        <th class="c-warn">Classe III</th>
+        <th class="c-danger">Classe IV</th>
+      </tr>
+      <tr>
+        <td>Perda de volume</td>
+        <td>&lt; 750 mL<br><small>&lt;15%</small></td>
+        <td>750–1500 mL<br><small>15–30%</small></td>
+        <td>1500–2000 mL<br><small>30–40%</small></td>
+        <td>&gt; 2000 mL<br><small>&gt;40%</small></td>
+      </tr>
+      <tr>
+        <td>FC</td>
+        <td class="c-ok">&lt; 100</td>
+        <td class="c-ok">100–120</td>
+        <td class="c-warn">120–140</td>
+        <td class="c-danger">&gt; 140</td>
+      </tr>
+      <tr>
+        <td>PA sistólica</td>
+        <td class="c-ok">Normal</td>
+        <td class="c-ok">Normal</td>
+        <td class="c-warn">↓</td>
+        <td class="c-danger">↓↓</td>
+      </tr>
+      <tr>
+        <td>Pressão de pulso</td>
+        <td class="c-ok">Normal / ↑</td>
+        <td class="c-warn">↓</td>
+        <td class="c-warn">↓</td>
+        <td class="c-danger">↓↓</td>
+      </tr>
+      <tr>
+        <td>FR</td>
+        <td>14–20</td>
+        <td>20–30</td>
+        <td class="c-warn">30–40</td>
+        <td class="c-danger">&gt; 35</td>
+      </tr>
+      <tr>
+        <td>Débito urinário (mL/h)</td>
+        <td>&gt; 30</td>
+        <td>20–30</td>
+        <td class="c-warn">5–15</td>
+        <td class="c-danger">Mínimo</td>
+      </tr>
+      <tr>
+        <td>Glasgow</td>
+        <td>15</td>
+        <td>14–15</td>
+        <td class="c-warn">12–14</td>
+        <td class="c-danger">≤ 11</td>
+      </tr>
+      <tr>
+        <td>BE</td>
+        <td>0 a −2</td>
+        <td>−2 a −6</td>
+        <td class="c-warn">−6 a −10</td>
+        <td class="c-danger">&lt; −10</td>
+      </tr>
+      <tr>
+        <td>Necessidade de hemotransfusão</td>
+        <td>Monitorar</td>
+        <td>Possível</td>
+        <td class="c-warn">Sim</td>
+        <td class="c-danger">Maciça / Ativar PTM</td>
+      </tr>
+    </table>
+    </div>
+    <div class="alert alert-amber">⚠️ <strong>Armadilha ATLS:</strong> Pacientes jovens com boa reserva fisiológica podem manter PA normal com perda de até 30–40% da volemia. Não use PA isolada como marcador de choque. Use <strong>BE, lactato e Shock Index</strong>.</div>
+  </div>
+
+  <!-- TIPOS DE CHOQUE -->
+  <div class="card">
+    <div class="card-title">Tipos de Choque no Trauma</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Tipo</th>
+        <th>Mecanismo central</th>
+        <th>Achados diferenciadores</th>
+        <th>Conduta emergencial</th>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">Hemorrágico</span></td>
+        <td>↓ pré-carga → ↓ DC</td>
+        <td>Taquicardia, pele fria, hemorragia visível ou oculta</td>
+        <td>Hemostasia + transfusão</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-amber">Obstrutivo</span></td>
+        <td>Impedimento ao fluxo (PNX hipertensivo, tamponamento)</td>
+        <td>Tríade de Beck / ausência MV unilateral, turgência jugular</td>
+        <td>Descompressão imediata</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">Neurogênico</span></td>
+        <td>Perda tônus simpático → ↓ RVS</td>
+        <td>Bradicardia + hipotensão, pele quente, lesão medular alta</td>
+        <td>Vasopressor (NA) + excluir hemorrágico</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-teal">Cardiogênico</span></td>
+        <td>Contusão miocárdica / arritmia</td>
+        <td>ECG alterado, troponina, ecocardiograma</td>
+        <td>Suporte inotrópico, tratar causa</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">Misto</span></td>
+        <td>≥ 2 mecanismos simultâneos</td>
+        <td>Resposta inadequada ao tratamento isolado</td>
+        <td>Tratar todos os componentes em paralelo</td>
+      </tr>
+    </table>
+    </div>
+    <div class="alert alert-red">⚠️ <strong>Regra crítica:</strong> Todo choque em traumatizado é hemorrágico ATÉ PROVA EM CONTRÁRIO. Excluir hemorragia ativa ANTES de atribuir outra causa.</div>
+  </div>
+
+  <!-- BIOMARCADORES -->
+  <div class="card">
+    <div class="card-title">Biomarcadores de Perfusão — O que usar e quando</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Marcador</th>
+        <th>Valor crítico</th>
+        <th>Interpretação / Limitações</th>
+      </tr>
+      <tr>
+        <td><strong>Lactato</strong></td>
+        <td class="c-danger">&gt; 4 mmol/L = crítico</td>
+        <td>Hipoperfusão tecidual global. Melhor preditor de mortalidade. Clearance &gt;10%/h é meta. Pode estar normal precocemente.</td>
+      </tr>
+      <tr>
+        <td><strong>Base Excess (BE)</strong></td>
+        <td class="c-warn">BE &lt; −6 = choque moderado</td>
+        <td>Disponível rapidamente pela gasometria. Correlaciona com volume de hemorragia. Mais específico que pH isolado.</td>
+      </tr>
+      <tr>
+        <td><strong>Shock Index (SI)</strong></td>
+        <td class="c-warn">SI &gt; 1,0 = alarme<br><span class="c-danger">SI &gt; 1,4 = crítico</span></td>
+        <td>FC/PAS. Simples, à beira do leito. Detecta instabilidade antes da queda da PA sistólica.</td>
+      </tr>
+      <tr>
+        <td><strong>Deficit de base &lt; −10</strong></td>
+        <td class="c-danger">Mortalidade &gt;50%</td>
+        <td>Correlação forte com necessidade de PTM. Integrar com lactato.</td>
+      </tr>
+      <tr>
+        <td><strong>ScvO₂</strong></td>
+        <td class="c-warn">&lt; 65%</td>
+        <td>Baixa disponibilidade na sala vermelha. Mais útil na UTI.</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- FISIOPATOLOGIA CASCATA -->
+  <div class="card">
+    <div class="card-title">Fisiopatologia — Cascata do Choque Hemorrágico</div>
+    <div class="flow-box"><span class="hlr">HEMORRAGIA AGUDA</span>
+        │
+        ├─ <span class="hl">↓ Volume circulante</span>
+        │       │
+        │       ├─ ↓ Retorno venoso → ↓ Pré-carga → ↓ Volume sistólico
+        │       │       └─ <span class="hlr">↓ Débito cardíaco → Hipotensão</span>
+        │       │
+        │       └─ Ativação barorreceptores aórticos/carotídeos
+        │               └─ ↑ Simpático → Taquicardia + Vasoconstrição periférica
+        │                       └─ Redistribuição de fluxo (pele, vísceras → coração/cérebro)
+        │
+        ├─ <span class="hl">↓ DO₂ tecidual</span>
+        │       └─ Metabolismo anaeróbico → <span class="hlr">↑ Lactato + ↑ H⁺ (acidose)</span>
+        │               └─ Disfunção mitocondrial → morte celular
+        │
+        └─ <span class="hl">Endotélio ativado</span>
+                ├─ Liberação de Proteína C ativada
+                ├─ <span class="hlr">Fibrinólise patológica (hiperfibrinólise)</span>
+                └─ Coagulopatia traumática aguda (ATC)
+                        └─ <span class="hlr">TRÍADE LETAL: Hipotermia + Acidose + Coagulopatia</span></div>
+  </div>
+
+  <!-- RESPOSTA À RESSUSCITAÇÃO -->
+  <div class="card">
+    <div class="card-title">Resposta à Ressuscitação — Avaliação Dinâmica</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Tipo de resposta</th>
+        <th>Achados</th>
+        <th>Sangramento ativo?</th>
+        <th>Decisão</th>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">Rápida</span></td>
+        <td>Estabilização e manutenção dos sinais vitais</td>
+        <td>Provável pequeno / resolvido</td>
+        <td>Completar avaliação, decidir destino</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-amber">Transitória</span></td>
+        <td>Melhora inicial → deterioração ao reduzir infusão</td>
+        <td><strong>Provável sangramento ativo</strong></td>
+        <td>Hemostasia cirúrgica urgente + PTM</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">Ausente</span></td>
+        <td>Não responde a volume/transfusão</td>
+        <td><strong>Sangramento maciço ativo ou outra causa</strong></td>
+        <td>Hemostasia de emergência + descartar obstrutivo</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+</div><!-- /sec-choque -->
+
+<!-- ============================================================
+     SEÇÃO 2 — DAMAGE CONTROL RESUSCITATION
+     ============================================================ -->
+<div class="section" id="sec-dcr">
+
+  <div class="card">
+    <div class="card-title amber">O que é DCR — Conceito Central</div>
+    <p style="font-size:13px; line-height:1.6; margin-bottom:10px;">
+      Damage Control Resuscitation (DCR) é a estratégia de ressuscitação que combina <strong>controle precoce de sangramento</strong>, <strong>restrição de cristaloides</strong>, <strong>transfusão balanceada</strong> e <strong>hipotensão permissiva</strong> para interromper a espiral da tríade/diamond letal ANTES da correção anatômica definitiva.
+    </p>
+    <div class="alert alert-amber">
+      A DCR não é sobre o que infundir — é sobre <strong>o que NÃO infundir</strong> e <strong>a que velocidade tratar cada componente da coagulopatia</strong>.
+    </div>
+  </div>
+
+  <!-- PILARES DCR -->
+  <div class="card">
+    <div class="card-title amber">Pilares da DCR</div>
+    <div class="mnemonic-grid">
+      <div class="mnemonic-item" style="border-color: var(--danger);">
+        <div class="m-letter" style="color:var(--danger);">1</div>
+        <div class="m-text"><strong>Hemostasia precoce</strong><br>Cirurgia de controle de danos, REBOA, embolização</div>
+      </div>
+      <div class="mnemonic-item" style="border-color: var(--amber);">
+        <div class="m-letter" style="color:var(--amber);">2</div>
+        <div class="m-text"><strong>Hipotensão permissiva</strong><br>PAS 80–90 mmHg até hemostasia<br>(TCE: PAS ≥ 90)</div>
+      </div>
+      <div class="mnemonic-item" style="border-color: var(--teal);">
+        <div class="m-letter" style="color:var(--teal);">3</div>
+        <div class="m-text"><strong>Transfusão balanceada</strong><br>CH:PFC:Plaq = 1:1:1<br>Evitar hemodiluição</div>
+      </div>
+      <div class="mnemonic-item" style="border-color: var(--info);">
+        <div class="m-letter" style="color:var(--info);">4</div>
+        <div class="m-text"><strong>Controle de temperatura</strong><br>Cobertores térmicos, fluidos aquecidos, sala aquecida</div>
+      </div>
+      <div class="mnemonic-item" style="border-color: var(--ok);">
+        <div class="m-letter" style="color:var(--ok);">5</div>
+        <div class="m-text"><strong>TXA precoce</strong><br>&lt; 3h do trauma<br>1g IV em 10 min → 1g em 8h</div>
+      </div>
+      <div class="mnemonic-item" style="border-color: #9b59b6;">
+        <div class="m-letter" style="color:#9b59b6;">6</div>
+        <div class="m-text"><strong>Cálcio ionizado</strong><br>Meta: Ca²⁺ ≥ 1,1 mmol/L<br>CaCl₂ 1g IV por 4–6 CH</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIPOTENSÃO PERMISSIVA -->
+  <div class="card">
+    <div class="card-title amber">Hipotensão Permissiva — Quando e Quanto</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Cenário</th>
+        <th>Alvo de PA</th>
+        <th>Justificativa</th>
+      </tr>
+      <tr>
+        <td>Trauma sem TCE, sangramento ativo, sem hemostasia</td>
+        <td class="c-warn"><strong>PAS 80–90 mmHg</strong><br>PAM ~50 mmHg</td>
+        <td>Reduz sangramento sem "deslocar o coágulo". Não aumentar acima deste alvo até hemostasia cirúrgica.</td>
+      </tr>
+      <tr>
+        <td>Trauma + TCE grave (Glasgow ≤ 8)</td>
+        <td class="c-danger"><strong>PAS ≥ 90 mmHg<br>PAM ≥ 80 mmHg</strong></td>
+        <td>PPC = PAM − PIC. Hipotensão = isquemia cerebral secundária. Não aplicar HP neste cenário.</td>
+      </tr>
+      <tr>
+        <td>Trauma penetrante torácico isolado</td>
+        <td class="c-warn"><strong>PAS ~70–80 mmHg</strong></td>
+        <td>Evidência mais forte para HP neste grupo. CRASH-2 e dados FAST-1 suportam.</td>
+      </tr>
+      <tr>
+        <td>Após hemostasia cirúrgica</td>
+        <td class="c-ok"><strong>PAM ≥ 65 mmHg</strong></td>
+        <td>Ressuscitação normotensiva a partir deste ponto.</td>
+      </tr>
+    </table>
+    </div>
+    <div class="alert alert-red">⚠️ HP é uma estratégia de <strong>ponte até hemostasia</strong>, não uma meta de ressuscitação definitiva. Limite de tempo: máximo 60–90 minutos de HP.</div>
+  </div>
+
+  <!-- EVITAR -->
+  <div class="card">
+    <div class="card-title amber">O Que Evitar na DCR</div>
+    <ul class="checklist">
+      <li>
+        <span class="ck-icon">❌</span>
+        <div>
+          <div class="ck-text"><strong>Cristaloides em excesso</strong></div>
+          <div class="ck-note">Cada litro de SF 0,9% contribui com ~154 mEq de cloreto → acidose hiperclorêmica + hemodiluição de fatores. Meta: &lt; 1,5L total de cristaloide na fase aguda.</div>
+        </div>
+      </li>
+      <li>
+        <span class="ck-icon">❌</span>
+        <div>
+          <div class="ck-text"><strong>Coloide isolado sem sangue</strong></div>
+          <div class="ck-note">Não substitui fatores. Amido → pior coagulopatia e IRA.</div>
+        </div>
+      </li>
+      <li>
+        <span class="ck-icon">❌</span>
+        <div>
+          <div class="ck-text"><strong>Hipocalemia + hipotermia juntos</strong></div>
+          <div class="ck-note">Predispõe a FV. Monitorar K⁺ durante PTM.</div>
+        </div>
+      </li>
+      <li>
+        <span class="ck-icon">❌</span>
+        <div>
+          <div class="ck-text"><strong>Aguardar INR/TTPa para transfundir PFC</strong></div>
+          <div class="ck-note">Coagulopatia traumática aguda não é detectada precocemente por INR/TTPa. TEG/ROTEM é superior. Na ausência de TEG, transfundir empiricamente na proporção 1:1:1.</div>
+        </div>
+      </li>
+      <li>
+        <span class="ck-icon">❌</span>
+        <div>
+          <div class="ck-text"><strong>TXA após 3 horas do trauma</strong></div>
+          <div class="ck-note">CRASH-2: TXA &gt; 3h do trauma pode aumentar mortalidade por fibrinólise paradoxal. Se tempo incerto, não administrar.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- FISIOPATOLOGIA COAGULOPATIA -->
+  <div class="card">
+    <div class="card-title amber">Coagulopatia Traumática Aguda (ATC) — Fisiopatologia</div>
+    <div class="flow-box"><span class="hl">TRAUMA GRAVE + HIPOPERFUSÃO</span>
+        │
+        ├─ Ativação da <span class="hlr">Proteína C</span>
+        │       ├─ Inativa Fatores Va e VIIIa → ↓ formação de trombina
+        │       └─ Inibe PAI-1 → <span class="hlr">Hiperfibrinólise</span>
+        │               └─ Dissolução precoce de coágulos já formados
+        │
+        ├─ <span class="hl">Acidose (pH &lt; 7,2)</span>
+        │       └─ Inibe enzimas da cascata de coagulação (−50% atividade a pH 7,1)
+        │
+        ├─ <span class="hl">Hipotermia (&lt; 35°C)</span>
+        │       ├─ Inibe enzimas plaquetárias
+        │       └─ Reduz síntese de fatores hepáticos
+        │
+        └─ <span class="hl">Hemodiluição</span> (cristaloide em excesso)
+                └─ ↓ Concentração de fatores + plaquetas
+                        └─ <span class="hlr">COAGULOPATIA ESTABELECIDA → SANGRAMENTO CONTÍNUO</span>
+
+<span class="hlg">TEG/ROTEM detecta hiperfibrinólise precocemente — INR/TTPa NÃO detectam ATC</span></div>
+  </div>
+
+  <!-- PROTOCOLO TXA -->
+  <div class="card">
+    <div class="card-title amber">Ácido Tranexâmico (TXA) — Protocolo</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Detalhe</th>
+      </tr>
+      <tr><td>Mecanismo</td><td>Inibe ligação do plasminogênio à fibrina → ↓ fibrinólise</td></tr>
+      <tr><td>Dose</td><td><strong>1g IV em 100mL SF em 10 minutos</strong> → 1g IV em 8 horas</td></tr>
+      <tr><td>Janela terapêutica</td><td class="c-warn"><strong>&lt; 3 horas do trauma</strong> (idealmente &lt; 1h)</td></tr>
+      <tr><td>Indicação</td><td>Trauma com sangramento significativo ou risco (Shock Index &gt; 1, BE &lt; −6)</td></tr>
+      <tr><td>Contraindicações</td><td>Fibrinólise fisiológica (CID avançada) — controverso. TVP/TEP ativo.</td></tr>
+      <tr><td>Evidência</td><td>CRASH-2 (N=20.211): redução mortalidade por sangramento 5,7% vs 7,7% se &lt; 1h</td></tr>
+    </table>
+    </div>
+    <div class="alert alert-red">⚠️ TXA &gt; 3h do trauma: <strong>NÃO ADMINISTRAR</strong>. CRASH-2 mostrou aumento de mortalidade neste grupo.</div>
+  </div>
+
+</div><!-- /sec-dcr -->
+
+<!-- ============================================================
+     SEÇÃO 3 — DIAMOND OF DEATH
+     ============================================================ -->
+<div class="section" id="sec-diamond">
+
+  <div class="card">
+    <div class="card-title teal">Diamond of Death — Os Quatro Componentes</div>
+    <div class="alert alert-teal">
+      A evolução da "Tríade Letal" (hipotermia + acidose + coagulopatia) para o <strong>Diamond of Death</strong> incorpora a <strong>hipocalcemia ionizada</strong> como quarto elemento — frequentemente ignorado na prática, mas determinante em transfusão maciça.
+    </div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Elemento</th>
+        <th>Alvo normal</th>
+        <th>Limiar crítico</th>
+        <th>Mecanismo no trauma</th>
+        <th>Tratamento</th>
+      </tr>
+      <tr>
+        <td>🌡️ <strong>Hipotermia</strong></td>
+        <td>36–37,5°C</td>
+        <td class="c-danger">&lt; 34°C = grave</td>
+        <td>↓ atividade enzimática coagulação, ↓ função plaquetária, ↑ arritmias</td>
+        <td>Cobertores, fluidos aquecidos, sala aquecida, esôfago térmico</td>
+      </tr>
+      <tr>
+        <td>🧪 <strong>Acidose</strong></td>
+        <td>pH 7,35–7,45</td>
+        <td class="c-danger">pH &lt; 7,2 = grave</td>
+        <td>Inibe cascata coagulação (−50% a pH 7,1), ↓ contratilidade miocárdica</td>
+        <td>Hemostasia + ressuscitação (NaHCO₃ apenas se pH &lt; 7,1 + instabilidade)</td>
+      </tr>
+      <tr>
+        <td>🩸 <strong>Coagulopatia</strong></td>
+        <td>INR &lt; 1,5<br>Fibrinogênio &gt; 2g/L</td>
+        <td class="c-danger">INR &gt; 1,5<br>Fibrinogênio &lt; 1,5g/L</td>
+        <td>ATC, hemodiluição, hipotermia, acidose — todos convergem</td>
+        <td>PFC + Fibrinogênio + Plaquetas + TXA + Crioprecipitado</td>
+      </tr>
+      <tr>
+        <td>💛 <strong>Hipocalcemia</strong></td>
+        <td>Ca²⁺ ionizado 1,15–1,35 mmol/L</td>
+        <td class="c-danger">&lt; 1,1 mmol/L</td>
+        <td>Quelação de Ca²⁺ pelo citrato (conservante do sangue). 4 CH = ~3g citrato</td>
+        <td>CaCl₂ 1g IV por cada 4 CH transfundidos</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- INTERAÇÕES -->
+  <div class="card">
+    <div class="card-title teal">Interações Entre os Componentes — Por que é um "Diamond"?</div>
+    <div class="flow-box"><span class="hlr">HIPOTERMIA</span> ←──────────────────────────────────────────────────┐
+    │                                                                          │
+    │  ↓ função plaquetária                                                    │
+    │  ↓ síntese de fatores                                                    │
+    ▼                                                                          │
+<span class="hlr">COAGULOPATIA</span> ←────────────────── <span class="hl">HIPOCALCEMIA</span>                         │
+    │                                    │                                     │
+    │  sangramento contínuo              │  Ca²⁺ = co-fator obrigatório       │
+    ▼                                    │  de fatores II, VII, IX, X          │
+<span class="hlr">ACIDOSE</span> ──────────────────────────────┘                                     │
+    │                                                                          │
+    │  ↓ atividade enzimática coagulação                                       │
+    │  ↑ vasodilatação → mais sangramento                                      │
+    └──────────────────── retroalimenta HIPOTERMIA ──────────────────────────┘
+
+<span class="hlg">Cada elemento PERPETUA os outros → Espiral de morte sem interrupção ativa</span></div>
+  </div>
+
+  <!-- MONITORIZAÇÃO -->
+  <div class="card">
+    <div class="card-title teal">Monitorização Integrada do Diamond</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Parâmetro</th>
+        <th>Método</th>
+        <th>Frequência na PTM</th>
+        <th>Alvo</th>
+      </tr>
+      <tr>
+        <td>Temperatura central</td>
+        <td>Sonda esofágica, retal ou vesical</td>
+        <td>Contínuo</td>
+        <td class="c-ok">&gt; 35°C</td>
+      </tr>
+      <tr>
+        <td>pH / BE / Lactato</td>
+        <td>Gasometria arterial</td>
+        <td>A cada 30–60 min</td>
+        <td class="c-ok">pH &gt; 7,35 / BE &gt; −6 / Lactato &lt; 2</td>
+      </tr>
+      <tr>
+        <td>INR / TTPa</td>
+        <td>Coagulograma</td>
+        <td>A cada 1–2h</td>
+        <td class="c-ok">INR &lt; 1,5 / TTPa &lt; 1,5× normal</td>
+      </tr>
+      <tr>
+        <td>Fibrinogênio</td>
+        <td>Clauss ou derivado</td>
+        <td>A cada 1–2h</td>
+        <td class="c-ok">&gt; 2 g/L (alvo &gt; 1,5 na urgência)</td>
+      </tr>
+      <tr>
+        <td>Plaquetas</td>
+        <td>Hemograma</td>
+        <td>A cada 1–2h</td>
+        <td class="c-ok">&gt; 50.000 / &gt; 100.000 se TCE</td>
+      </tr>
+      <tr>
+        <td>Cálcio ionizado</td>
+        <td>Gasometria / iônico</td>
+        <td>Após cada 4–6 CH</td>
+        <td class="c-ok">≥ 1,1 mmol/L</td>
+      </tr>
+      <tr>
+        <td>TEG / ROTEM</td>
+        <td>Tromboelastografia</td>
+        <td>Imediato + após terapia</td>
+        <td>Guiar componentes específicos</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- FIBRINOGÊNIO -->
+  <div class="card">
+    <div class="card-title teal">Fibrinogênio — O Primeiro a Cair</div>
+    <p style="font-size:12.5px; line-height:1.6;">
+      O fibrinogênio é o fator de coagulação de menor concentração relativa e o <strong>primeiro a atingir nível crítico</strong> durante hemorragia maciça. A diretriz europeia de sangramento 2023 (ESAIC/ESA) recomenda manutenção de fibrinogênio ≥ 1,5–2 g/L durante sangramento ativo, com alvo ≥ 2 g/L no trauma grave.
+    </p>
+    <div class="tbl-wrap" style="margin-top:10px;">
+    <table>
+      <tr>
+        <th>Produto</th>
+        <th>Dose inicial</th>
+        <th>Fibrinogênio fornecido</th>
+        <th>Tempo de preparo</th>
+      </tr>
+      <tr>
+        <td>Crioprecipitado</td>
+        <td>10 unidades</td>
+        <td>~3–4 g</td>
+        <td>15–30 min (descongelamento)</td>
+      </tr>
+      <tr>
+        <td>Concentrado de fibrinogênio</td>
+        <td>3–4 g IV</td>
+        <td>3–4 g (imediato)</td>
+        <td class="c-ok">Pronto para uso (&lt; 5 min)</td>
+      </tr>
+      <tr>
+        <td>PFC (para fibrinogênio)</td>
+        <td>4–6 unidades</td>
+        <td>~1–2 g</td>
+        <td>Descongelamento necessário</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+</div><!-- /sec-diamond -->
+
+<!-- ============================================================
+     SEÇÃO 4 — CALCULADORAS
+     ============================================================ -->
+<div class="section" id="sec-calcs">
+
+  <div class="inner-tabs">
+    <button class="inner-tab active" onclick="showInner('calc-si')">Shock Index</button>
+    <button class="inner-tab" onclick="showInner('calc-diamond')">Diamond of Death</button>
+    <button class="inner-tab" onclick="showInner('calc-rts')">RTS</button>
+  </div>
+
+  <!-- SHOCK INDEX -->
+  <div class="inner-section active" id="calc-si">
+    <div class="card">
+      <div class="card-title">Shock Index — FC / PAS</div>
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>FC (bpm)</label>
+          <input type="number" id="si-fc" placeholder="ex: 120" min="30" max="250">
+        </div>
+        <div class="calc-field">
+          <label>PAS (mmHg)</label>
+          <input type="number" id="si-pas" placeholder="ex: 90" min="40" max="250">
+        </div>
+      </div>
+      <button class="btn-calc" onclick="calcSI()">CALCULAR SHOCK INDEX</button>
+
+      <div class="result-panel" id="res-si">
+        <div class="result-label">SHOCK INDEX</div>
+        <div class="result-main" id="si-val">—</div>
+        <div class="result-items">
+          <div class="result-row"><span class="lbl">Classificação</span><span class="val" id="si-class">—</span></div>
+          <div class="result-row"><span class="lbl">Interpretação clínica</span><span class="val" id="si-interp">—</span></div>
+          <div class="result-row"><span class="lbl">Classe ATLS estimada</span><span class="val" id="si-atls">—</span></div>
+          <div class="result-row"><span class="lbl">Conduta sugerida</span><span class="val" id="si-cond">—</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div class="sub-title">Shock Index Pediátrico (PSI)</div>
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>FC (bpm)</label>
+            <input type="number" id="psi-fc" placeholder="ex: 140" min="50" max="300">
+          </div>
+          <div class="calc-field">
+            <label>PAS (mmHg)</label>
+            <input type="number" id="psi-pas" placeholder="ex: 80" min="30" max="200">
+          </div>
+        </div>
+        <div class="calc-field" style="margin-bottom:10px;">
+          <label>Idade (anos)</label>
+          <select id="psi-age">
+            <option value="1">1–3 anos (normal PSI &lt; 1.22)</option>
+            <option value="4">4–6 anos (normal PSI &lt; 1.0)</option>
+            <option value="7">7–12 anos (normal PSI &lt; 0.9)</option>
+            <option value="13">13–17 anos (normal PSI &lt; 0.85)</option>
+          </select>
+        </div>
+        <button class="btn-calc amber" onclick="calcPSI()">CALCULAR PSI PEDIÁTRICO</button>
+        <div class="result-panel" id="res-psi">
+          <div class="result-label">PEDIATRIC SHOCK INDEX</div>
+          <div class="result-main" id="psi-val">—</div>
+          <div class="result-items">
+            <div class="result-row"><span class="lbl">Avaliação</span><span class="val" id="psi-class">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /calc-si -->
+
+  <!-- DIAMOND OF DEATH -->
+  <div class="inner-section" id="calc-diamond">
+    <div class="card">
+      <div class="card-title teal">Avaliador — Diamond of Death</div>
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>Temperatura central (°C)</label>
+          <input type="number" id="d-temp" placeholder="ex: 35.5" step="0.1" min="28" max="41">
+          <div class="unit">Normal: 36–37,5°C</div>
+        </div>
+        <div class="calc-field">
+          <label>pH arterial</label>
+          <input type="number" id="d-ph" placeholder="ex: 7.25" step="0.01" min="6.8" max="7.6">
+          <div class="unit">Normal: 7,35–7,45</div>
+        </div>
+        <div class="calc-field">
+          <label>Base Excess (BE)</label>
+          <input type="number" id="d-be" placeholder="ex: -8" step="0.5" min="-30" max="10">
+          <div class="unit">Normal: -2 a +2 mEq/L</div>
+        </div>
+        <div class="calc-field">
+          <label>Lactato (mmol/L)</label>
+          <input type="number" id="d-lac" placeholder="ex: 4.5" step="0.1" min="0" max="25">
+          <div class="unit">Normal: &lt; 2 mmol/L</div>
+        </div>
+        <div class="calc-field">
+          <label>INR</label>
+          <input type="number" id="d-inr" placeholder="ex: 1.8" step="0.1" min="0.8" max="10">
+          <div class="unit">Normal: &lt; 1,2</div>
+        </div>
+        <div class="calc-field">
+          <label>Fibrinogênio (g/L)</label>
+          <input type="number" id="d-fib" placeholder="ex: 1.2" step="0.1" min="0" max="10">
+          <div class="unit">Normal: 2–4 g/L</div>
+        </div>
+        <div class="calc-field">
+          <label>Plaquetas (×10³/μL)</label>
+          <input type="number" id="d-plt" placeholder="ex: 80" min="0" max="1000">
+          <div class="unit">Normal: 150–400</div>
+        </div>
+        <div class="calc-field">
+          <label>Ca²⁺ ionizado (mmol/L)</label>
+          <input type="number" id="d-ca" placeholder="ex: 0.95" step="0.01" min="0.5" max="2">
+          <div class="unit">Normal: 1,15–1,35 mmol/L</div>
+        </div>
+      </div>
+      <button class="btn-calc teal" onclick="calcDiamond()">AVALIAR DIAMOND OF DEATH</button>
+
+      <div class="result-panel" id="res-diamond">
+        <div class="result-label">STATUS DIAMOND OF DEATH</div>
+        <div class="result-main" id="diamond-score">—</div>
+        <div class="diamond-status" id="diamond-grid"></div>
+        <div id="diamond-alerts"></div>
+        <div id="diamond-conduta" style="margin-top:10px; font-size:12px; line-height:1.6;"></div>
+      </div>
+    </div>
+  </div><!-- /calc-diamond -->
+
+  <!-- RTS -->
+  <div class="inner-section" id="calc-rts">
+    <div class="card">
+      <div class="card-title">Revised Trauma Score (RTS)</div>
+      <div class="calc-field" style="margin-bottom:10px;">
+        <label>Glasgow Coma Scale</label>
+        <select id="rts-gcs">
+          <option value="4">13–15</option>
+          <option value="3">9–12</option>
+          <option value="2">6–8</option>
+          <option value="1">4–5</option>
+          <option value="0">3</option>
+        </select>
+      </div>
+      <div class="calc-field" style="margin-bottom:10px;">
+        <label>PAS sistólica (mmHg)</label>
+        <select id="rts-pas">
+          <option value="4">&gt; 89</option>
+          <option value="3">76–89</option>
+          <option value="2">50–75</option>
+          <option value="1">1–49</option>
+          <option value="0">0</option>
+        </select>
+      </div>
+      <div class="calc-field" style="margin-bottom:12px;">
+        <label>Frequência Respiratória (irpm)</label>
+        <select id="rts-fr">
+          <option value="4">10–29</option>
+          <option value="3">≥ 30</option>
+          <option value="2">6–9</option>
+          <option value="1">1–5</option>
+          <option value="0">0 (apneia)</option>
+        </select>
+      </div>
+      <button class="btn-calc" onclick="calcRTS()">CALCULAR RTS</button>
+      <div class="result-panel" id="res-rts">
+        <div class="result-label">REVISED TRAUMA SCORE</div>
+        <div class="result-main" id="rts-val">—</div>
+        <div class="result-items">
+          <div class="result-row"><span class="lbl">Sobrevida estimada</span><span class="val" id="rts-surv">—</span></div>
+          <div class="result-row"><span class="lbl">Interpretação</span><span class="val" id="rts-interp">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /calc-rts -->
+
+</div><!-- /sec-calcs -->
+
+<!-- ============================================================
+     SEÇÃO 5 — TRANSFUSÃO MACIÇA
+     ============================================================ -->
+<div class="section" id="sec-ptm">
+
+  <!-- CRITÉRIOS DE ATIVAÇÃO -->
+  <div class="card">
+    <div class="card-title">Ativação do PTM — Critérios</div>
+    <div class="sub-title">Critérios clínicos (qualquer um = considerar PTM)</div>
+    <ul class="checklist">
+      <li><span class="ck-icon c-danger">⚡</span><div><div class="ck-text"><strong>Necessidade de ≥ 10 unidades de CH em 24h</strong></div><div class="ck-note">Definição clássica de transfusão maciça.</div></div></li>
+      <li><span class="ck-icon c-danger">⚡</span><div><div class="ck-text"><strong>Shock Index &gt; 1,4</strong></div></div></li>
+      <li><span class="ck-icon c-danger">⚡</span><div><div class="ck-text"><strong>BE &lt; −10 + atividade hemorrágica clara</strong></div></div></li>
+      <li><span class="ck-icon c-warn">⚠️</span><div><div class="ck-text"><strong>Score ABC ≥ 2</strong></div><div class="ck-note">Assessment of Blood Consumption: PA ≤ 90, FC ≥ 120, mecanismo penetrante, FAST positivo — 1 ponto cada, ≥ 2 = ativar PTM.</div></div></li>
+      <li><span class="ck-icon c-warn">⚠️</span><div><div class="ck-text"><strong>Resposta transitória ou ausente à ressuscitação inicial</strong></div></div></li>
+    </ul>
+  </div>
+
+  <!-- PROPORÇÃO 1:1:1 -->
+  <div class="card">
+    <div class="card-title">Proporção 1:1:1 — Transfusão Balanceada</div>
+    <p style="font-size:12.5px; margin-bottom:12px;">Baseada no PROPPR Trial (JAMA 2015): plasma fresco + plaquetas na proporção 1:1 com CH reduz mortalidade em 24h (NNT ~14).</p>
+
+    <div class="sub-title">Protocolo padrão por caixa (pacote de transfusão maciça)</div>
+    <div class="ratio-bar">
+      <span class="ratio-label">Caixa 1</span>
+      <div class="ratio-unit">
+        <span class="ratio-block">CH ×6</span>
+        <span class="ratio-block plasma">PFC ×6</span>
+        <span class="ratio-block platelet">Plaq ×1 aférese</span>
+      </div>
+    </div>
+    <div class="ratio-bar">
+      <span class="ratio-label">Caixa 2</span>
+      <div class="ratio-unit">
+        <span class="ratio-block">CH ×6</span>
+        <span class="ratio-block plasma">PFC ×6</span>
+        <span class="ratio-block platelet">Plaq ×1 aférese</span>
+        <span class="ratio-block cryo">Crio ×10</span>
+      </div>
+    </div>
+
+    <div class="alert alert-blue" style="margin-top:10px;">
+      ℹ️ Crioprecipitado (caixa 2) fornece <strong>fibrinogênio, fator VIII, fator von Willebrand e fator XIII</strong>. Indicar quando fibrinogênio &lt; 1,5 g/L ou na ausência de TEG/ROTEM para guiar.
+    </div>
+  </div>
+
+  <!-- CÁLCIO NA PTM -->
+  <div class="card">
+    <div class="card-title">Cálcio na PTM — Protocolo</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Produto</th><th>CH transfundido</th><th>Dose de CaCl₂</th><th>Observação</th></tr>
+      <tr><td>CaCl₂ 10%</td><td>Cada 4 CH</td><td class="c-warn"><strong>1g IV em 5–10 min</strong></td><td>CaCl₂ fornece 3× mais Ca²⁺ elementar que gluconato. Preferir se acesso central disponível.</td></tr>
+      <tr><td>Gluconato de Ca²⁺ 10%</td><td>Cada 4 CH</td><td>3g IV</td><td>Alternativa se apenas acesso periférico. Metabolização hepática necessária → menos eficaz em hipoperfusão.</td></tr>
+    </table>
+    </div>
+    <div class="alert alert-red">⚠️ CaCl₂ é cáustico — <strong>NÃO administrar perifericamente</strong>. Veia central ou intraósseo proximal. Gluconato pode ser periférico.</div>
+  </div>
+
+  <!-- CHECKLIST PTM -->
+  <div class="card">
+    <div class="card-title">Checklist — Primeiros 30 Minutos do PTM</div>
+    <ul class="checklist">
+      <li><span class="ck-icon">🔴</span><div><div class="ck-text"><strong>0–5 min: ATIVAR time de transfusão + hemocentro</strong></div><div class="ck-note">Notificar banco de sangue do protocolo. Confirmar tipo sanguíneo ou usar O negativo.</div></div></li>
+      <li><span class="ck-icon">🔴</span><div><div class="ck-text"><strong>TXA 1g IV em 10 min (se &lt; 3h do trauma)</strong></div></div></li>
+      <li><span class="ck-icon">🔴</span><div><div class="ck-text"><strong>Gasometria: pH, BE, lactato, Ca²⁺ ionizado, Hb</strong></div></div></li>
+      <li><span class="ck-icon">🟡</span><div><div class="ck-text"><strong>Aquecer paciente + fluidos</strong></div><div class="ck-note">Blood warmer. Cobertores térmicos. Sala &gt; 25°C se possível.</div></div></li>
+      <li><span class="ck-icon">🟡</span><div><div class="ck-text"><strong>Monitorização contínua temperatura central</strong></div></div></li>
+      <li><span class="ck-icon">🟡</span><div><div class="ck-text"><strong>Calcular Shock Index + ABC Score</strong></div></div></li>
+      <li><span class="ck-icon">🟢</span><div><div class="ck-text"><strong>Coagulograma: INR, TTPa, fibrinogênio, plaquetas</strong></div></div></li>
+      <li><span class="ck-icon">🟢</span><div><div class="ck-text"><strong>TEG/ROTEM se disponível</strong></div></div></li>
+      <li><span class="ck-icon">🟢</span><div><div class="ck-text"><strong>Cálcio IV após cada 4 CH</strong></div></div></li>
+      <li><span class="ck-icon">🟢</span><div><div class="ck-text"><strong>Manter hipotensão permissiva até hemostasia cirúrgica</strong></div><div class="ck-note">PAS 80–90 mmHg (ou PAM ~50). Exceção: TCE associado.</div></div></li>
+    </ul>
+  </div>
+
+  <!-- ENDPOINT -->
+  <div class="card">
+    <div class="card-title">Endpoints de Ressuscitação — Quando Parar a PTM?</div>
+    <div class="tbl-wrap">
+    <table>
+      <tr><th>Parâmetro</th><th>Meta</th></tr>
+      <tr><td>Temperatura</td><td class="c-ok">&gt; 35°C</td></tr>
+      <tr><td>pH</td><td class="c-ok">&gt; 7,35</td></tr>
+      <tr><td>BE</td><td class="c-ok">&gt; −6 mEq/L</td></tr>
+      <tr><td>Lactato</td><td class="c-ok">&lt; 2 mmol/L (ou clearance &gt; 10%/h)</td></tr>
+      <tr><td>Ca²⁺ ionizado</td><td class="c-ok">≥ 1,1 mmol/L</td></tr>
+      <tr><td>INR</td><td class="c-ok">&lt; 1,5</td></tr>
+      <tr><td>Fibrinogênio</td><td class="c-ok">&gt; 2 g/L</td></tr>
+      <tr><td>Plaquetas</td><td class="c-ok">&gt; 50.000 (ou &gt; 100.000 se TCE)</td></tr>
+      <tr><td>Hemostasia cirúrgica</td><td class="c-ok">Confirmada</td></tr>
+    </table>
+    </div>
+  </div>
+
+</div><!-- /sec-ptm -->
+
+</div><!-- /content -->
+
+<script>
+// ─── NAV ───
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showInner(id) {
+  document.querySelectorAll('.inner-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.inner-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── SHOCK INDEX ───
+function calcSI() {
+  const fc  = parseFloat(document.getElementById('si-fc').value);
+  const pas = parseFloat(document.getElementById('si-pas').value);
+  if (!fc || !pas) return;
+  const si = (fc / pas).toFixed(2);
+  let cls, interp, atls, cond, color;
+  if (si < 0.6) {
+    cls='Normal'; interp='Sem sinais de choque'; atls='Classe I'; cond='Monitorar'; color='var(--ok)';
+  } else if (si < 1.0) {
+    cls='Baixo risco'; interp='Fisiologicamente compensado'; atls='Classe I–II'; cond='Monitorar de perto, gasometria'; color='var(--ok)';
+  } else if (si < 1.4) {
+    cls='⚠️ ALARME'; interp='Instabilidade hemodinâmica. Choque provável.'; atls='Classe II–III'; cond='Volume + tipagem + avaliar PTM. Gasometria urgente.'; color='var(--warning)';
+  } else {
+    cls='🔴 CRÍTICO'; interp='Choque grave. Alta mortalidade.'; atls='Classe III–IV'; cond='ATIVAR PTM. Hemostasia imediata. Hipotensão permissiva.'; color='var(--danger)';
+  }
+  document.getElementById('si-val').textContent = si;
+  document.getElementById('si-val').style.color = color;
+  document.getElementById('si-class').textContent = cls;
+  document.getElementById('si-class').style.color = color;
+  document.getElementById('si-interp').textContent = interp;
+  document.getElementById('si-atls').textContent = atls;
+  document.getElementById('si-cond').textContent = cond;
+  document.getElementById('res-si').classList.add('visible');
+}
+
+// ─── PSI ───
+function calcPSI() {
+  const fc  = parseFloat(document.getElementById('psi-fc').value);
+  const pas = parseFloat(document.getElementById('psi-pas').value);
+  const ag  = parseInt(document.getElementById('psi-age').value);
+  if (!fc || !pas) return;
+  const psi = (fc / pas).toFixed(2);
+  const cutoffs = {1: 1.22, 4: 1.0, 7: 0.9, 13: 0.85};
+  const cut = cutoffs[ag];
+  const cls = psi >= cut ? `🔴 ELEVADO (corte ${cut} para esta faixa etária) — risco elevado` : `✅ Normal para faixa etária (corte ${cut})`;
+  document.getElementById('psi-val').textContent = psi;
+  document.getElementById('psi-val').style.color = psi >= cut ? 'var(--danger)' : 'var(--ok)';
+  document.getElementById('psi-class').textContent = cls;
+  document.getElementById('res-psi').classList.add('visible');
+}
+
+// ─── DIAMOND OF DEATH ───
+function calcDiamond() {
+  const temp = parseFloat(document.getElementById('d-temp').value);
+  const ph   = parseFloat(document.getElementById('d-ph').value);
+  const be   = parseFloat(document.getElementById('d-be').value);
+  const lac  = parseFloat(document.getElementById('d-lac').value);
+  const inr  = parseFloat(document.getElementById('d-inr').value);
+  const fib  = parseFloat(document.getElementById('d-fib').value);
+  const plt  = parseFloat(document.getElementById('d-plt').value);
+  const ca   = parseFloat(document.getElementById('d-ca').value);
+
+  // Avaliar cada componente
+  function classTemp(v) {
+    if (isNaN(v)) return null;
+    if (v >= 36) return {status:'normal', label:'Normal', color:'var(--ok)'};
+    if (v >= 34) return {status:'mild',   label:'Hipotermia leve', color:'var(--warning)'};
+    return              {status:'severe', label:'⚠️ Hipotermia grave', color:'var(--danger)'};
+  }
+  function classAcid(v_ph, v_be) {
+    if (isNaN(v_ph) && isNaN(v_be)) return null;
+    const ph_crit = !isNaN(v_ph) && v_ph < 7.2;
+    const be_crit = !isNaN(v_be) && v_be < -10;
+    const ph_mild = !isNaN(v_ph) && v_ph < 7.35;
+    const be_mild = !isNaN(v_be) && v_be < -6;
+    if (ph_crit || be_crit) return {status:'severe', label:'⚠️ Acidose grave', color:'var(--danger)'};
+    if (ph_mild || be_mild) return {status:'mild',   label:'Acidose moderada', color:'var(--warning)'};
+    return                         {status:'normal', label:'Normal', color:'var(--ok)'};
+  }
+  function classCoag(v_inr, v_fib, v_plt) {
+    if (isNaN(v_inr) && isNaN(v_fib) && isNaN(v_plt)) return null;
+    const crit = (!isNaN(v_inr) && v_inr > 2) || (!isNaN(v_fib) && v_fib < 1) || (!isNaN(v_plt) && v_plt < 50);
+    const mild = (!isNaN(v_inr) && v_inr > 1.5) || (!isNaN(v_fib) && v_fib < 1.5) || (!isNaN(v_plt) && v_plt < 100);
+    if (crit) return {status:'severe', label:'⚠️ Coagulopatia grave', color:'var(--danger)'};
+    if (mild) return {status:'mild',   label:'Coagulopatia leve-moderada', color:'var(--warning)'};
+    return           {status:'normal', label:'Normal', color:'var(--ok)'};
+  }
+  function classCa(v) {
+    if (isNaN(v)) return null;
+    if (v >= 1.1) return {status:'normal', label:'Normal', color:'var(--ok)'};
+    if (v >= 0.9) return {status:'mild',   label:'Hipocalcemia leve', color:'var(--warning)'};
+    return               {status:'severe', label:'⚠️ Hipocalcemia grave', color:'var(--danger)'};
+  }
+
+  const eTemp = classTemp(temp);
+  const eAcid = classAcid(ph, be);
+  const eCoag = classCoag(inr, fib, plt);
+  const eCa   = classCa(ca);
+
+  const elements = [eTemp, eAcid, eCoag, eCa].filter(e => e !== null);
+  const nSevere = elements.filter(e => e && e.status === 'severe').length;
+  const nMild   = elements.filter(e => e && e.status === 'mild').length;
+
+  let scoreLabel, scoreColor;
+  if (nSevere >= 3) { scoreLabel = '🔴 DIAMOND COMPLETO — Risco extremo de morte'; scoreColor = 'var(--danger)'; }
+  else if (nSevere >= 2) { scoreLabel = '🟠 DIAMOND GRAVE — Intervenção imediata'; scoreColor = '#ff7700'; }
+  else if (nSevere >= 1 || nMild >= 2) { scoreLabel = '🟡 DIAMOND PARCIAL — Alto risco'; scoreColor = 'var(--warning)'; }
+  else { scoreLabel = '🟢 Sem elementos críticos do Diamond'; scoreColor = 'var(--ok)'; }
+
+  document.getElementById('diamond-score').textContent = scoreLabel;
+  document.getElementById('diamond-score').style.color = scoreColor;
+
+  const grid = document.getElementById('diamond-grid');
+  const items = [
+    {icon:'🌡️', name:'Hipotermia', val: isNaN(temp) ? '—' : temp+'°C', e: eTemp},
+    {icon:'🧪', name:'Acidose',     val: isNaN(ph) ? (isNaN(be) ? '—' : 'BE '+be) : 'pH '+ph, e: eAcid},
+    {icon:'🩸', name:'Coagulopatia', val: isNaN(inr) ? (isNaN(fib)?'—':'Fib '+fib) : 'INR '+inr, e: eCoag},
+    {icon:'💛', name:'Hipocalcemia', val: isNaN(ca) ? '—' : 'Ca²⁺ '+ca, e: eCa},
+  ];
+  grid.innerHTML = items.map(i => {
+    const status = i.e ? i.e.status : 'normal';
+    const color  = i.e ? i.e.color  : 'var(--muted)';
+    const label  = i.e ? i.e.label  : 'Não informado';
+    return `<div class="diamond-item ${status}">
+      <div class="d-icon">${i.icon}</div>
+      <div class="d-name">${i.name}</div>
+      <div class="d-val" style="color:${color}">${i.val}</div>
+      <div class="d-status" style="color:${color}">${label}</div>
+    </div>`;
+  }).join('');
+
+  // Alertas + conduta
+  let alerts = '';
+  let conduta = '<strong>Condutas prioritárias:</strong><br>';
+  if (eTemp && eTemp.status !== 'normal') {
+    alerts += `<div class="alert alert-amber">🌡️ <strong>Hipotermia detectada:</strong> Cobertores térmicos, blood warmer, sala aquecida. Meta: Temp &gt; 35°C.</div>`;
+    conduta += '• Aquecer ativamente — todo fluido IV aquecido<br>';
+  }
+  if (eAcid && eAcid.status === 'severe') {
+    alerts += `<div class="alert alert-red">🧪 <strong>Acidose grave:</strong> pH &lt; 7,2 inibe cascata de coagulação em 50%. Hemostasia é o único tratamento definitivo. NaHCO₃ apenas se pH &lt; 7,1 + instabilidade elétrica.</div>`;
+    conduta += '• Não tratar acidose com bicarbonato empiricamente — tratar a causa (hemostasia)<br>';
+  }
+  if (eCoag && eCoag.status !== 'normal') {
+    alerts += `<div class="alert alert-red">🩸 <strong>Coagulopatia:</strong> PFC + Fibrinogênio/Crioprecipitado + Plaquetas. Verificar TEG/ROTEM. Fibrinogênio é o primeiro fator a cair — meta ≥ 2 g/L.</div>`;
+    conduta += '• Transfusão balanceada 1:1:1 + fibrinogênio se &lt; 1,5 g/L<br>';
+  }
+  if (eCa && eCa.status !== 'normal') {
+    alerts += `<div class="alert alert-amber">💛 <strong>Hipocalcemia:</strong> Cálcio é co-fator obrigatório de fatores II, VII, IX, X. CaCl₂ 1g IV por cada 4 CH. Não aguardar sintomas.</div>`;
+    conduta += '• CaCl₂ 1g IV agora + a cada 4 CH transfundidos<br>';
+  }
+  if (nSevere === 0 && nMild === 0) conduta = '<span style="color:var(--ok)">✅ Parâmetros dentro dos limites. Manter monitorização.</span>';
+
+  document.getElementById('diamond-alerts').innerHTML = alerts;
+  document.getElementById('diamond-conduta').innerHTML = conduta;
+  document.getElementById('res-diamond').classList.add('visible');
+}
+
+// ─── RTS ───
+function calcRTS() {
+  const gcs = parseInt(document.getElementById('rts-gcs').value);
+  const pas = parseInt(document.getElementById('rts-pas').value);
+  const fr  = parseInt(document.getElementById('rts-fr').value);
+  const rts = (0.9368 * gcs + 0.7326 * pas + 0.2908 * fr).toFixed(3);
+  const surv = rts >= 7.8408 ? '>95%' : rts >= 6 ? '80–95%' : rts >= 4 ? '60–80%' : rts >= 2 ? '30–60%' : '<30%';
+  const interp = rts >= 7.8408 ? '✅ Baixo risco' : rts >= 6 ? '⚠️ Risco moderado' : rts >= 4 ? '🟠 Alto risco' : '🔴 Risco muito alto — prioridade máxima';
+  document.getElementById('rts-val').textContent = rts + ' / 7.8408';
+  document.getElementById('rts-surv').textContent = surv;
+  document.getElementById('rts-interp').textContent = interp;
+  document.getElementById('res-rts').classList.add('visible');
+}
+</script>
+</body>
+</html>

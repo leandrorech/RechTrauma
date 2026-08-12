@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RechTrauma v2.0</title>
+<style>
+:root{
+  --bg:#0D0F12;--surface:#13161B;--card:#1A1E26;--card2:#11151D;--border:#252A35;
+  --text:#F0F2F6;--dim:#8A92A3;--red:#E84040;--amber:#F0A500;--blue:#4DA6FF;
+  --cyan:#00B4A6;--green:#3DD68C;--radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}
+.sidebar{width:280px;background:var(--surface);border-right:1px solid var(--border);position:fixed;inset:0 auto 0 0;z-index:10;overflow:auto;transition:.2s}
+.sidebar.closed{transform:translateX(-100%)}
+.brand{padding:18px;border-bottom:2px solid var(--red)}
+.brand h1{font-size:24px}.brand span{color:var(--red)}.brand p,.status,.small{color:var(--dim);font-size:12px}
+.nav{padding:12px}.nav button{width:100%;border:0;background:transparent;color:var(--dim);text-align:left;padding:11px 12px;border-radius:10px;font-weight:800;cursor:pointer;margin-bottom:4px}
+.nav button:hover,.nav button.active{background:var(--card);color:var(--text)}.nav button.active{border-left:3px solid var(--red)}
+.main{margin-left:280px;width:calc(100% - 280px)}
+.topbar{height:58px;background:rgba(19,22,27,.92);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 18px;position:sticky;top:0;z-index:5}
+.menuBtn{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:9px 11px;cursor:pointer}
+.status{margin-left:auto}.pill{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:900;display:inline-block;margin:1px}
+.p-red{background:#3a1010;color:#ffb3b3}.p-amber{background:#2e200a;color:#ffd878}.p-blue{background:#0d1f3a;color:#92caff}.p-cyan{background:#0a2626;color:#80fff3}.p-green{background:#0d2e1c;color:#82f0b4}
+.content{max-width:1160px;margin:auto;padding:22px}.section{display:none}.section.active{display:block}
+.hero{border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,#191e27,#10131a);padding:22px;margin-bottom:18px}
+.hero h2{font-size:26px;margin-bottom:6px}.hero p,.card p,.card li{color:var(--dim);font-size:14px;line-height:1.55}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card.click{cursor:pointer;transition:.15s}.card.click:hover{transform:translateY(-2px);border-color:var(--red)}
+.card h3{font-size:16px;margin-bottom:8px}
+.title{font-size:12px;text-transform:uppercase;letter-spacing:.9px;color:var(--red);font-weight:900;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:12px}
+.title.amber{color:var(--amber)}.title.blue{color:var(--blue)}.title.cyan{color:var(--cyan)}.title.green{color:var(--green)}
+.layer-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.layer-tabs button{background:var(--card2);border:1px solid var(--border);color:var(--dim);padding:8px 12px;border-radius:999px;font-weight:800;cursor:pointer}
+.layer-tabs button.active{color:#fff;border-color:var(--red);background:#351717}.layer-tabs.blue button.active{border-color:var(--blue);background:#0f2035}
+.layer{display:none}.layer.active{display:block}
+.alert{border-left:4px solid var(--red);background:#1e0f0f;color:#ffb3b3;padding:12px;border-radius:10px;margin:10px 0;font-size:14px}
+.alert.amber{border-color:var(--amber);background:#1e160a;color:#ffd878}.alert.blue{border-color:var(--blue);background:#0a1525;color:#92caff}.alert.cyan{border-color:var(--cyan);background:#0a1f1e;color:#80fff3}.alert.green{border-color:var(--green);background:#0d2318;color:#82f0b4}
+.flow{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0e1218;border:1px solid var(--border);border-radius:12px;padding:14px;color:#c9d0dc;white-space:pre-wrap;overflow:auto;font-size:13px;line-height:1.65}
+.calc{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;color:var(--dim);font-size:12px;font-weight:800;margin:8px 0 5px}
+input,select{width:100%;background:#0e1218;border:1px solid var(--border);border-radius:10px;color:var(--text);padding:11px;font-size:15px}
+.btn{background:var(--red);border:0;color:white;border-radius:11px;padding:12px 14px;font-weight:900;cursor:pointer;width:100%;margin-top:12px}
+.result{display:none;background:#0e1218;border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:12px}.result.show{display:block}.result .big{font-size:28px;font-weight:950;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}th{color:var(--dim);font-size:12px;background:#151a23}
+.checklist{list-style:none}.checklist li{padding:8px 0;border-bottom:1px solid var(--border)}
+.footer{color:var(--dim);font-size:11px;text-align:center;padding:20px}
+@media(max-width:850px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.grid,.grid2,.calc{grid-template-columns:1fr}.content{padding:14px}.status{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><h1>Rech<span>Trauma</span></h1><p>Trauma • Sala Vermelha • UTI</p></div>
+  <div class="nav" id="nav">
+    <button data-sec="home" class="active">🏠 Home</button><button data-sec="plantao">🚨 Modo Plantão</button><button data-sec="choque">🩸 Choque</button><button data-sec="dcr">⚙️ DCR</button><button data-sec="diamond">💎 Diamond</button><button data-sec="fisiologia">🧬 Fisiologia</button><button data-sec="tce">🧠 TCE</button><button data-sec="torax">🫁 Trauma Torácico</button><button data-sec="fast">🩻 FAST/eFAST</button><button data-sec="abd_pelve">🛡️ Abdome & Pelve</button><button data-sec="procedimentos">🔪 Procedimentos</button><button data-sec="uti">🏥 UTI Trauma</button><button data-sec="calcs">🧮 Calculadoras</button>
+  </div>
+</aside>
+<main class="main">
+<div class="topbar"><button class="menuBtn" onclick="toggleMenu()">☰</button><strong>RECHTRAUMA v2.0</strong><span class="pill p-red">BRAVO</span><span class="pill p-amber">ALPHA</span><span class="pill p-blue">CHARLIE</span><div class="status">Núcleo hemodinâmico expandido</div></div>
+<div class="content">
+
+<section id="home" class="section active">
+<div class="hero"><h2>RechTrauma v2.0</h2><p>Núcleo metabólico e hemodinâmico expandido: Choque, DCR, Diamond, TCE, FAST e procedimentos.</p></div>
+<div class="grid">
+<div class="card click" onclick="go('plantao')"><h3>🚨 Modo Plantão</h3><p>Fluxos críticos baseados em estabilidade, eFAST, tórax, abdome e pelve.</p></div>
+<div class="card click" onclick="go('choque')"><h3>🩸 Choque Completo</h3><p>ATLS estendido, biomarcadores e resposta à ressuscitação.</p></div>
+<div class="card click" onclick="go('dcr')"><h3>⚙️ DCR Completo</h3><p>PTM, TXA, cálcio, fibrinogênio em g/L e TEG/ROTEM.</p></div>
+<div class="card click" onclick="go('diamond')"><h3>💎 Diamond Completo</h3><p>Quatro eixos, monitorização e calculadora numérica.</p></div>
+<div class="card click" onclick="go('tce')"><h3>🧠 TCE</h3><p>Alvos de PAS por idade, PIC/CPP, osmoterapia e UTI.</p></div>
+<div class="card click" onclick="go('torax')"><h3>🫁 Tórax</h3><p>PNX hipertensivo, hemotórax, contusão e dreno.</p></div>
+<div class="card click" onclick="go('fast')"><h3>🩻 FAST/eFAST</h3><p>Simulador interpretativo cruzado com estabilidade.</p></div>
+<div class="card click" onclick="go('procedimentos')"><h3>🔪 Procedimentos</h3><p>Checklists de IOT, dreno, PTM e crico.</p></div>
+<div class="card click" onclick="go('calcs')"><h3>🧮 Calculadoras</h3><p>SI, GCS, CPP, ABC, RTS, Parkland e Diamond Engine.</p></div>
+</div>
+</section>
+
+<section id="plantao" class="section">
+<div class="hero"><h2>🚨 Modo Plantão</h2><p>Fluxo real: instável ou estável? O que está matando agora?</p></div>
+<div class="card"><div class="title">Fluxo decisório inicial</div><div class="flow">PACIENTE TRAUMA GRAVE
+↓
+ABCDE simultâneo + monitor + O₂ + acesso calibroso/IO + controle de hemorragia externa
+↓
+INSTÁVEL?
+├─ SIM:
+│   ├─ Tórax clínico/eFAST positivo → descompressão/dreno/toracotomia conforme achado
+│   ├─ FAST abdominal positivo → laparotomia de controle de danos
+│   ├─ Pelve instável → binder em trocanteres + PTM + hemodinâmica/packing/fixação
+│   ├─ eFAST negativo → procurar retroperitônio, externo, neurogênico, obstrutivo
+│   └─ Ativar PTM se ABC ≥2, SI ≥1,3, BE ≤-6/-10 ou resposta transitória/ausente
+└─ NÃO:
+    ├─ TC contrastada conforme mecanismo e achados
+    ├─ NOM se órgão sólido e estabilidade sustentada
+    └─ Reavaliação seriada: sinais vitais, lactato, BE, dor, abdome, diurese</div></div>
+<div class="grid2">
+<div class="card"><div class="title">Primeiros 10 minutos</div><ul><li>ABCDE simultâneo.</li><li>Monitor, O₂, capnografia se IOT, 2 acessos calibrosos ou IO.</li><li>Controle de hemorragia externa: compressão, hemostático, torniquete.</li><li>eFAST/RX tórax/RX pelve conforme estabilidade.</li><li>Decidir: TC, centro cirúrgico, hemodinâmica ou UTI.</li></ul></div>
+<div class="card"><div class="title">Ameaças imediatas</div><ul><li>Pneumotórax hipertensivo → descompressão/dreno.</li><li>Hemotórax maciço → dreno + cirurgia se critério.</li><li>Choque hemorrágico → PTM + controle de danos.</li><li>TCE grave → evitar hipóxia/hipotensão.</li><li>FAST positivo instável → controle cirúrgico.</li></ul></div>
+</div>
+</section>
+
+<section id="choque" class="section">
+<div class="hero"><h2>🩸 Choque no Trauma</h2><p>Mapeamento hemodinâmico e decisão por resposta.</p></div>
+<div class="layer-tabs"><button class="active" onclick="layer(event,'choque','op')">ATLS + Biomarcadores</button><button onclick="layer(event,'choque','av')">Resposta</button><button onclick="layer(event,'choque','ex')">Fluxos</button></div>
+<div id="choque-op" class="layer active">
+<div class="card"><div class="title">Classificação ATLS estendida</div><table><tr><th>Parâmetro</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr><tr><td>Perda</td><td>&lt;15%</td><td>15–30%</td><td>30–40%</td><td>&gt;40%</td></tr><tr><td>FC</td><td>&lt;100</td><td>100–120</td><td>120–140</td><td>&gt;140</td></tr><tr><td>PAS</td><td>Normal</td><td>Normal</td><td>↓</td><td>↓↓</td></tr><tr><td>FR</td><td>14–20</td><td>20–30</td><td>30–40</td><td>&gt;35</td></tr><tr><td>Diurese</td><td>&gt;30 mL/h</td><td>20–30</td><td>5–15</td><td>Mínima</td></tr><tr><td>GCS</td><td>15</td><td>14–15</td><td>12–14</td><td>≤11</td></tr><tr><td>BE</td><td>0 a -2</td><td>-2 a -6</td><td>-6 a -10</td><td>&lt;-10</td></tr><tr><td>Lactato</td><td>&lt;2</td><td>2–4</td><td>&gt;4</td><td>&gt;6 / refratário</td></tr></table></div>
+<div class="card"><div class="title">Perfis etiológicos</div><table><tr><th>Tipo</th><th>Mecanismo</th><th>Pista</th><th>Conduta</th></tr><tr><td>Hemorrágico</td><td>Perda volêmica absoluta</td><td>Frio, taquicárdico, SI elevado</td><td>Hemostasia + PTM</td></tr><tr><td>Obstrutivo</td><td>PNX/tamponamento</td><td>JVP, MV abolido, eFAST positivo</td><td>Descompressão</td></tr><tr><td>Neurogênico</td><td>Perda simpática T6+</td><td>Hipotensão + bradicardia/pele quente</td><td>NA + excluir hemorragia</td></tr></table></div>
+</div>
+<div id="choque-av" class="layer"><div class="card"><div class="title amber">Resposta à ressuscitação</div><table><tr><th>Resposta</th><th>Achado</th><th>Interpretação</th><th>Decisão</th></tr><tr><td>Rápida</td><td>Estabiliza e mantém</td><td>Sangramento menor/contido</td><td>Completar avaliação</td></tr><tr><td>Transitória</td><td>Melhora e volta a cair</td><td>Sangramento ativo</td><td>PTM + hemostasia urgente</td></tr><tr><td>Ausente</td><td>Não responde</td><td>Exsanguinação/obstrutivo/misto</td><td>Controle imediato; considerar REBOA/cirurgia</td></tr></table></div></div>
+<div id="choque-ex" class="layer"><div class="card"><div class="title">Fluxos cruzados</div><div class="flow">INSTÁVEL + ABDOME POSITIVO → Laparotomia de Controle de Danos.
+INSTÁVEL + TÓRAX POSITIVO → Descompressão/dreno; toracotomia se hemotórax maciço.
+INSTÁVEL + PELVE INSTÁVEL → Binder + PTM + angio/packing/fixação conforme recurso.
+INSTÁVEL + eFAST NEGATIVO → retroperitônio, externo, neurogênico, obstrutivo, cardiogênico.</div></div></div>
+</section>
+
+<section id="dcr" class="section">
+<div class="hero"><h2>⚙️ Damage Control Resuscitation</h2><p>Ressuscitação que preserva coagulação e fisiologia.</p></div>
+<div class="card"><div class="title amber">PTM balanceado</div><p>Objetivo: mimetizar sangue total, reduzir hemodiluição, corrigir coagulopatia e sustentar perfusão até hemostasia.</p><div class="flow">CH : PFC : Plaquetas ≈ 1 : 1 : 1
++
+TXA precoce se janela adequada
++
+Ca²⁺ ionizado alvo > 1,1 mmol/L
++
+Fibrinogênio alvo ≥ 1,5–2,0 g/L
++
+Aquecimento ativo e controle de sangramento</div></div>
+<div class="grid2">
+<div class="card"><div class="title amber">TXA</div><p>1 g EV em 10 min + 1 g em 8 h, se sangramento significativo e dentro da janela de 3 h. Não usar tardiamente de forma automática.</p></div>
+<div class="card"><div class="title amber">TEG/ROTEM</div><table><tr><th>Parâmetro</th><th>Problema</th><th>Conduta</th></tr><tr><td>R/CT alto</td><td>Fator plasmático</td><td>PFC/PCC conforme contexto</td></tr><tr><td>Ângulo/alpha baixo</td><td>Fibrinogênio</td><td>Crio/fibrinogênio</td></tr><tr><td>MA/MCF baixo</td><td>Plaquetas</td><td>Plaquetas</td></tr><tr><td>LY30/ML alto</td><td>Hiperfibrinólise</td><td>TXA</td></tr></table></div>
+</div>
+<div class="card"><div class="title">Erros fatais</div><ul class="checklist"><li>❌ Cristaloide liberal antes de sangue.</li><li>❌ Hipotensão permissiva em TCE grave.</li><li>❌ Aguardar INR/TTPa para iniciar PTM quando indicação clínica é clara.</li><li>❌ Esquecer cálcio ionizado e temperatura.</li><li>❌ Misturar unidades de fibrinogênio: este app padroniza em g/L.</li></ul></div>
+</section>
+
+<section id="diamond" class="section">
+<div class="hero"><h2>💎 Diamond of Death</h2><p>Quatro eixos que se retroalimentam: hipotermia, acidose, coagulopatia e hipocalcemia.</p></div>
+<div class="card"><div class="title cyan">Matriz dos eixos</div><table><tr><th>Eixo</th><th>Limiar crítico</th><th>Mecanismo</th><th>Resgate</th></tr><tr><td>Hipotermia</td><td>&lt;35°C</td><td>Inibe cascata e plaqueta</td><td>Aquecimento ativo + fluidos/sangue aquecidos</td></tr><tr><td>Acidose</td><td>pH &lt;7,20 ou BE ≤-6</td><td>Reduz coagulação e contratilidade</td><td>Restaurar perfusão; bicarbonato não rotineiro</td></tr><tr><td>Hipocalcemia</td><td>Ca²⁺ &lt;1,1 mmol/L</td><td>Citrato quela cálcio</td><td>Gluconato/cloreto conforme acesso</td></tr><tr><td>Coagulopatia</td><td>INR &gt;1,5 ou TEG/ROTEM alterado</td><td>ATC + diluição + consumo</td><td>PTM, fibrinogênio/crio, plaquetas, plasma</td></tr></table></div>
+<div class="card"><div class="title cyan">Pós-PTM na UTI</div><p>Monitorar clearance de lactato, BE, cálcio ionizado, fibrinogênio ≥1,5–2,0 g/L, plaquetas, INR, temperatura e sinais de hipercoagulabilidade rebote/TEV.</p></div>
+</section>
+
+<section id="fisiologia" class="section">
+<div class="hero"><h2>🧬 Fisiologia do Trauma</h2><p>Endotélio, glicocálix, ATC e MODS.</p></div>
+<div class="card"><div class="title green">Glicocálix</div><p>Choque, inflamação e catecolaminas lesam o glicocálix, aumentando leak capilar, edema e disfunção microcirculatória. Cristaloides em excesso aceleram esse processo.</p></div>
+<div class="card"><div class="title green">ATC</div><p>Coagulopatia traumática aguda ocorre em minutos: hipoperfusão, proteína C ativada, inativação dos fatores Va/VIIIa e hiperfibrinólise.</p></div>
+</section>
+
+<section id="tce" class="section">
+<div class="hero"><h2>🧠 TCE e Neurotrauma</h2><p>Prevenir lesão secundária.</p></div>
+<div class="layer-tabs blue"><button class="active" onclick="layer(event,'tce','monro')">Monro-Kellie</button><button onclick="layer(event,'tce','bravo')">Sala Vermelha</button><button onclick="layer(event,'tce','charlie')">UTI</button></div>
+<div id="tce-monro" class="layer active"><div class="card"><div class="title blue">Monro-Kellie</div><p>Quando a complacência intracraniana esgota, pequenos aumentos de volume elevam exponencialmente a PIC.</p></div></div>
+<div id="tce-bravo" class="layer"><div class="card"><div class="title blue">Sala Vermelha</div><ul><li>IOT se GCS ≤8 ou incapacidade de proteção de via aérea.</li><li>PAS: 15–49 anos e &gt;70 anos: ≥110 mmHg; 50–69 anos: ≥100 mmHg.</li><li>SpO₂ ≥94% e PaCO₂ 35–40 mmHg.</li><li>Osmoterapia se herniação/HIC: manitol 0,25–1 g/kg; NaCl hipertônico conforme protocolo local, preferir em instabilidade hemodinâmica.</li><li>Hiperventilação apenas como ponte curta em herniação iminente.</li></ul></div></div>
+<div id="tce-charlie" class="layer"><div class="card"><div class="title blue">UTI Neurotrauma</div><ul><li>PIC: tratar se &gt;22 mmHg.</li><li>CPP/PPC: 60–70 mmHg.</li><li>Normotermia e evitar extremos glicêmicos.</li><li>Considerar DVE, PbtO₂, EEG contínuo, sedação profunda e neurocirurgia conforme cenário.</li></ul></div></div>
+</section>
+
+<section id="torax" class="section">
+<div class="hero"><h2>🫁 Trauma Torácico</h2><p>Morte imediata e dreno.</p></div>
+<div class="layer-tabs"><button class="active" onclick="layer(event,'torax','morte')">Morte Imediata</button><button onclick="layer(event,'torax','vm')">Ventilação</button><button onclick="layer(event,'torax','trouble')">Dreno</button></div>
+<div id="torax-morte" class="layer active"><div class="card"><div class="title">Pneumotórax hipertensivo</div><p>Choque obstrutivo por redução do retorno venoso. Tratamento clínico: descompressão e dreno.</p></div><div class="card"><div class="title">Hemotórax maciço</div><p>≥1500 mL inicial, &gt;200 mL/h por 2–4h, ou hemotórax retido significativo com falha de drenagem: acionar cirurgia.</p></div></div>
+<div id="torax-vm" class="layer"><div class="card"><div class="title">Contusão pulmonar</div><p>Shunt e mecânica assimétrica. Ventilação protetora: Vt ~6 mL/kg de peso predito, platô &lt;30, driving pressure ideal &lt;15.</p></div></div>
+<div id="torax-trouble" class="layer"><div class="grid2"><div class="card"><div class="title">Selo d'água</div><div class="field"><label>Dreno oscila?</label><select id="tx_oscila" onchange="checkDrain()"><option value="sim">Sim</option><option value="nao">Não</option></select></div><div class="field"><label>Borbulha continuamente?</label><select id="tx_borbulha" onchange="checkDrain()"><option value="nao">Não</option><option value="sim">Sim</option></select></div><div class="field"><label>Débito</label><select id="tx_debito" onchange="checkDrain()"><option value="normal">Normal</option><option value="critico">Crítico</option></select></div></div><div class="card"><div class="title">Diagnóstico</div><div id="drain_res" class="alert green" style="margin:0">Sistema funcionando.</div></div></div></div>
+</section>
+
+<section id="fast" class="section">
+<div class="hero"><h2>🩻 FAST/eFAST</h2><p>Decisão por estabilidade.</p></div>
+<div class="grid2"><div class="card"><div class="title">Achados</div><div class="field"><label>Hemodinâmica</label><select id="fs_hemo" onchange="simFAST()"><option value="estavel">Estável</option><option value="instavel">Instável</option></select></div><div class="field"><label>Líquido abdominal</label><select id="fs_abd" onchange="simFAST()"><option value="neg">Negativo</option><option value="pos">Positivo</option></select></div><div class="field"><label>Pericárdio</label><select id="fs_card" onchange="simFAST()"><option value="neg">Normal</option><option value="pos">Positivo</option></select></div><div class="field"><label>Pleura</label><select id="fs_pleura" onchange="simFAST()"><option value="neg">Normal</option><option value="pntx">Pneumotórax</option></select></div></div><div class="card"><div class="title">Diretriz</div><div id="fs_res" class="alert green" style="margin:0">Exame normal.</div></div></div>
+</section>
+
+<section id="abd_pelve" class="section">
+<div class="hero"><h2>🛡️ Abdome & Pelve</h2><p>NOM, binder e SCA.</p></div>
+<div class="grid2"><div class="card"><div class="title green">Pelve</div><p>Binder/lençol nos trocanteres maiores em pelve instável. Não posicionar em abdome ou cristas ilíacas.</p></div><div class="card"><div class="title green">SCA</div><p>SCA: PIA &gt;20 mmHg + nova disfunção orgânica.</p></div></div>
+<div class="card"><div class="title green">Monitor SCA</div><div class="grid2"><div class="field"><label>PIA</label><input type="number" id="ab_pia" value="10" oninput="checkSCA()"></div><div class="field"><label>Diurese</label><select id="ab_diurese" onchange="checkSCA()"><option value="ok">Preservada</option><option value="oligo">Oligúria/anúria</option></select></div></div><div id="sca_res" class="alert green">Pressões normais.</div></div>
+</section>
+
+<section id="procedimentos" class="section">
+<div class="hero"><h2>🔪 Procedimentos</h2><p>Checklists práticos.</p></div>
+<div class="grid2"><div class="card"><div class="title">IOT no trauma</div><ul class="checklist"><li>Pré-oxigenação e plano de via aérea difícil.</li><li>Imobilização cervical manual.</li><li>Vasopressor pronto se choque/TCE.</li><li>Confirmar com capnografia quantitativa.</li><li>Evitar hipotensão pós-indução.</li></ul></div>
+<div class="card"><div class="title">Drenagem torácica</div><ul class="checklist"><li>5º EIC linha axilar anterior/média.</li><li>Dissecção romba e exploração digital.</li><li>Conectar ao selo d'água.</li><li>Checar oscilação, borbulhamento e débito.</li></ul></div>
+<div class="card"><div class="title">PTM Checklist</div><ul class="checklist"><li>Acionar banco e equipe cirúrgica.</li><li>Gaso, lactato, BE, Ca²⁺, Hb, INR/TTPa, fibrinogênio, plaquetas.</li><li>Hemocomponentes aquecidos e balanceados.</li><li>TXA precoce e cálcio ionizado.</li></ul></div>
+<div class="card"><div class="title">Cricotireoidostomia</div><ul class="checklist"><li>Não intuba/não oxigena.</li><li>Incisão vertical cutânea; horizontal na membrana.</li><li>Dilatar, inserir cânula balonada, confirmar EtCO₂.</li></ul></div></div>
+</section>
+
+<section id="uti" class="section">
+<div class="hero"><h2>🏥 UTI do Trauma</h2><p>Hemostasia fisiológica e proteção orgânica.</p></div>
+<div class="card"><div class="title blue">Prioridades</div><ul><li>Ventilação protetora conforme lesão.</li><li>Clearance de lactato e correção de BE.</li><li>Correção contínua do Diamond.</li><li>Profilaxia TEV assim que seguro.</li><li>Rabdomiólise, IRA pigmentar, sepse pós-trauma e delirium.</li></ul></div>
+</section>
+
+<section id="calcs" class="section">
+<div class="hero"><h2>🧮 Calculadoras Essenciais</h2><p>Algoritmos integrados.</p></div>
+<div class="grid2">
+<div class="card"><div class="title">Shock Index</div><div class="calc"><div class="field"><label>FC</label><input id="si_fc" type="number"></div><div class="field"><label>PAS</label><input id="si_pas" type="number"></div></div><button class="btn" onclick="calcSI()">Calcular</button><div class="result" id="si_res"></div></div>
+<div class="card"><div class="title">Glasgow</div><div class="calc"><div class="field"><label>Ocular</label><select id="g_o"><option value="4">4 - Espontânea</option><option value="3">3 - Voz</option><option value="2">2 - Dor</option><option value="1">1 - Ausente</option></select></div><div class="field"><label>Verbal</label><select id="g_v"><option value="5">5 - Orientado</option><option value="4">4 - Confuso</option><option value="3">3 - Palavras</option><option value="2">2 - Sons</option><option value="1">1 - Ausente</option></select></div><div class="field"><label>Motora</label><select id="g_m"><option value="6">6 - Obedece</option><option value="5">5 - Localiza</option><option value="4">4 - Flexão normal</option><option value="3">3 - Flexão anormal</option><option value="2">2 - Extensão</option><option value="1">1 - Ausente</option></select></div></div><button class="btn" onclick="calcGCS()">Calcular</button><div class="result" id="gcs_res"></div></div>
+<div class="card"><div class="title">CPP/PPC</div><div class="calc"><div class="field"><label>PAS</label><input id="cpp_pas" type="number" value="120"></div><div class="field"><label>PAD</label><input id="cpp_pad" type="number" value="80"></div><div class="field"><label>PIC</label><input id="cpp_pic" type="number" value="15"></div></div><button class="btn" style="background:var(--blue)" onclick="calcCPPAdvanced()">Analisar</button><div class="result" id="cpp_res"></div></div>
+<div class="card"><div class="title">ABC Score</div><div class="field"><label>eFAST positivo?</label><select id="abc_fast"><option value="0">Não</option><option value="1">Sim</option></select></div><div class="field"><label>PAS ≤90?</label><select id="abc_pas"><option value="0">Não</option><option value="1">Sim</option></select></div><div class="field"><label>FC ≥120?</label><select id="abc_fc"><option value="0">Não</option><option value="1">Sim</option></select></div><div class="field"><label>Mecanismo penetrante?</label><select id="abc_pen"><option value="0">Não</option><option value="1">Sim</option></select></div><button class="btn" onclick="calcABC()">Calcular</button><div class="result" id="abc_res"></div></div>
+<div class="card"><div class="title">RTS</div><div class="field"><label>GCS categoria</label><select id="rts_gcs"><option value="4">13–15</option><option value="3">9–12</option><option value="2">6–8</option><option value="1">4–5</option><option value="0">3</option></select></div><div class="field"><label>PAS categoria</label><select id="rts_pas"><option value="4">&gt;89</option><option value="3">76–89</option><option value="2">50–75</option><option value="1">1–49</option><option value="0">0</option></select></div><div class="field"><label>FR categoria</label><select id="rts_fr"><option value="4">10–29</option><option value="3">&gt;29</option><option value="2">6–9</option><option value="1">1–5</option><option value="0">0</option></select></div><button class="btn" onclick="calcRTS()">Calcular</button><div class="result" id="rts_res"></div></div>
+<div class="card"><div class="title">Parkland</div><div class="calc"><div class="field"><label>Peso kg</label><input id="pk_peso" type="number" value="70"></div><div class="field"><label>SCQ %</label><input id="pk_scq" type="number" value="0"></div></div><button class="btn" style="background:var(--amber)" onclick="calcParkland()">Calcular</button><div class="result" id="pk_res"></div></div>
+<div class="card"><div class="title">Diamond Engine</div><div class="calc"><div class="field"><label>Temperatura °C</label><input id="d_temp" type="number" step="0.1"></div><div class="field"><label>pH</label><input id="d_ph" type="number" step="0.01"></div><div class="field"><label>BE</label><input id="d_be" type="number" step="0.5"></div><div class="field"><label>Lactato</label><input id="d_lac" type="number" step="0.1"></div><div class="field"><label>Ca²⁺ ionizado</label><input id="d_ca" type="number" step="0.01"></div><div class="field"><label>INR</label><input id="d_inr" type="number" step="0.1"></div><div class="field"><label>Fibrinogênio g/L</label><input id="d_fib" type="number" step="0.1"></div><div class="field"><label>Plaquetas x10³/µL</label><input id="d_plt" type="number"></div></div><button class="btn" style="background:var(--cyan)" onclick="calcDiamond()">Avaliar fisiologia</button><div class="result" id="d_res"></div></div>
+</div>
+</section>
+
+<div class="footer">Protótipo educacional avançado · RechTrauma v2.0. Não substitui protocolo institucional, equipe especializada ou julgamento clínico.</div>
+</div></main></div>
+
+<script>
+function toggleMenu(){const s=document.getElementById('sidebar');if(innerWidth<850){s.classList.toggle('open')}else{s.classList.toggle('closed');document.querySelector('.main').style.marginLeft=s.classList.contains('closed')?'0':'280px';document.querySelector('.main').style.width=s.classList.contains('closed')?'100%':'calc(100% - 280px)'}}
+function go(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.sec===id));if(innerWidth<850)document.getElementById('sidebar').classList.remove('open');scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.sec));
+function layer(ev,mod,id){document.querySelectorAll('#'+mod+' .layer').forEach(x=>x.classList.remove('active'));document.getElementById(mod+'-'+id).classList.add('active');ev.target.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('active'));ev.target.classList.add('active')}
+function showRes(id,html){const el=document.getElementById(id);el.innerHTML=html;el.classList.add('show')}
+function clsText(c,t){return '<span class="pill '+c+'">'+t+'</span>'}
+function val(id){return parseFloat(document.getElementById(id).value)}
+function calcSI(){let fc=val('si_fc'),pas=val('si_pas');if(!fc||!pas)return;let si=fc/pas,c='p-green',t='Normal',cond='Monitorar em contexto clínico.';if(si>=1.3){c='p-red';t='Risco crítico';cond='Choque grave/oculto provável: PTM, eFAST, controle de danos.'}else if(si>=0.9){c='p-amber';t='Choque oculto';cond='Hipovolemia mascarada: gasometria, lactato, BE e reavaliação seriada.'}showRes('si_res','<div class="big">'+si.toFixed(2)+'</div>'+clsText(c,t)+'<p class="small">'+cond+'</p>')}
+function calcGCS(){let g=val('g_o')+val('g_v')+val('g_m');let c=g<=8?'p-red':g<=12?'p-amber':'p-green';let t=g<=8?'TCE grave':g<=12?'TCE moderado':'TCE leve';showRes('gcs_res','<div class="big">GCS '+g+'</div>'+clsText(c,t)+'<p class="small">'+(g<=8?'Via aérea definitiva e neuroproteção imediata.':'Monitorização e reavaliação.')+'</p>')}
+function calcCPPAdvanced(){let pas=val('cpp_pas'),pad=val('cpp_pad'),pic=val('cpp_pic');if(!pas||!pad)return;let pam=pad+(pas-pad)/3,cpp=pam-(pic||0),c='p-green',t='PPC adequada',cond='Manter metas.';if(pas<100){c='p-red';t='Hipotensão crítica';cond='Corrigir imediatamente. Hipotensão aumenta mortalidade no TCE.'}else if(pic>=22){c='p-red';t='HIC';cond='Osmoterapia, sedação, cabeceira, DVE/neurocirurgia conforme cenário.'}else if(cpp<60){c='p-amber';t='Hipoperfusão cerebral';cond='Elevar PAM e/ou reduzir PIC.'}else if(cpp>70){c='p-amber';t='Acima da meta';cond='Evitar hiperperfusão se PIC controlada.'}showRes('cpp_res','<div class="big">'+cpp.toFixed(1)+' mmHg</div>'+clsText(c,t)+'<p class="small">PAM '+pam.toFixed(1)+' | PIC '+(pic||0)+'<br>'+cond+'</p>')}
+function calcABC(){let score=val('abc_fast')+val('abc_pas')+val('abc_fc')+val('abc_pen');let ativar=score>=2;showRes('abc_res','<div class="big">'+score+'/4</div>'+clsText(ativar?'p-red':'p-green',ativar?'Ativar/considerar PTM':'PTM não automática')+'<p class="small">ABC ≥2 sugere alto risco de transfusão maciça.</p>')}
+function calcRTS(){let g=val('rts_gcs'),p=val('rts_pas'),f=val('rts_fr');let r=0.9368*g+0.7326*p+0.2908*f;let c=r<4?'p-red':r<6?'p-amber':'p-green';showRes('rts_res','<div class="big">'+r.toFixed(2)+'</div>'+clsText(c,r<4?'Crítico':r<6?'Alto risco':'Menor risco fisiológico')+'<p class="small">RTS ponderado.</p>')}
+function calcParkland(){let peso=val('pk_peso'),scq=val('pk_scq');if(peso<=0||scq<=0){showRes('pk_res','<div class="big">0 mL</div>');return}let vol=4*peso*scq,p8=vol/2,n16=vol/2;showRes('pk_res','<div class="big">'+vol.toLocaleString()+' mL</div>'+clsText('p-amber','RL 24h')+'<p class="small">Primeiras 8h: '+p8.toLocaleString()+' mL ('+(p8/8).toFixed(0)+' mL/h).<br>16h seguintes: '+n16.toLocaleString()+' mL ('+(n16/16).toFixed(0)+' mL/h). Ajustar por diurese.</p>')}
+function calcDiamond(){let temp=val('d_temp'),ph=val('d_ph'),be=val('d_be'),lac=val('d_lac'),ca=val('d_ca'),inr=val('d_inr'),fib=val('d_fib'),plt=val('d_plt');let sev=0,mod=0,txt=[];function add(s,m,label){if(s){sev++;txt.push(label+' crítico')}else if(m){mod++;txt.push(label)}}add(temp&&temp<35,temp&&temp<36,'Hipotermia');add(ph&&ph<7.2,ph&&ph<7.35,'Acidose');add(be&&be<=-10,be&&be<=-6,'BE');add(lac&&lac>4,lac&&lac>=2,'Lactato');add(ca&&ca<0.9,ca&&ca<1.1,'Hipocalcemia');add(inr&&inr>1.5,inr&&inr>1.2,'INR');add(fib&&fib<1.5,fib&&fib<2.0,'Fibrinogênio');add(plt&&plt<50,plt&&plt<100,'Plaquetas');let crit=sev>0||mod>=3,c=crit?'p-red':mod>0?'p-amber':'p-green',t=crit?'Falha fisiológica crítica':(mod>0?'Eixos em sofrimento':'Compensado');let cond=crit?'Aquecimento ativo, restauração de perfusão, cálcio, PTM/TEG-ROTEM, fibrinogênio/crio/plaquetas conforme eixo.':'Vigilância ativa e correção progressiva.';showRes('d_res','<div class="big">'+t+'</div>'+clsText(c,crit?'Zona vermelha':(mod>0?'Vigilância ativa':'Baixo risco'))+'<p class="small">'+(txt.join(' · ')||'Nenhum desvio crítico preenchido')+'<br><br>'+cond+'</p>')}
+function checkDrain(){let el=document.getElementById('drain_res');if(tx_borbulha.value==='sim'){el.className='alert';el.innerHTML='<strong>Fístula aérea/vazamento:</strong> verificar circuito, posição do dreno e considerar lesão traqueobrônquica se alto débito sob VM.'}else if(tx_debito.value==='critico'){el.className='alert';el.innerHTML='<strong>Hemotórax em expansão:</strong> PTM e cirurgia torácica.'}else if(tx_oscila.value==='nao'){el.className='alert amber';el.innerHTML='<strong>Sem oscilação:</strong> obstrução, dobra, coágulo ou reexpansão completa.'}else{el.className='alert green';el.innerHTML='Sistema pleural pérvio em selo d\'água.'}}
+function simFAST(){let el=document.getElementById('fs_res');if(fs_hemo.value==='instavel'){if(fs_card.value==='pos'){el.className='alert';el.innerHTML='<strong>Tamponamento:</strong> pericardiocentese como ponte/cirurgia.'}else if(fs_abd.value==='pos'){el.className='alert';el.innerHTML='<strong>Hemoperitônio + choque:</strong> centro cirúrgico; não TC.'}else if(fs_pleura.value==='pntx'){el.className='alert';el.innerHTML='<strong>Pneumotórax:</strong> descompressão/dreno imediato.'}else{el.className='alert amber';el.innerHTML='Choque com eFAST negativo: procurar pelve, retroperitônio, externo, neurogênico/obstrutivo.'}}else{if(fs_abd.value==='pos'){el.className='alert blue';el.innerHTML='Estável + FAST positivo: TC contrastada e avaliar NOM.'}else{el.className='alert green';el.innerHTML='Janelas normais. Reavaliar conforme mecanismo.'}}}
+function checkSCA(){let el=document.getElementById('sca_res'),pia=val('ab_pia');if(pia>=20&&ab_diurese.value==='oligo'){el.className='alert';el.innerHTML='<strong>SCA:</strong> PIA ≥20 + disfunção orgânica. Medidas clínicas e considerar descompressão.'}else if(pia>=12){el.className='alert amber';el.innerHTML='<strong>HIA:</strong> monitorar PIA e evitar sobrecarga.'}else{el.className='alert green';el.innerHTML='Pressões preservadas.'}}
+</script>
+</body>
+</html>
